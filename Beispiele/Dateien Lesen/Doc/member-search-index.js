@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"<Unnamed>","c":"DateienReadWrite","l":"DateienReadWrite()"},{"p":"<Unnamed>","c":"DateienReadWrite","l":"read(String)","url":"read-java.lang.String-"},{"p":"<Unnamed>","c":"DateienReadWrite","l":"write(String, String[][])","url":"write-java.lang.String-java.lang.String:A:A-"}]
