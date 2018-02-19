@@ -1,20 +1,45 @@
 package Grafik;
 
 import java.awt.Graphics;
-import java.awt.event.ActionListener;
-
+import java.awt.event.MouseListener;
 import javax.swing.JPanel;
 
 class MenueButton{
-  private ActionListener listener;		// Listener für diesen Button
-  private JPanel panel; 				// Panel auf welchem gezeichnet wird
+  private MouseListener listener;		// Listener fÃ¼r diesen Button
+  private ButtonPanel panel; 			// Panel auf welchem gezeichnet wird
   private String text;					// Buttontext
-  private Image button;					// Bild des Buttons
+  private String image;					// Bild des Buttons
+  int x;
+  int y;
+  int width;
+  int height;
   
-  // zeichnet den Button an der übergebenen Position
-  public void drawButton(Graphics g, int x, int y, int width, int height){
-    
+  public MenueButton(String name, MouseListener l, int x, int y, int width, int height) {
+	  panel = new ButtonPanel();
+	  text = name;
+	  image = "file";
+	  panel.addMouseListener(l);
+	  this.x = x;
+	  this.y = y;
+	  this.width = width;
+	  this.height = height;
   }
-
+  
+  public JPanel getPanel() {
+	  return panel;
+  }
+  
+  
+  @SuppressWarnings("serial")
+  class ButtonPanel extends JPanel{
+  	public ButtonPanel() {
+  		super();
+  	}
+  	
+  	@Override
+  	public void paint(Graphics g) {
+  		this.setBounds(x, y, width, height);
+  		g.fillRect(0, 0, width, height);
+  	}
+  }
 }
-
