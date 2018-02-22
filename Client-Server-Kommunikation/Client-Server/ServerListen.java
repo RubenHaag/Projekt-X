@@ -2,14 +2,12 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 /**
  * ServerListen dient zum Daten emfangen, von den Clients.
  * @author  Oskar, Moritz
- * @version 0.1
+ * @version 0.2.1
  */
 public class ServerListen extends Thread{
   
@@ -27,7 +25,7 @@ public class ServerListen extends Thread{
     bb = ByteBuffer.allocate(1024);
     this.port = port;
     myIP = InetAddress.getLocalHost();
-    SocketAddress ia = new InetSocketAddress(myIP, this.port);
+    ia = new InetSocketAddress(myIP, this.port);
     connect();
   } 
 
@@ -40,20 +38,24 @@ public class ServerListen extends Thread{
           e1.printStackTrace();
         }
       try {
-        Thread.sleep(10);
+        Thread.sleep(1000);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
-
-    }
+     }   
   }
    /**
      *  Metode zum emfangen und verarbeiten der Daten.
      */
   private void read() throws IOException {
     c1.receive(bb);
-    System.out.println(bb.getInt());
-    bb.clear();
+    if(bb.position() != 0) {
+      bb.flip();
+      System.out.println("first Int: "+bb.getInt());
+      //System.out.println("first double: "+bb.getDouble());
+      //sself.setUUID(bb.getInt());
+      //sself.setZahl(bb.getDouble());
+    }
   }
    /**
      *  Metode zum eröffen des Servers
@@ -61,8 +63,12 @@ public class ServerListen extends Thread{
      */
   private void connect() throws IOException {
     c1 = DatagramChannel.open();
-        c1.configureBlocking(false);
+    c1.configureBlocking(false);
     c1.socket().bind(ia);
-    
-  }
+    //nur zum prüfen
+    System.out.println("ONLINE");
+    System.out.println(myIP);
+    System.out.println(port);
+  }  
 }
+

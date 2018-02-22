@@ -1,7 +1,7 @@
 
 import java.io.IOException;
 
-public class main {
+public class mainServer {
 
   public static void main(String[] args) throws IOException {
     Thread l = new ServerListen(1234);
