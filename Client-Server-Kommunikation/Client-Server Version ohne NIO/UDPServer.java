@@ -17,8 +17,10 @@ public class UDPServer extends Thread{
   private InetAddress ia1, ia2, ia3;
     
   /**
-     * Konstruktor für die Klasse Server
-     * @param port der port an dem der Server hört
+     * Konstruktor für die Klasse UDPServer
+     * @param ia1 ist die InetAddress von dem ersten Client, an den der Server daten sendet.
+     * @param ia2 ist die InetAddress von dem zweiten Client, an den der Server daten sendet.
+     * @param ia3 ist die InetAddress von dem dritten Client, an den der Server daten sendet.
      */
   public UDPServer(InetAddress ia1,InetAddress ia2, InetAddress ia3) throws IOException {
     this.ia1 =ia1;

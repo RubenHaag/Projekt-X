@@ -9,6 +9,11 @@ public class UDPClient extends Thread {
   private  int portToServer;
   private InetAddress ia1;
   
+  /**
+     * Konstruktor für die Klasse UDPServer
+     * @param ia ist die InetAddress von dem Server, an den der Client die Daten sendet.
+     * @param port ist der port an dem der Client die Daten sendet.
+     */
   public UDPClient(InetAddress ia, int port) throws IOException {
     ia1 = ia;
     portToServer = port;
