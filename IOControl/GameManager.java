@@ -307,8 +307,10 @@ public class GameManager{
 	}
 	public void cSetHealth( int h){
 	this.health = h;
-	
-	
+	}
+	public int cGetHealth(){
+		return health;
+		
 	}
 	
 	
