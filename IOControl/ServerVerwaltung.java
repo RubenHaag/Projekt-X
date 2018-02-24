@@ -11,7 +11,7 @@ public class ServerVerwaltung {
   private GameManager[] spielerListe = new GameManager[3];
   private int i = 0;
   private int k = 0;
-  boolean s1=false;          //s1,s2,b : welche rolle ist schon vergeben, wird beim login benötigt (s:Spieler b:Boss)
+  boolean s1=false;          //s1,s2,b : welche rolle ist schon vergeben, wird beim login benÃ¶tigt (s:Spieler b:Boss)
   boolean s2=false;
   boolean b=false;
   GameManager spieler1=new GameManager();
@@ -19,12 +19,12 @@ public class ServerVerwaltung {
   GameManager boss=new GameManager();
   private AttackMode am;
   
-  public void sAttack(UUID id, AttackMode am){    //�berpr�fen ob m�glich
+  public void sAttack(UUID id, AttackMode am){    //überprüfen ob möglich
     for(int i = 0; i < spielerListe.length; i++){
       GameManager local = spielerListe[i];
       int y = sGetNumberID(id);
       local.cAttackg(y);
-      //hit usw. muss man noch einf�gen
+      //hit usw. muss man noch einfügen
     }
   }
   /**
@@ -228,14 +228,14 @@ public class ServerVerwaltung {
   }
   
  /* spielerIstBoss,spielerIst1,spielerIst2 werden beim Login aufgerufen,
- *  getrennt für bessere Übersichtlichkeit
+ *  getrennt fÃ¼r bessere Ãœbersichtlichkeit
  */
   private void spielerIstBoss(GameManager g){// Das ist ein Konstruktor.. soll das ne Methode sein?
     spielerListe[0]=g;
     g.cSetBoss(true,0);
     n++;
     b=true;
-    g.auswahlBoss();                //Boss auswahl Screen öffnen, direkt an grafik weiterleiten
+    g.auswahlBoss();                //Boss auswahl Screen Ã¶ffnen, direkt an grafik weiterleiten
     //boss.loginErfolgreich(true);
   }
   private void spielerIst1(GameManager g){
@@ -243,7 +243,7 @@ public class ServerVerwaltung {
     g.cSetBoss(false,1);
     n++;
     s1=true;
-    g.auswahlSpieler();             //Spieler auswahl Screen öffnen, direkt an grafik weiterleiten
+    g.auswahlSpieler();             //Spieler auswahl Screen Ã¶ffnen, direkt an grafik weiterleiten
     //spieler1.loginErfolgreich(true);
   }
   private void spielerIst2(GameManager g){
@@ -251,7 +251,7 @@ public class ServerVerwaltung {
     g.cSetBoss(true,2);
     n++;
     s2=true;
-    g.auswahlSpieler();             //Spieler auswahl Screen öffnen, direkt an grafik weiterleiten
+    g.auswahlSpieler();             //Spieler auswahl Screen Ã¶ffnen, direkt an grafik weiterleiten
     //spieler2.loginErfolgreich(true);
   }
   
@@ -262,7 +262,7 @@ public class ServerVerwaltung {
  
 
   /**
-   * Überprüft die UUID mit der der Clients und liefert die interne ID zurück
+   * ÃœberprÃ¼ft die UUID mit der der Clients und liefert die interne ID zurÃ¼ck
    * @param id UUID 
    * @return Interne ID
    */
@@ -304,13 +304,13 @@ public class ServerVerwaltung {
    * Berechnet den Jump der Spieler
    */
   public void sJump(){
-    //prüft ob möglich
+    //prÃ¼ft ob mÃ¶glich
   }
   /**
    * Bewegt die Spieler
    */
   public void sMove() {
-    //prüft ob möglich
+    //prÃ¼ft ob mÃ¶glich
     
   }
   /**
@@ -322,7 +322,7 @@ public class ServerVerwaltung {
   }
   
   public void sUpdateHealth(){
-	  for(int i = 0; i >= spielerListe.length; i++){
+	  for(int i = 0; i < spielerListe.length; i++){
 	      GameManager local = spielerListe[i];
 	      if(i == 0){
 	    	  if(h1 < 100){
