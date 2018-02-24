@@ -287,13 +287,16 @@ public class GameManager{
 	 * @param playerobjekt
 	 * @return überlappt die Hitbox des eigenen Spielcharakters mit einer Hitbox der Map -> true oder false
 	 */
-	public boolean intersect(Rectangle r,Rectangle playerobjekt){
-		if(((r.getXPos()+r.getWidth()>= playerobjekt.getXPos() && playerobjekt.getXPos() >=r.getXPos()) && ((r.getYPos()-r.getHeigth()) <= playerobjekt.getYPos() && playerobjekt.getYPos() <= r.getYPos()))){
-		return true;																						
-		}else{
+	public boolean intersect(Rectangle[] rectangles, Rectangle p) {
+		for (Rectangle r : rectangles) {
+			if (!((p.getRight() <= r.getLeft() || p.getLeft() >= r.getRight()) && (p.getBottom() >= r.getTop()))) {
+				pa.setGround(true);
+				pa.updateGround(r);
+				return true;
+			}
+		}
 		return false;
-		}
-		}
+	}
 	
 	
 	
