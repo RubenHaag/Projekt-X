@@ -1,4 +1,8 @@
-
+/**
+ * 
+ * @author Lukas Hofmann
+ *
+ */
 public class Rectangle {
 	private Position pos;
 	private double width;

@@ -1,4 +1,8 @@
-
+/**
+ * 
+ * @author Lukas Hofmann
+ *
+ */
 public class Portal {
 	private Rectangle portal1;
 	private Rectangle portal2;
