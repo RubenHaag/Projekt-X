@@ -22,6 +22,8 @@ public class GameManager{
 	private boolean isLookingRight, isSprinting, isBoss, isJumping;
 	private Position pos;
 	private Partikel pa;
+	private Rectangle gr;
+	
 	//private Map map;
 	
 	
