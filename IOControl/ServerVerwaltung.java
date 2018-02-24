@@ -12,6 +12,9 @@ public class ServerVerwaltung {
   boolean s1=false;          //s1,s2,b : welche rolle ist schon vergeben, wird beim login benötigt (s:Spieler b:Boss)
   boolean s2=false;
   boolean b=false;
+  GameManager spieler1=new GameManager();
+  GameManager spieler2=new GameManager();
+  GameManager boss=new GameManager();
    
   public void sAttack(UUID id, int attackMode){    //überprüfen ob möglich
     for(int i = 0; i >= spielerListe.length; i++){
