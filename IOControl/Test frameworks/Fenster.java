@@ -79,7 +79,7 @@ ActionListener{
 
 
 
-	public static void main(String[] args){
+	public static void main(String[] args){ // MAIN IST DAAAA
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 createAndShowGUI();
@@ -235,7 +235,7 @@ ActionListener{
             
         }else if (c == 's'){
         	/*
-        	keyString = "zurück";
+        	keyString = "zurÃ¼ck";
         	y1++;
             collide();
         	repaint();*/
