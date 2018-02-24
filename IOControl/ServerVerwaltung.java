@@ -11,12 +11,12 @@ public class ServerVerwaltung {
 	private int k = 0; 
 	public void sAttack(UUID id, int attackMode){
 		
-		//überprüfen ob möglich
+		//Ã¼berprÃ¼fen ob mÃ¶glich
 		for(int i = 0; i >= spielerListe.length; i++){
 			GameManager local = spielerListe[i];
 			int y = sGetNumberID(id);
 			local.cAttackg(y);
-			//hit usw. muss man noch einfügen
+			//hit usw. muss man noch einfÃ¼gen
 			
 		}
 	}
@@ -47,7 +47,7 @@ public class ServerVerwaltung {
 		return true;
 	}
 	/**
-	 * Überprüft die UUID mit der der Clients und liefert die interne ID zurück
+	 * ÃœberprÃ¼ft die UUID mit der der Clients und liefert die interne ID zurÃ¼ck
 	 * @param id UUID 
 	 * @return Interne ID
 	 */
@@ -77,13 +77,13 @@ public class ServerVerwaltung {
 	 * Berechnet den Jump der Spieler
 	 */
 	public void sJump(){
-		//prüft ob möglich
+		//prÃ¼ft ob mÃ¶glich
 	}
 	/**
 	 * Bewegt die Spieler
 	 */
 	public void sMove() {
-		//prüft ob möglich
+		//prÃ¼ft ob mÃ¶glich
 		
 	}
 	/**
