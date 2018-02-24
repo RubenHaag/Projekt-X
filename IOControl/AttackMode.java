@@ -2,6 +2,7 @@
 public class AttackMode {
 	private Rectangle damageBox;
 	private int damage;
+	
 	AttackMode(Rectangle damagebox, int damage) {
 		this.setDamagebox(damagebox);
 		this.setDamage(damage);

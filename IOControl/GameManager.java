@@ -91,26 +91,28 @@ public class GameManager{
    */
   
   public void inputKey(KeyEvent e) {
-    char c = e.getKeyChar();
-    if(c== 'a'){
-      isLookingRight = false;
-      isSprinting = false;
-      cMoveSelf();
-    }else if(c== 'd'){
-      isLookingRight = true;
-      isSprinting = false;
-      cMoveSelf();
-    }else if(c== ' '){
-      cJumpSelf();
-    }else if(c== '1'){
-      attackMode =1;
-    }else if(c== '2'){
-      attackMode =2;
-    }else if(c== '3') {
-      attackMode =3;
-    }
-    
-    // attackMode umstellen fehlt
+	  switch (e.getKeyChar()) {
+	  case 'a':
+	      isLookingRight = false;
+	      isSprinting = false;
+	      cMoveSelf();
+	      break;
+	  case 'd':
+	      isLookingRight = true;
+	      isSprinting = false;
+	      cMoveSelf();
+	      break;
+	  case ' ':
+		  cJumpSelf();
+		  break;
+	  case '1':
+	  case '2':
+	  case '3':
+		  try {
+			  attackMode = Integer.parseInt(Character.toString(e.getKeyChar()));
+		  } catch (Exception ignored) {}
+		  break;
+	  }
   }
   
   /**
@@ -131,8 +133,6 @@ public class GameManager{
       case 3:
         cAttack(amSpezial2);
         break;
-      default:
-        //Error anzeigen
       }
     }
   }

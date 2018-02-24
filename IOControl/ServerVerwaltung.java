@@ -20,7 +20,7 @@ public class ServerVerwaltung {
   private AttackMode am;
   
   public void sAttack(UUID id, AttackMode am){    //überprüfen ob möglich
-    for(int i = 0; i >= spielerListe.length; i++){
+    for(int i = 0; i < spielerListe.length; i++){
       GameManager local = spielerListe[i];
       int y = sGetNumberID(id);
       local.cAttackg(y);
@@ -340,8 +340,6 @@ public class ServerVerwaltung {
 	    	  local.cSetHealth((int) h3);
 	    	  }
 	      }
-	      
-	  
 	  }
 	  
 	  
