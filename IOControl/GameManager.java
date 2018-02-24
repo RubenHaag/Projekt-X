@@ -26,7 +26,7 @@ public class GameManager{
 	private boolean isLookingRight, isSprinting, isBoss, isJumping;
 	private Position pos;
 	private Partikel pa;
-	private Rectangle gr;
+	private Rectangle gr, pSelf, pOther1, pOther2;
 	private Rectangle [] hbListe = new Rectangle[hbAnzahl];
 	//private Map map;
 	
@@ -70,6 +70,7 @@ public class GameManager{
             @Override
             public void run() {
             	cUpdateG();
+            	intersect(hbListe, pSelf);
             }
         }, 1000, 100);
 		server = null;
@@ -301,6 +302,7 @@ public class GameManager{
 				return true;
 			}
 		}
+		pa.setGround(false);
 		return false;
 	}
 	
