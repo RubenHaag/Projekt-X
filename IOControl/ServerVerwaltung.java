@@ -17,13 +17,14 @@ public class ServerVerwaltung {
   GameManager spieler1=new GameManager();
   GameManager spieler2=new GameManager();
   GameManager boss=new GameManager();
-   
-  public void sAttack(UUID id, int attackMode){    //√ºberpr√ºfen ob m√∂glich
-    for(int i = 0; i < spielerListe.length; i++){
+  private AttackMode am;
+  
+  public void sAttack(UUID id, AttackMode am){    //¸berpr¸fen ob mˆglich
+    for(int i = 0; i >= spielerListe.length; i++){
       GameManager local = spielerListe[i];
       int y = sGetNumberID(id);
       local.cAttackg(y);
-      //hit usw. muss man noch einf√ºgen
+      //hit usw. muss man noch einf¸gen
     }
   }
   /**
