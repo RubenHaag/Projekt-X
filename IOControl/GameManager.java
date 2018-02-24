@@ -83,10 +83,10 @@ public class GameManager{
 		server = s;
 	}
 	/**
-	 * Diese Methode wird vom InputListener aufgerufen und führt die Methode cMoveSelf() aus.
-	 * Außerdem werden die Attribute isLookingRight und isSprinting verändert
+	 * Diese Methode wird vom InputListener aufgerufen und fÃ¼hrt die Methode cMoveSelf() aus.
+	 * AuÃŸerdem werden die Attribute isLookingRight und isSprinting verÃ¤ndert
 	 * @param e Die aktivierte Taste
-	 * w/leertaste muss noch ergänzend werden
+	 * w/leertaste muss noch ergÃ¤nzend werden
 	 */
 	
 	public void inputKey(KeyEvent e) {
@@ -108,7 +108,7 @@ public class GameManager{
 	
 	/**
 	 Diese Methode wird vom InputListener aufgerufen, wenn ein Mausklick registriert wurde.
-	 Sie löst die Methode attack() aus, wenn die linke Maustaste gedrückt wurde, wertet also den Mausinput aus
+	 Sie lÃ¶st die Methode attack() aus, wenn die linke Maustaste gedrÃ¼ckt wurde, wertet also den Mausinput aus
 	 */
 	public void inputMouse(MouseEvent m) {
 		int i = m.getButton();
@@ -118,7 +118,7 @@ public class GameManager{
 		}
 	}
 	/**
-	 * Überträgt die eigene Bewegung an den Server
+	 * ÃœbertrÃ¤gt die eigene Bewegung an den Server
 	 */
 	public void cMoveSelf(){
 		System.out.println("bewegung");
@@ -143,13 +143,13 @@ public class GameManager{
 	}
 	*/
 	/**
-	 * Führt die Methode sAttack(ID, attackMode) beim Server aus.
+	 * FÃ¼hrt die Methode sAttack(ID, attackMode) beim Server aus.
 	 */
 	public void cAttack(){
 		//server.sAttack(id, attackMode);
 	}
 	/** 
-	 * Übergibt der Grafik, dass Schaden an einen Spieler ausgeführt wurde
+	 * Ãœbergibt der Grafik, dass Schaden an einen Spieler ausgefÃ¼hrt wurde
 	 */
 	public void cHit(){
 		/*
@@ -167,22 +167,22 @@ public class GameManager{
 		
 	}
 	/**
-	 * Übergibt der Grafik das ein Spieler attackiert
-	 * @param y welcher Spieler diese Methode ausführt
+	 * Ãœbergibt der Grafik das ein Spieler attackiert
+	 * @param y welcher Spieler diese Methode ausfÃ¼hrt
 	 */
 	public void cAttackg(int y) {
 		// an grafik weiterleiten
 		
 	}
 	/**
-	 * Führt die sLogin(GameManager) beim Server auf, um eine Verbindung aufzubauen.
+	 * FÃ¼hrt die sLogin(GameManager) beim Server auf, um eine Verbindung aufzubauen.
 	 */
-	public void cLogin(){ //übergabe der ServerID!!!
+	public void cLogin(){ //Ã¼bergabe der ServerID!!!
 		id = UUID.randomUUID();
 		server.sLogin(this);
 	}
 	/**
-	 * Führt die Methode sLogout(GameManager) beim Server aus, um seine Verbindung mit diesem zu trennen.
+	 * FÃ¼hrt die Methode sLogout(GameManager) beim Server aus, um seine Verbindung mit diesem zu trennen.
 	 */
 	public void cLogout(){
 		server.sLogout(this);
@@ -198,15 +198,15 @@ public class GameManager{
 		
 	}
 	/**
-	 * Ermöglicht dem Server die UUID des Clients zu bekommen.
-	 * @return Übergibt die UUID des Clients
+	 * ErmÃ¶glicht dem Server die UUID des Clients zu bekommen.
+	 * @return Ãœbergibt die UUID des Clients
 	 */
 	public UUID cGetUUID(){
 		return id;
 		
 	}
 	/**
-	 * Übergibt die interne ID zur Erkennung um welchen Client es sich handelt.
+	 * Ãœbergibt die interne ID zur Erkennung um welchen Client es sich handelt.
 	 * @return eigene ID
 	 */
 	public int cGetNumberID(){
@@ -221,7 +221,7 @@ public class GameManager{
 		
 	}
 	/**
-	 * Übergibt die IDs der anderen Clients an diesen Client
+	 * Ãœbergibt die IDs der anderen Clients an diesen Client
 	 * @param id1 ID des ersten anderen Spielers
 	 * @param id2 ID des zweiten anderen Spielers
 	 */
@@ -230,28 +230,28 @@ public class GameManager{
 		numberIDother2 = id2;
 	}
 	/**
-	 * Methode um die Grafik über erschaffene Projectiles zu informieren
+	 * Methode um die Grafik Ã¼ber erschaffene Projectiles zu informieren
 	 */
 	public void cSpawnprojectile(){
 		//an Grafik
 	}
 	/**
-	 * Methode um die Grafik über zerstörte Projectiles zu informieren
+	 * Methode um die Grafik Ã¼ber zerstÃ¶rte Projectiles zu informieren
 	 */
 	public void cDestroyprojectile(){
 		//an Grafik
 	}
 	/**
-	 * Alle Daten werden an die Grafik übertragen
+	 * Alle Daten werden an die Grafik Ã¼bertragen
 	 */
 	public static void cUpdateG(){
-		//alle daten übergeben
+		//alle daten Ã¼bergeben
 	}
 	/**
-	 * Methode die im Sekundentakt vom Server an den Client übertragen wird
-	 * @param mana Mana für die Spezialfähigkeit
+	 * Methode die im Sekundentakt vom Server an den Client Ã¼bertragen wird
+	 * @param mana Mana fÃ¼r die SpezialfÃ¤higkeit
 	 * @param health Lebenpunkte des Spielers
-	 * @param cooldown Cooldown seiner Spezialfähigkeit
+	 * @param cooldown Cooldown seiner SpezialfÃ¤higkeit
 	 */
 	public void cUpdateS(int mana, int health, int cooldown){
 		this.mana = mana;
@@ -260,7 +260,7 @@ public class GameManager{
 	}
 	//Update Nocheinmal mit anderen Parametern
 	/**
-	 * Übergibt Ort wo der Spieler erschaffen werden soll.
+	 * Ãœbergibt Ort wo der Spieler erschaffen werden soll.
 	 * Fehlt Differenzierung zwischen den Spielern
 	 * @param pos Spawnposition des Spielers
 	 * @param isLookingRight Die Richtung in die der Spieler schaut
@@ -270,7 +270,7 @@ public class GameManager{
 		this.isLookingRight = isLookingRight;
 	}*/
 	/**
-	 * Übergibt den laufenden Countdown an die Grafik
+	 * Ãœbergibt den laufenden Countdown an die Grafik
 	 * @param countdown Countdown bis Spielbeginn
 	 */
 	public void startCountdown(int countdown) {
@@ -292,7 +292,7 @@ public class GameManager{
 	 * 
 	 * @param r
 	 * @param playerobjekt
-	 * @return überlappt die Hitbox des eigenen Spielcharakters mit einer Hitbox der Map -> true oder false
+	 * @return Ã¼berlappt die Hitbox des eigenen Spielcharakters mit einer Hitbox der Map -> true oder false
 	 */
 	public boolean intersect(Rectangle[] rectangles, Rectangle p) {
 		for (Rectangle r : rectangles) {
@@ -305,7 +305,11 @@ public class GameManager{
 		pa.setGround(false);
 		return false;
 	}
+	public void cSetHealth( int h){
+	this.health = h;
 	
+	
+	}
 	
 	
 	
