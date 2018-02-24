@@ -9,7 +9,11 @@ import java.util.UUID;
 
 
 
-
+/**
+ * 
+ * @author Lukas Hofmann, Patrick Waltermann
+ *
+ */
 public class GameManager{
 	
 	/**
@@ -18,11 +22,12 @@ public class GameManager{
 	 * 
 	 * */
 	private UUID id;
-	private int attackMode, numberIdSelf, numberIDother1, numberIDother2,mana , health, cooldown,jumpheight, movementspeed, playerwidth, playerheight;
+	private int attackMode, numberIdSelf, numberIDother1, numberIDother2,mana , health, cooldown,jumpheight, movementspeed, playerwidth, playerheight, hbAnzahl;
 	private boolean isLookingRight, isSprinting, isBoss, isJumping;
 	private Position pos;
 	private Partikel pa;
 	private Rectangle gr;
+	private Rectangle [] hbListe = new Rectangle[hbAnzahl];
 	//private Map map;
 	
 	

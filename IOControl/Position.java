@@ -1,4 +1,8 @@
-
+/**
+ * 
+ * @author Lukas Hofmann, Patrick Waltermann
+ *
+ */
 public class Position {
 	private double x, y;
 	
