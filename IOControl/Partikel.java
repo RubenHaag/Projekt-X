@@ -22,7 +22,7 @@ public class Partikel extends Thread{
       ground = false;
       fr1 = 80;
       fr2 = -fr1;
-      gr = new Rectangle(0,0,1,1);
+      gr = new Rectangle(new Position(0,0),1,1);
       pos = new Position(0, 0);
       width = 20;
   }
@@ -69,7 +69,7 @@ public class Partikel extends Thread{
         if(ground == true){
             yVel = yVelw;
             pos.setXPos(pos.getXPos()+dt / 1000000000* xVel);
-            pos.setXPos(gr.getMinY()-width + 1);
+            pos.setXPos(gr.getBottom()-width + 1);
             
             if (xVel > 0 || xVel < 0){
               try {
