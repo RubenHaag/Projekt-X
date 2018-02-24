@@ -1,5 +1,7 @@
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
-import java.lang.Thread
+import java.lang.Thread;
 /**
  * 
  * @author Lukas Hofmann, Patrick Waltermann , Max Schulte
@@ -316,6 +318,32 @@ public class ServerVerwaltung {
    */
   public void sUpdate(ReducedPlayer c){
     
+  }
+  
+  public void sUpdateHealth(){
+	  for(int i = 0; i >= spielerListe.length; i++){
+	      GameManager local = spielerListe[i];
+	      if(i == 0){
+	    	  if(h1 < 100){
+	    	  h1 =(h1 + 0.01* regspeed1);
+	    	  local.cSetHealth((int) h1);
+	    	  }
+	      }else if(i == 1){
+	    	  if(h1 < 100){
+	    	  h2 =(h2 + 0.01* regspeed2);
+	    	  local.cSetHealth((int) h2);
+	    	  }
+	      }else if(i == 2){
+	    	  if(h1 < 100){
+	    	  h3 =(h3 + 0.01* regspeed3);
+	    	  local.cSetHealth((int) h3);
+	    	  }
+	      }
+	      
+	  
+	  }
+	  
+	  
   }
   
 }
