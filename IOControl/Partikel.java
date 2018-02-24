@@ -1,7 +1,7 @@
 
 /**
  * 
- * @author Patrick Waltermann mit geringer Unterstützung von Lukas Hofmann
+ * @author Patrick Waltermann mit geringer Unterstï¿½tzung von Lukas Hofmann
  *
  */
 public class Partikel extends Thread{
@@ -9,11 +9,11 @@ public class Partikel extends Thread{
   private Rectangle gr;
   private Position pos;
   private boolean ground = false;
-  //Fenster f1;
   long last_time = System.nanoTime();
   /**
    * Stellt die grundlegende Fallbewegung ein
    */
+
   public Partikel(){
       xVel = 200;
       yVel = 0;
@@ -30,7 +30,7 @@ public class Partikel extends Thread{
    * 
    * @param pos Position des Rechtecks
    * @param w Breite
-   * @param gr Rechteck für das ein Partikelobjekt erstellt werden soll.
+   * @param gr Rechteck fï¿½r das ein Partikelobjekt erstellt werden soll.
    */
   public Partikel(Position pos, double w,Rectangle gr){
       this();
@@ -42,7 +42,7 @@ public class Partikel extends Thread{
     
   }
   /**
-   * Setzt ob das Objekt steht oder fällt
+   * Setzt ob das Objekt steht oder fï¿½llt
    * @param g Ob das Objekt steht oder nicht
    */
   public void setGround(boolean g){
@@ -75,7 +75,6 @@ public class Partikel extends Thread{
               try {
                   this.sleep(1);
               } catch (InterruptedException e) {
-                  // TODO Auto-generated catch block
                   e.printStackTrace();
               }
               xVel = xVel + dt / 1000000000* fr;
@@ -96,8 +95,8 @@ public class Partikel extends Thread{
     
   }
   /**
-   * Gibt die Geschwindigkeit des Objektes zurück.
-   * @return gibt die Geschwindigkeit des Objektes zurück
+   * Gibt die Geschwindigkeit des Objektes zurï¿½ck.
+   * @return gibt die Geschwindigkeit des Objektes zurï¿½ck
    */
   public double getYVel(){
       return yVel;
