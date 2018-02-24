@@ -240,7 +240,7 @@ public class ServerVerwaltung {
     spielerListe[2]=g;
     g.cSetBoss(true,2);
     n++;
-    b=false;
+    s2=true;
     //spieler2.loginErfolgreich(true);
   }
 
