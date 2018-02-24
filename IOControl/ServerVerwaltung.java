@@ -17,7 +17,7 @@ public class ServerVerwaltung {
   GameManager boss=new GameManager();
    
   public void sAttack(UUID id, int attackMode){    //überprüfen ob möglich
-    for(int i = 0; i >= spielerListe.length; i++){
+    for(int i = 0; i < spielerListe.length; i++){
       GameManager local = spielerListe[i];
       int y = sGetNumberID(id);
       local.cAttackg(y);
@@ -219,13 +219,15 @@ public class ServerVerwaltung {
       boss.zeigen(s);
       Thread.sleep(15000);
       //Spielstart
-      //spieler1.spielstart();
-      //spieler2.spielstart();
-      //boss.spielstart();
+      for (int j; j<spielerListe.length; j++){
+        spielerListe[j].spielstart;
     } // end of if
   }
   
-  spielerIstBoss(GameManager g){// Das ist ein Konstruktor.. soll das ne Methode sein?
+ /* spielerIstBoss,spielerIst1,spielerIst2 werden beim Login aufgerufen,
+ *  getrennt für bessere Übersichtlichkeit
+ */
+  private void spielerIstBoss(GameManager g){// Das ist ein Konstruktor.. soll das ne Methode sein?
     spielerListe[0]=g;
     g.cSetBoss(true,0);
     n++;
@@ -233,7 +235,7 @@ public class ServerVerwaltung {
     g.auswahlBoss();                //Boss auswahl Screen öffnen, direkt an grafik weiterleiten
     //boss.loginErfolgreich(true);
   }
-  spielerIst1(GameManager g){
+  private void spielerIst1(GameManager g){
     spielerListe[1]=g;
     g.cSetBoss(false,1);
     n++;
@@ -241,7 +243,7 @@ public class ServerVerwaltung {
     g.auswahlSpieler();             //Spieler auswahl Screen öffnen, direkt an grafik weiterleiten
     //spieler1.loginErfolgreich(true);
   }
-  spielerIst2(GameManager g){
+  private void spielerIst2(GameManager g){
     spielerListe[2]=g;
     g.cSetBoss(true,2);
     n++;
@@ -250,9 +252,10 @@ public class ServerVerwaltung {
     //spieler2.loginErfolgreich(true);
   }
   
-  aswahl skin, Gamemanager g){
-    g.setSkin(skin);
-  }
+  
+  //private void setSkin (int Skin, Gamemanager g){   //skin entweder int oder enum
+  //  g.setSkin(skin);
+  //}
  
 
   /**
