@@ -216,9 +216,9 @@ public class ServerVerwaltung {
       boss.zeigen(s);
       Thread.sleep(15000);
       //Spielstart
-      //spieler1.spielstart()
-      //spieler2.spielstart()
-      //boss.spielstart
+      //spieler1.spielstart();
+      //spieler2.spielstart();
+      //boss.spielstart();
     } // end of if
   }
   
@@ -227,6 +227,7 @@ public class ServerVerwaltung {
     g.cSetBoss(true,0);
     n++;
     b=true;
+    g.auswahlBoss();                //Boss auswahl Screen öffnen, direkt an grafik weiterleiten
     //boss.loginErfolgreich(true);
   }
   spielerIst1(GameManager g){
@@ -234,6 +235,7 @@ public class ServerVerwaltung {
     g.cSetBoss(false,1);
     n++;
     s1=true;
+    g.auswahlSpieler();             //Spieler auswahl Screen öffnen, direkt an grafik weiterleiten
     //spieler1.loginErfolgreich(true);
   }
   spielerIst2(GameManager g){
@@ -241,8 +243,14 @@ public class ServerVerwaltung {
     g.cSetBoss(true,2);
     n++;
     s2=true;
+    g.auswahlSpieler();             //Spieler auswahl Screen öffnen, direkt an grafik weiterleiten
     //spieler2.loginErfolgreich(true);
   }
+  
+  aswahl skin, Gamemanager g){
+    g.setSkin(skin);
+  }
+ 
 
   /**
    * Überprüft die UUID mit der der Clients und liefert die interne ID zurück
