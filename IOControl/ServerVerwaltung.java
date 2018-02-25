@@ -1,5 +1,7 @@
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
-import java.lang.Thread
+import java.lang.Thread;
 /**
  * 
  * @author Lukas Hofmann, Patrick Waltermann , Max Schulte
@@ -9,16 +11,20 @@ public class ServerVerwaltung {
   private GameManager[] spielerListe = new GameManager[3];
   private int i = 0;
   private int k = 0;
-  boolean s1=false;          //s1,s2,b : welche rolle ist schon vergeben, wird beim login ben�tigt (s:Spieler b:Boss)
+  boolean s1=false;          //s1,s2,b : welche rolle ist schon vergeben, wird beim login benÃ¶tigt (s:Spieler b:Boss)
   boolean s2=false;
   boolean b=false;
-   
-  public void sAttack(UUID id, int attackMode){    //�berpr�fen ob m�glich
-    for(int i = 0; i >= spielerListe.length; i++){
+  GameManager spieler1=new GameManager();
+  GameManager spieler2=new GameManager();
+  GameManager boss=new GameManager();
+  private AttackMode am;
+  
+  public void sAttack(UUID id, AttackMode am){    //überprüfen ob möglich
+    for(int i = 0; i < spielerListe.length; i++){
       GameManager local = spielerListe[i];
       int y = sGetNumberID(id);
       local.cAttackg(y);
-      //hit usw. muss man noch einf�gen
+      //hit usw. muss man noch einfügen
     }
   }
   /**
@@ -216,44 +222,47 @@ public class ServerVerwaltung {
       boss.zeigen(s);
       Thread.sleep(15000);
       //Spielstart
-      //spieler1.spielstart();
-      //spieler2.spielstart();
-      //boss.spielstart();
+      for (int j; j<spielerListe.length; j++){
+        spielerListe[j].spielstart;
     } // end of if
   }
   
-  spielerIstBoss(GameManager g){
+ /* spielerIstBoss,spielerIst1,spielerIst2 werden beim Login aufgerufen,
+ *  getrennt fÃ¼r bessere Ãœbersichtlichkeit
+ */
+  private void spielerIstBoss(GameManager g){// Das ist ein Konstruktor.. soll das ne Methode sein?
     spielerListe[0]=g;
     g.cSetBoss(true,0);
     n++;
     b=true;
-    g.auswahlBoss();                //Boss auswahl Screen �ffnen, direkt an grafik weiterleiten
+    g.auswahlBoss();                //Boss auswahl Screen Ã¶ffnen, direkt an grafik weiterleiten
     //boss.loginErfolgreich(true);
   }
-  spielerIst1(GameManager g){
+  private void spielerIst1(GameManager g){
     spielerListe[1]=g;
     g.cSetBoss(false,1);
     n++;
     s1=true;
-    g.auswahlSpieler();             //Spieler auswahl Screen �ffnen, direkt an grafik weiterleiten
+    g.auswahlSpieler();             //Spieler auswahl Screen Ã¶ffnen, direkt an grafik weiterleiten
     //spieler1.loginErfolgreich(true);
   }
-  spielerIst2(GameManager g){
+  private void spielerIst2(GameManager g){
     spielerListe[2]=g;
     g.cSetBoss(true,2);
     n++;
     s2=true;
-    g.auswahlSpieler();             //Spieler auswahl Screen �ffnen, direkt an grafik weiterleiten
+    g.auswahlSpieler();             //Spieler auswahl Screen Ã¶ffnen, direkt an grafik weiterleiten
     //spieler2.loginErfolgreich(true);
   }
   
-  aswahl skin, Gamemanager g){
-    g.setSkin(skin);
-  }
+  
+  //private void setSkin (int Skin, Gamemanager g){   //skin entweder int oder enum
+  //  g.setSkin(skin);
+  //}
  
 
   /**
-   * �berpr�ft die UUID mit der der Clients und liefert die interne ID zur�ck
+   * ÃœberprÃ¼ft die UUID mit der der Clients und liefert die interne ID zurÃ¼ck
    * @param id UUID 
    * @return Interne ID
    */
@@ -295,13 +304,13 @@ public class ServerVerwaltung {
    * Berechnet den Jump der Spieler
    */
   public void sJump(){
-    //pr�ft ob m�glich
+    //prÃ¼ft ob mÃ¶glich
   }
   /**
    * Bewegt die Spieler
    */
   public void sMove() {
-    //pr�ft ob m�glich
+    //prÃ¼ft ob mÃ¶glich
     
   }
   /**
@@ -310,6 +319,30 @@ public class ServerVerwaltung {
    */
   public void sUpdate(ReducedPlayer c){
     
+  }
+  
+  public void sUpdateHealth(){
+	  for(int i = 0; i < spielerListe.length; i++){
+	      GameManager local = spielerListe[i];
+	      if(i == 0){
+	    	  if(h1 < 100){
+	    	  h1 =(h1 + 0.01* regspeed1);
+	    	  local.cSetHealth((int) h1);
+	    	  }
+	      }else if(i == 1){
+	    	  if(h1 < 100){
+	    	  h2 =(h2 + 0.01* regspeed2);
+	    	  local.cSetHealth((int) h2);
+	    	  }
+	      }else if(i == 2){
+	    	  if(h1 < 100){
+	    	  h3 =(h3 + 0.01* regspeed3);
+	    	  local.cSetHealth((int) h3);
+	    	  }
+	      }
+	  }
+	  
+	  
   }
   
 }
