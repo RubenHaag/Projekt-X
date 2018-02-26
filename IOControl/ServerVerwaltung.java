@@ -80,20 +80,6 @@ public class ServerVerwaltung {
    * @return
    */
   public boolean sLogin(GameManager g){
-    /*if(i > 2) {return false;}
-    spielerListe [i] = g;
-    System.out.println("Yeah!");
-    i++;
-    if (k == 0){
-    g.cSetBoss(true, k);
-    k++;
-    }else{
-      g.cSetBoss(false, k);
-      k++;
-      
-    }
-    return true;   */
-
 
     //login der Spieler mit Zufallsauswahl ob der Spieler ein Spieler oder der Boss wird
     int n=0;                   //n: wie viele angemeldete Spieler
