@@ -13,13 +13,13 @@ public class ServerVerwaltung {
   private int k = 0;
   private double h1, h2, h3;
   private int regspeed1, regspeed2, regspeed3;
-  boolean s1=false;          //s1,s2,b : welche rolle ist schon vergeben, wird beim login benÃ¶tigt (s:Spieler b:Boss)
-  boolean s2=false;
-  boolean b=false;
+  private boolean s1=false;          //s1,s2,b : welche rolle ist schon vergeben, wird beim login benÃ¶tigt (s:Spieler b:Boss)
+  private boolean s2=false;
+  private boolean b=false;
   GameManager spieler1=new GameManager();
   GameManager spieler2=new GameManager();
   GameManager boss=new GameManager();
-  private Attack am;
+  private Attack amP1, amP2, amP3;
   
   public ServerVerwaltung(){
 	  
@@ -27,13 +27,36 @@ public class ServerVerwaltung {
 	  
   }
   
-  public void sAttack(UUID id, AttackMode am){    //überprüfen ob möglich
-    for(int i = 0; i < spielerListe.length; i++){
+  public void sAttack(UUID id,Attack am){
+    //überprüfen ob möglich
+    int y = sGetNumberID(id);
+    for(int i = 0; i <= spielerListe.length; i++){
       GameManager local = spielerListe[i];
-      int y = sGetNumberID(id);
-      local.cAttackg(y);
-      //hit usw. muss man noch einfügen
+      spielerListe[i].cAttackg(y);
+      
+      //int y = sGetNumberID(id);
+      //local.cAttackg(y);
+      //TODO hit usw. muss man noch einfügen
     }
+  }
+  /**
+   * ÃœberprÃ¼ft die UUID mit der der Clients und liefert die interne ID zurÃ¼ck
+   * @param id UUID
+   * @return Interne ID
+   */
+  public int sGetNumberID(UUID id){
+    int x = 5;//absichtlich falscher Int
+    for(int i = 0; i <= spielerListe.length; i++){
+      GameManager local = spielerListe[i];
+      if(local.cGetUUID() == id){
+        return local.cGetNumberID();
+      }
+      else{
+
+      }
+
+    }
+    return x;
   }
   /**
    * Initiert das Spiel
@@ -269,26 +292,7 @@ public class ServerVerwaltung {
   //}
  
 
-  /**
-   * ÃœberprÃ¼ft die UUID mit der der Clients und liefert die interne ID zurÃ¼ck
-   * @param id UUID 
-   * @return Interne ID
-   */
-   /*
-  public int sGetNumberID(UUID id){
-    int x = 5;//absichtlich falscher Int 
-    for(int i = 0; i < spielerListe.length; i++){
-      GameManager local = spielerListe[i];
-      if(local.cGetUUID() == id){
-        return local.cGetNumberID();
-      }
-      else{
-        
-      }
-      
-    }
-    return x; 
-  }      */
+
   /**
    * Methode die vom Client aufgerufen wird  um den austritt aus der Session zu signalisieren
    * @param gameManager Client
@@ -330,7 +334,7 @@ public class ServerVerwaltung {
   }
   
   public void sUpdateHealth(){
-	  for(int i = 0; i < spielerListe.length; i++){
+	  for(int i = 0; i <= spielerListe.length; i++){
 	      GameManager local = spielerListe[i];
 	      if(i == 0){
 	    	  if(h1 < 100){

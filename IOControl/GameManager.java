@@ -163,7 +163,6 @@ public class GameManager{
      */
     public void cAttack(Attack am) {
         Position clone = new Position(pos.getXPos(), pos.getYPos());
-
        if(isLookingRight){
            clone.setXPos(pSelf.getRight());
            clone.setYPos(pSelf.getTop());
@@ -173,6 +172,8 @@ public class GameManager{
        }
         am.setPosition(clone);
         server.sAttack(id, am);
+        //TODO an grafik spieler attakiert senden
+
 
     }
     /**
@@ -188,8 +189,7 @@ public class GameManager{
      * @param y welcher Spieler diese Methode ausf�hrt
      */
     public void cAttackg(int y) {
-        // an grafik weiterleiten
-
+        //TODO an grafik weiterleiten
     }
     /**
      * F�hrt die sLogin(GameManager) beim Server auf, um eine Verbindung aufzubauen.
@@ -305,23 +305,6 @@ public class GameManager{
     public void cSetCharakter() {
 
     }
-    /**
-     *
-     * @param rectangles
-     * @param p
-     * @return �berlappt die Hitbox des eigenen Spielcharakters mit einer Hitbox der Map -> true oder false
-     */
-    public boolean intersect(Rectangle[] rectangles, Rectangle p) {
-        for (Rectangle r : rectangles) {
-            if (!((p.getRight() <= r.getLeft() || p.getLeft() >= r.getRight()) && (p.getBottom() >= r.getTop()))) {
-                pa.setGround(true);
-                pa.updateGround(r);
-                return true;
-            }
-        }
-        pa.setGround(false);
-        return false;
-    }
 
     public void cSetHealth( int h){
         this.health = h;
@@ -329,6 +312,17 @@ public class GameManager{
     public int cGetHealth(){
         return health;
 
+    }
+    public boolean intersect(Rectangle[] player, Rectangle damage) {
+        for (Rectangle r : player) {
+            if (!((damage.getRight() <= r.getLeft() || damage.getLeft() >= r.getRight()) && (damage.getBottom() >= r.getTop()))) {
+                pa.setGround(true);
+                pa.updateGround(r);
+                return true;
+            }
+        }
+        pa.setGround(false);
+        return false;
     }
 
 
