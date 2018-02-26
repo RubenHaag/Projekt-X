@@ -80,6 +80,11 @@ public class ServerVerwaltung {
    * @return
    */
   public boolean sLogin(GameManager g){
+    int n=0;                   //n: wie viele angemeldete Spieler
+    boolean s1=false;          //s1,s2,b : wlecvhe rolle ist schon vergeben (s:Spieler b:Boss)
+    boolean s2=false;
+    boolean b=false;
+    double z=Math.random();
 
     if (n==0&&z<=0.333333) {
       spielerIstBoss(g);
