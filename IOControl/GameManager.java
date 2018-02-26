@@ -268,7 +268,12 @@ public class GameManager{
     public void cDestroyprojectile(){
         //an Grafik
     }
-    
+    /**
+     * Alle Daten werden an die Grafik �bertragen
+     */
+    public static void cUpdateG(){
+        //alle daten �bergeben
+    }
     /**
      *
      */
