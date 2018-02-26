@@ -20,12 +20,20 @@ public class GameManager{
      *
      * */
     private UUID id;
-    private int attackMode, numberIdSelf, numberIDother1, numberIDother2,mana , health, cooldown,jumpheight, movementspeed, playerwidth, playerheight, hbAnzahl;
+    private int attackMode, numberIdSelf, numberIDother1, numberIDother2,mana, cooldown,jumpheight, movementspeed, playerwidth, playerheight, hbAnzahl;
     private boolean isLookingRight, isSprinting, isBoss, isJumping;
     private Position pos;
     private Partikel pa;
     private Attack amNormal,amSpec1,amSpec2;
-    private Rectangle gr, pSelf, pOther1, pOther2;
+    private Rectangle gr;
+    private double health;
+    public Rectangle getpSelf() {
+        return pSelf;
+    }
+
+    private Rectangle pSelf;
+    private Rectangle pOther1;
+    private Rectangle pOther2;
     private Rectangle [] hbListe = new Rectangle[hbAnzahl];
     //private Map map;
 
@@ -71,7 +79,7 @@ public class GameManager{
                 cUpdateG();
                 intersect(hbListe, pSelf);
             }
-        }, 1000, 100);
+        }, 0, 100);
         server = null;
     }
     /**
@@ -179,7 +187,7 @@ public class GameManager{
     /**
      * �bergibt der Grafik, dass Schaden an einen Spieler ausgef�hrt wurde
      */
-    public void cHit() {
+    public void cHit(int damage) {
         //todo
         //damage methode an client
         //leben umsetzen etc.
@@ -306,10 +314,10 @@ public class GameManager{
 
     }
 
-    public void cSetHealth( int h){
+    public void cSetHealth( double h){
         this.health = h;
     }
-    public int cGetHealth(){
+    public double cGetHealth(){
         return health;
 
     }

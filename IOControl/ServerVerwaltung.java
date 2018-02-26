@@ -22,8 +22,7 @@ public class ServerVerwaltung {
   private Attack amP1, amP2, amP3;
   
   public ServerVerwaltung(){
-	  
-	  
+
 	  
   }
   
@@ -33,7 +32,11 @@ public class ServerVerwaltung {
     for(int i = 0; i <= spielerListe.length; i++){
       GameManager local = spielerListe[i];
       spielerListe[i].cAttackg(y);
-      
+      if(am.getDamageBox().intersect(spielerListe[i].getpSelf())){
+        spielerListe[i].cHit(am.getDamage());
+        //TODO Klappt noch nicht
+        }
+
       //int y = sGetNumberID(id);
       //local.cAttackg(y);
       //TODO hit usw. muss man noch einfügen
@@ -62,6 +65,12 @@ public class ServerVerwaltung {
    * Initiert das Spiel
    */
   public void sStartGame(){
+      Timer timer = new Timer();
+      timer.schedule(new TimerTask() {
+          public void run() {
+
+          }
+      }, 0, 100);
     
   }
   /**
@@ -333,28 +342,15 @@ public class ServerVerwaltung {
     
   }
   
-  public void sUpdateHealth(){
-	  for(int i = 0; i <= spielerListe.length; i++){
-	      GameManager local = spielerListe[i];
-	      if(i == 0){
-	    	  if(h1 < 100){
-	    	  h1 =(h1 + 0.01* regspeed1);
-	    	  local.cSetHealth((int) h1);
-	    	  }
-	      }else if(i == 1){
-	    	  if(h1 < 100){
-	    	  h2 =(h2 + 0.01* regspeed2);
-	    	  local.cSetHealth((int) h2);
-	    	  }
-	      }else if(i == 2){
-	    	  if(h1 < 100){
-	    	  h3 =(h3 + 0.01* regspeed3);
-	    	  local.cSetHealth((int) h3);
-	    	  }
-	      }
-	  }
-	  
-	  
+  public void sUpdateHealth() {
+      for (int i = 0; i <= spielerListe.length; i++) {
+          GameManager local = spielerListe[i];
+          if (local.cGetHealth() < 100) {
+              local.cSetHealth(local.cGetHealth() + 0.01 * regspeed1);
+          }
+
+
+      }
   }
-  
+
 }
