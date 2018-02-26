@@ -14,7 +14,7 @@ public class ServerVerwaltung {
   private boolean s1=false;          //s1,s2,b : welche rolle ist schon vergeben, wird beim login benÃ¶tigt (s:Spieler b:Boss)
   private boolean s2=false;
   private boolean b=false;
-  int n = 0   			     // n: Anzahl der eingeloggten Spieler
+  int n = 0;   			     // n: Anzahl der eingeloggten Spieler
   GameManager spieler1=new GameManager();
   GameManager spieler2=new GameManager();
   GameManager boss=new GameManager();
