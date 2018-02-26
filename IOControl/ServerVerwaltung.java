@@ -19,7 +19,8 @@ public class ServerVerwaltung {
   GameManager spieler2=new GameManager();
   GameManager boss=new GameManager();
   private Attack amP1, amP2, amP3;
-  
+  long last_time = System.nanoTime();
+  private double dt;
   public ServerVerwaltung(){
 
 	  
@@ -63,13 +64,16 @@ public class ServerVerwaltung {
       Timer timer = new Timer();
       timer.schedule(new TimerTask() {
           public void run() {
+              long time = System.nanoTime();
+              dt = (double)((time - last_time));
+              last_time = time;
               sUpdateHealth();
+              sUpdateCooldown();
+              sUpdateMana();
               for(int i = 0; i <= spielerListe.length; i++) {
                   GameManager local = spielerListe[i];
                   if (local.getpSelf().isAttacking()){ sAttack(local.cGetUUID(),local.getAmall());}
-
               }
-
           }
       }, 0, 100);
     
@@ -282,11 +286,30 @@ public class ServerVerwaltung {
       for (int i = 0; i <= spielerListe.length; i++) {
           GameManager local = spielerListe[i];
           if (local.getpSelf().getHealth() < 100) {
-              local.getpSelf().setHealth(local.getpSelf().getHealth() + 0.01 * local.getpSelf().getRegSpeed());
+              local.getpSelf().setHealth(local.getpSelf().getHealth() + dt/1000000000 *0.01* local.getpSelf().getRegSpeed());
           }
-
-
       }
   }
+  public void sUpdateCooldown() {
+      for (int i = 0; i <= spielerListe.length; i++) {
+          GameManager local = spielerListe[i];
+          if(local.getpSelf().getAmSpec1().getCooldown()>0){
+            local.getpSelf().getAmSpec1().setCooldown(local.getpSelf().getAmSpec1().getCooldown()-dt/1000000000);
+          }
+          else {local.getpSelf().getAmSpec1().setCooldown(0);}
+          if(local.getpSelf().getAmSpec2().getCooldown()>0){
+              local.getpSelf().getAmSpec2().setCooldown(local.getpSelf().getAmSpec2().getCooldown()-dt/1000000000);
+          }
+          else {local.getpSelf().getAmSpec2().setCooldown(0);}
+      }
+  }
+    public void sUpdateMana() {
+        for (int i = 0; i <= spielerListe.length; i++) {
+            GameManager local = spielerListe[i];
+            if (local.getpSelf().getMana() < 100) {
+                local.getpSelf().setMana(local.getpSelf().getMana() + dt/1000000000 *0.01* local.getpSelf().getRegSpeed());
+            }
+        }
+    }
 
 }

@@ -1,7 +1,7 @@
 public class Player {
-    private int numberID,attackMode, mana, cooldown,jumpheight, movementspeed;
+    private int numberID,attackMode,jumpheight, movementspeed;
     private Rectangle hb;
-    private double health, damage, regSpeed;
+    private double health, damage, regSpeed, mana;
     private boolean isJumping,isHitted, isAttacking, isLookingRight, isSprinting, isBoss;
     private Attack amNormal,amSpec1,amSpec2;
     private Partikel pa;
@@ -96,20 +96,12 @@ public class Player {
         this.attackMode = attackMode;
     }
 
-    public int getMana() {
+    public double getMana() {
         return mana;
     }
 
-    public void setMana(int mana) {
+    public void setMana(double mana) {
         this.mana = mana;
-    }
-
-    public int getCooldown() {
-        return cooldown;
-    }
-
-    public void setCooldown(int cooldown) {
-        this.cooldown = cooldown;
     }
 
     public int getJumpheight() {

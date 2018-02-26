@@ -45,7 +45,6 @@ public class GameManager{
         pSelf.setAttackMode(1);
         pSelf.setMana(0);
         pSelf.setHealth(0);
-        pSelf.setCooldown(0);
         pSelf.setJumpheight(100);
         pSelf.setMovementspeed(100);
         pSelf.setLookingRight(false);
@@ -160,20 +159,23 @@ public class GameManager{
      * F�hrt die Methode sAttack(ID, attackMode) beim Server aus.
      */
     public void cAttack(Attack am) {
-        Position clone = new Position(pSelf.getHb().getLeft(), pSelf.getHb().getTop());
-       if(pSelf.isLookingRight()){
-           clone.setXPos(pSelf.getHb().getRight());
-           clone.setYPos(pSelf.getHb().getTop());
-       }else{
-           clone.setXPos(pSelf.getHb().getLeft()-am.getDamageBox().getWidth());
-           clone.setYPos(pSelf.getHb().getTop());
-       }
-        am.setPosition(clone);
-        amall = am;
-        pSelf.setAttacking(true);
-        //TODO an grafik spieler attakiert senden
+        if(pSelf.getMana()>=am.getCost()&&am.getCooldown()==0) {
 
+            Position clone = new Position(pSelf.getHb().getLeft(), pSelf.getHb().getTop());
+            if (pSelf.isLookingRight()) {
+                clone.setXPos(pSelf.getHb().getRight());
+                clone.setYPos(pSelf.getHb().getTop());
+            } else {
+                clone.setXPos(pSelf.getHb().getLeft() - am.getDamageBox().getWidth());
+                clone.setYPos(pSelf.getHb().getTop());
+            }
+            am.setPosition(clone);
+            amall = am;
+            pSelf.setAttacking(true);
+            pSelf.setMana(pSelf.getMana()-am.getCost());
+            //TODO an grafik spieler attakiert senden
 
+        }
     }
     /**
      * �bergibt der Grafik, dass Schaden an einen Spieler ausgef�hrt wurde
@@ -267,7 +269,7 @@ public class GameManager{
      *
      */
     public CUpdate cGetUpdateS(){
-        CUpdate r = new CUpdate(id, pSelf.getAttackMode(),pSelf.getJumpheight(),pSelf.getMovementspeed(),pSelf.isLookingRight(),pSelf.getPartikel().isJumping(),pSelf.isAttacking(),pSelf.getHb(), amall);
+        CUpdate r = new CUpdate(id,amall,pSelf);
         pSelf.setAttacking(false);
         return r;
 
