@@ -84,22 +84,12 @@ public class ServerVerwaltung {
    * @return
    */
   public boolean sLogin(GameManager g){
+    int n=0;                   //n: wie viele angemeldete Spieler
+    boolean s1=false;          //s1,s2,b : wlecvhe rolle ist schon vergeben (s:Spieler b:Boss)
+    boolean s2=false;
+    boolean b=false;
+    double z=Math.random();
 
-    //login der Spieler mit Zufallsauswahl ob der Spieler ein Spieler oder der Boss wird
-    int n=0;                   //n: wie viele angemeldete Spieler
-    boolean s1=false;          //s1,s2,b : wlecvhe rolle ist schon vergeben (s:Spieler b:Boss)
-    boolean s2=false;
-    boolean b=false;
-    double z=Math.random();
-    
-    public boolean sLogin(GameManager g){
-    //login der Spieler mit Zufallsauswahl ob der Spieler ein Spieler oder der Boss wird
-    int n=0;                   //n: wie viele angemeldete Spieler
-    boolean s1=false;          //s1,s2,b : wlecvhe rolle ist schon vergeben (s:Spieler b:Boss)
-    boolean s2=false;
-    boolean b=false;
-    double z=Math.random();
-    
     if (n==0&&z<=0.333333) {
       spielerIstBoss(g);
     } // end of if
@@ -158,59 +148,6 @@ public class ServerVerwaltung {
     } // end of if
       
    return(true) ;
-  }
-    
-    if (n==0&&z<=0.333333) {
-      spielerIstBoss(g);
-    } // end of if
-    else if (n==0&&z>0.333333&&z<=0.666666) {
-      spielerIst1(g);
-    } // end of if
-    else if (n==0&&z>0.666666) {
-      spielerIst2(g);
-    } // end of if
-
-    else if (n==1&&b&&z<=0.5) {
-      spielerIst1(g);
-    } // end of if
-    else if (n==1&&s1&&z<=0.5) {
-      spielerIstBoss(g);
-    } // end of if
-    else if (n==1&&s2&&z<=0.5) {
-      spielerIstBoss(g);
-    } // end of if
-    
-    else if (n==1&&b&&z>0.5) {
-      spielerIst2(g);
-    } // end of if
-    else if (n==1&&s1&&z>0.5) {
-      spielerIst2(g);
-    } // end of if
-    else if (n==1&&s2&&z>0.5) {
-      spielerIst1(g);
-    } // end of if
-
-    else if (n==2&&s1&&s2) {
-      spielerIstBoss(g);
-    } // end of if
-    else if (n==2&&b&&s1) {
-      spielerIst2(g);
-    } // end of if
-    else if (n==2&&b&&s2) {
-      spielerIst1(g);
-    } // end of if
-
-    if (n==3) {
-      double aktZeit=System.currentTimeMillis();
-      String s="Alle Spieler eingeloggt! Start in 15s!";
-      spieler1.zeigen(s);
-      spieler2.zeigen(s);
-      boss.zeigen(s);
-      Thread.sleep(15000);
-      //Spielstart
-      for (int j; j<spielerListe.length; j++){
-        spielerListe[j].spielstart;
-    } // end of if
   }
   
  /* spielerIstBoss,spielerIst1,spielerIst2 werden beim Login aufgerufen,
