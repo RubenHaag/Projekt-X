@@ -151,7 +151,8 @@ public class ServerVerwaltung {
   }
   
  /* spielerIstBoss,spielerIst1,spielerIst2 werden beim Login aufgerufen,
- *  getrennt fÃ¼r bessere Ãœbersichtlichkeit
+ *  getrennt für bessere Übersichtlichkeit
+ * @param Gamemanager, der die Login funktion aufgerufen hat und sich gerade einloggt
  */
   private void spielerIstBoss(GameManager g){// Das ist ein Konstruktor.. soll das ne Methode sein?
     spielerListe[0]=g;
@@ -187,7 +188,8 @@ public class ServerVerwaltung {
 
   /**
    * Methode die vom Client aufgerufen wird  um den austritt aus der Session zu signalisieren
-   * @param gameManager Client
+   * @param gameManager Client, der sich ausgeloggt hat
+   * allen spielern wird gesagt, wer sich ausgeloggt hat, danach kehren alle Spieler zum HHauptbildschirm zurück
    */
   public void sLogout(GameManager gameManager) {
     String s="";
