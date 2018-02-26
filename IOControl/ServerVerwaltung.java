@@ -2,7 +2,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
 import java.lang.Thread;
-import java.util.concurrent.ExecutionException;
 
 /**
  * 
@@ -36,11 +35,18 @@ public class ServerVerwaltung {
   public void sAttack(UUID id,Attack am){
     //überprüfen ob möglich
     int y = sGetNumberID(id);
+      spielerListe[y].getpSelf().setMana(spielerListe[y].getpSelf().getMana()-am.getCost());
+      if(am== spielerListe[y].getpSelf().getAmSpec1()) {
+          spielerListe[y].getpSelf().getAmSpec1().resetCooldown();
+      }
+      if(am== spielerListe[y].getpSelf().getAmSpec2()) {
+          spielerListe[y].getpSelf().getAmSpec2().resetCooldown();
+      }
     for(int i = 0; i <= spielerListe.length; i++){
       GameManager local = spielerListe[i];
       if(am.getDamageBox().intersect(local.getpSelf().getHb())){
         local.getpSelf().setHitted(true);
-        local.getpSelf().setHealth(local.getpSelf().getHealth()-spielerListe[y].getAmall().getDamage());
+        local.getpSelf().setHealth(local.getpSelf().getHealth()-spielerListe[y].getAmAllg().getDamage());
         if(local.getpSelf().getHealth()<=0){
             local.getpSelf().setDead(true);
             if (local.getpSelf().isBoss()){
@@ -52,18 +58,14 @@ public class ServerVerwaltung {
             }
             deathcounter++;
         }
-        //TODO Klappt noch nicht
+        //TODO noch nie getetstet
         }
-
-      //int y = sGetNumberID(id);
-      //local.cAttackg(y);
-      //TODO hit usw. muss man noch einfügen
     }
   }
   /**
-   * ÃœberprÃ¼ft die UUID mit der der Clients und liefert die interne ID zurÃ¼ck
+   * Ueberprueft die UUID mit der der Clients und liefert die interne ID zurueck
    * @param id UUID
-   * @return Interne ID
+   * @return NumberID
    */
   public int sGetNumberID(UUID id){
     int x = 5;//absichtlich falscher Int
@@ -90,7 +92,7 @@ public class ServerVerwaltung {
               sUpdateMana();
               for(int i = 0; i <= spielerListe.length; i++) {
                   GameManager local = spielerListe[i];
-                  if (local.getpSelf().isAttacking()){ sAttack(local.cGetUUID(),local.getAmall());}
+                  if (local.getpSelf().isAttacking()){ sAttack(local.cGetUUID(),local.getAmAllg());}
               }
           }
       }, 0, 100);
@@ -226,7 +228,7 @@ public class ServerVerwaltung {
     spielerListe[2].logout(s);
   }
   /**
-   * Bewegt die Spieler
+   * Wird voraussichtlich weggelassen
    */
   public void sMove() {
     //prÃ¼ft ob mÃ¶glich
@@ -234,12 +236,20 @@ public class ServerVerwaltung {
   }
   /**
    * generelle Update Methode
-
    */
-  public void sUpdate(){
-    
+  public SUpdate sGetUpdateC(){
+    SUpdate r = new SUpdate(spielerListe[0].getpSelf(),spielerListe[1].getpSelf(),spielerListe[2].getpSelf(), bosswin,endGame);
+    return r;
   }
-  
+  public void sSetUpdateC(CUpdate update){
+      int y = sGetNumberID(update.getId());
+      spielerListe[y].getpSelf().getHb().setPos(update.getPlayer().getHb().getPos());
+      spielerListe[y].setAmAllg(update.getAmAllg());
+      spielerListe[y].getpSelf().setJumping(update.getPlayer().isJumping());
+      spielerListe[y].getpSelf().setLookingRight(update.getPlayer().isLookingRight());
+      spielerListe[y].getpSelf().setAttacking(update.getPlayer().isAttacking());
+      spielerListe[y].getpSelf().setSprinting(update.getPlayer().isSprinting());
+  }
   public void sUpdateHealth() {
       for (int i = 0; i <= spielerListe.length; i++) {
           GameManager local = spielerListe[i];

@@ -3,12 +3,12 @@ import java.util.UUID;
 public class CUpdate {
 
     private UUID id;
-    private  Attack amall;
+    private  Attack amAllg;
     private Player player;
 
-    public CUpdate(UUID id, Attack amall, Player player) {
+    public CUpdate(UUID id, Attack amAllg, Player player) {
         this.id = id;
-        this.amall = amall;
+        this.amAllg = amAllg;
         this.player = player;
     }
 
@@ -20,12 +20,12 @@ public class CUpdate {
         this.id = id;
     }
 
-    public Attack getAmall() {
-        return amall;
+    public Attack getAmAllg() {
+        return amAllg;
     }
 
-    public void setAmall(Attack amall) {
-        this.amall = amall;
+    public void setAmAllg(Attack amAllg) {
+        this.amAllg = amAllg;
     }
 
     public Player getPlayer() {

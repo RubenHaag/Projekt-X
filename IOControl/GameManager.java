@@ -24,7 +24,7 @@ public class GameManager{
     private boolean endGame, bosswin;
     private UUID id;
     private int hbAnzahl;
-    private Attack amall;
+    private Attack amAllg;
     private Player pSelf;
     private Player pOther1;
     private Player pOther2;
@@ -83,8 +83,11 @@ public class GameManager{
         return pSelf;
     }
 
-    public Attack getAmall() {
-        return amall;
+    public Attack getAmAllg() {
+        return amAllg;
+    }
+    public void setAmAllg(Attack amAllg) {
+        this.amAllg = amAllg;
     }
     /**
      * Setzt den Server mit dem der Client kommuniziert
@@ -155,7 +158,6 @@ public class GameManager{
         }else if (!pSelf.isLookingRight()) {
             pa.addxVel(-pSelf.getMovementspeed());
         }
-        //System.out.println("move - right?" + isLookingRight+ " - Sprint?" + isSprinting);
     }
     public void cJumpSelf(){
        pa.addyVel(pSelf.getJumpheight());
@@ -163,11 +165,6 @@ public class GameManager{
     public void cJumpOtherG(Player p) {
         //TODO sage grafik das p springt
     }
-    /*
-  public void cMoveOther(GameManager other1, GameManager other2){
-    
-  }
-  */
     /**
      * F�hrt die Methode sAttack(ID, attackMode) beim Server aus.
      */
@@ -183,9 +180,8 @@ public class GameManager{
                 clone.setYPos(pSelf.getHb().getTop());
             }
             am.setPosition(clone);
-            amall = am;
+            amAllg = am;
             pSelf.setAttacking(true);
-            pSelf.setMana(pSelf.getMana()-am.getCost());
             //TODO an grafik spieler attakiert senden
 
         }
@@ -240,8 +236,8 @@ public class GameManager{
      * @param i ID des sterbenden Spielers
      */
     public void cSterben(int i) {
-        if(sterbehilfe==0) {
-            sterbehilfe++;
+        if(sterbeHilfe==0) {
+            sterbeHilfe++;
             if (i == 0) {
                 try {
                     pa.wait();
@@ -272,22 +268,21 @@ public class GameManager{
     public void cDestroyprojectile(){
         //an Grafik
     }
-    /**
-     * Alle Daten werden an die Grafik �bertragen
-     */
-    public static void cUpdateG(){
-        //alle daten �bergeben
-    }
+    
     /**
      *
      */
     public CUpdate cGetUpdateS(){
-        CUpdate r = new CUpdate(id,amall,pSelf);
+        CUpdate r = new CUpdate(id, amAllg,pSelf);
         pSelf.setAttacking(false);
         return r;
 
     }
+    public void cSetUpdateS(SUpdate update){
+        //TODO fehlt!!!
+    }
     //Update Nocheinmal mit anderen Parametern
+    /*
     /**
      * �bergibt Ort wo der Spieler erschaffen werden soll.
      * Fehlt Differenzierung zwischen den Spielern
@@ -303,6 +298,7 @@ public class GameManager{
      * @param countdown Countdown bis Spielbeginn
      */
     public void startCountdown(int countdown) {
+        //TODO fehlt!!!
         //an grafik und Preparingphase initialisieren
     }
     /**
@@ -315,6 +311,7 @@ public class GameManager{
      * Setzt den/die Character der Spieler
      */
     public void cSetCharakter() {
+        //TODO fehlt!!!
 
     }
 
