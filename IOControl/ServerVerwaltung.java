@@ -2,6 +2,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
 import java.lang.Thread;
+import java.util.concurrent.ExecutionException;
+
 /**
  * 
  * @author Lukas Hofmann, Patrick Waltermann , Max Schulte
@@ -11,6 +13,8 @@ public class ServerVerwaltung {
   private GameManager[] spielerListe = new GameManager[3];
   private int i = 0;
   private int k = 0;
+  private int deathcounter = 0;
+  private boolean bosswin, endGame;
   private boolean s1=false;          //s1,s2,b : welche rolle ist schon vergeben, wird beim login benÃ¶tigt (s:Spieler b:Boss)
   private boolean s2=false;
   private boolean b=false;
@@ -20,6 +24,9 @@ public class ServerVerwaltung {
   GameManager boss=new GameManager();
   private Attack amP1, amP2, amP3;
   long last_time = System.nanoTime();
+    /**
+     * dt ist die Deltatime
+     */
   private double dt;
   public ServerVerwaltung(){
 
@@ -34,6 +41,17 @@ public class ServerVerwaltung {
       if(am.getDamageBox().intersect(local.getpSelf().getHb())){
         local.getpSelf().setHitted(true);
         local.getpSelf().setHealth(local.getpSelf().getHealth()-spielerListe[y].getAmall().getDamage());
+        if(local.getpSelf().getHealth()<=0){
+            local.getpSelf().setDead(true);
+            if (local.getpSelf().isBoss()){
+                endGame = true;
+                bosswin = true;
+            }else if (deathcounter ==1){
+                endGame = true;
+                bosswin = false;
+            }
+            deathcounter++;
+        }
         //TODO Klappt noch nicht
         }
 
@@ -85,7 +103,7 @@ public class ServerVerwaltung {
    */
   public boolean sLogin(GameManager g){
     int n=0;                   //n: wie viele angemeldete Spieler
-    boolean s1=false;          //s1,s2,b : wlecvhe rolle ist schon vergeben (s:Spieler b:Boss)
+    boolean s1=false;          //s1,s2,b : wlecvhe rolle ist schon vergeben (s:Spieler b:Boss); weitere Anmerkung ich glaube, du kannst auch Attribute mit API versehen. Zudem ist s1,s2,boss für jeden client automatisch false.
     boolean s2=false;
     boolean b=false;
     double z=Math.random();

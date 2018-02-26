@@ -1,10 +1,10 @@
 public class Player {
+
     private int numberID,attackMode,jumpheight, movementspeed;
     private Rectangle hb;
     private double health, damage, regSpeed, mana;
-    private boolean isJumping,isHitted, isAttacking, isLookingRight, isSprinting, isBoss;
+    private boolean isJumping,isHitted, isAttacking, isLookingRight, isSprinting, isBoss, isDead;
     private Attack amNormal,amSpec1,amSpec2;
-    private Partikel pa;
     private Rectangle gr;
 
 
@@ -144,19 +144,27 @@ public class Player {
         this.amSpec2 = amSpec2;
     }
 
-    public Partikel getPartikel() {
-        return pa;
-    }
-
-    public void setPartikel(Partikel pa) {
-        this.pa = pa;
-    }
-
     public Rectangle getGr() {
         return gr;
     }
 
     public void setGr(Rectangle gr) {
         this.gr = gr;
+    }
+
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public void setDead(boolean dead) {
+        isDead = dead;
+    }
+
+    public boolean isJumping() {
+        return isJumping;
+    }
+
+    public void setJumping(boolean jumping) {
+        isJumping = jumping;
     }
 }
