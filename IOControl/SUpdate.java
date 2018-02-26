@@ -1,16 +1,33 @@
 public class SUpdate {
-    private boolean isHitted, isAttacking;
-    private double damage, health, mana, cooldown;
-    private Rectangle pOther1,pOther2;
+    private Player p1,p2,p3;
 
-    public SUpdate(boolean isHitted, boolean isAttacking, double damage, double health, double mana, double cooldown, Rectangle pOther1, Rectangle pOther2) {
-        this.isHitted = isHitted;
-        this.isAttacking = isAttacking;
-        this.damage = damage;
-        this.health = health;
-        this.mana = mana;
-        this.cooldown = cooldown;
-        this.pOther1 = pOther1;
-        this.pOther2 = pOther2;
+    public SUpdate(Player p1, Player p2, Player p3) {
+        this.p1 = p1;
+        this.p2 = p2;
+        this.p3 = p3;
+    }
+
+    public Player getP1() {
+        return p1;
+    }
+
+    public void setP1(Player p1) {
+        this.p1 = p1;
+    }
+
+    public Player getP2() {
+        return p2;
+    }
+
+    public void setP2(Player p2) {
+        this.p2 = p2;
+    }
+
+    public Player getP3() {
+        return p3;
+    }
+
+    public void setP3(Player p3) {
+        this.p3 = p3;
     }
 }

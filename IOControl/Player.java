@@ -1,5 +1,5 @@
 public class Player {
-    private int id,attackMode, mana, cooldown,jumpheight, movementspeed;
+    private int numberID,attackMode, mana, cooldown,jumpheight, movementspeed;
     private Rectangle hb;
     private double health, damage, regSpeed;
     private boolean isJumping,isHitted, isAttacking, isLookingRight, isSprinting, isBoss;
@@ -8,12 +8,12 @@ public class Player {
     private Rectangle gr;
 
 
-    public int getId() {
-        return id;
+    public int getNumberID() {
+        return numberID;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setNumberID(int numberID) {
+        this.numberID = numberID;
     }
 
     public Rectangle getHb() {
@@ -46,14 +46,6 @@ public class Player {
 
     public void setRegSpeed(double regSpeed) {
         this.regSpeed = regSpeed;
-    }
-
-    public boolean isJumping() {
-        return isJumping;
-    }
-
-    public void setJumping(boolean jumping) {
-        isJumping = jumping;
     }
 
     public boolean isHitted() {

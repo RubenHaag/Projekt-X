@@ -51,7 +51,7 @@ public class GameManager{
         pSelf.setLookingRight(false);
         pSelf.setSprinting(false);
         pSelf.setBoss(false);
-        pSelf.setJumping(false);
+        pSelf.getPartikel().setJumping(false);
         pSelf.setPartikel(new Partikel(pSelf.getHb().getPos(), pSelf.getHb().getWidth(),pSelf.getGr()));
 
 
@@ -62,9 +62,9 @@ public class GameManager{
             public void run() {
                 cUpdateG();
                 intersect(hbListe, pSelf.getHb());
-                if(pSelf.isHitted()) {
-                    cHit(pSelf.getDamage());
-                }
+                if(pSelf.isHitted()) { cHit(pSelf.getDamage()); }
+                if(pOther1.getPartikel().isJumping()){cJumpOtherG(pOther1);}
+                if(pOther2.getPartikel().isJumping()){cJumpOtherG(pOther2);}
             }
         }, 0, 100);
         server = null;
@@ -121,7 +121,6 @@ public class GameManager{
      */
     public void inputMouse(MouseEvent m) {
         if(m.getButton()==1){
-            System.out.println("click");
             switch(pSelf.getAttackMode()){
                 case 1:
                     cAttack(pSelf.getAmNormal());
@@ -139,7 +138,6 @@ public class GameManager{
      * �bertr�gt die eigene Bewegung an den Server
      */
     public void cMoveSelf(){
-        System.out.println("bewegung");
         if (pSelf.isLookingRight()) {
             pSelf.getPartikel().addxVel(pSelf.getMovementspeed());
         }else if (!pSelf.isLookingRight()) {
@@ -149,13 +147,11 @@ public class GameManager{
     }
     public void cJumpSelf(){
         pSelf.getPartikel().addyVel(pSelf.getJumpheight());
-        pSelf.setJumping(true);
     }
-  /*
-  public void cJumpOther(GameManager other1, GameManager other2){
-    
-  }
-  
+    public void cJumpOtherG(Player p) {
+        //TODO sage grafik das p springt
+    }
+    /*
   public void cMoveOther(GameManager other1, GameManager other2){
     
   }
@@ -214,7 +210,7 @@ public class GameManager{
      */
     public void cSetBoss(boolean b, int k) {
         pSelf.setBoss(b);
-        pSelf.setId(k);
+        pSelf.setNumberID(k);
 
     }
     /**
@@ -230,7 +226,7 @@ public class GameManager{
      * @return eigene ID
      */
     public int cGetNumberID(){
-        return pSelf.getId();
+        return pSelf.getNumberID();
 
     }
     /**
@@ -246,8 +242,8 @@ public class GameManager{
      * @param id2 ID des zweiten anderen Spielers
      */
     public void cSetNumberIDother(int id1, int id2) {
-        pOther1.setId(id1);
-        pOther2.setId(id2);
+        pOther1.setNumberID(id1);
+        pOther2.setNumberID(id2);
     }
     /**
      * Methode um die Grafik �ber erschaffene Projectiles zu informieren
@@ -271,7 +267,7 @@ public class GameManager{
      *
      */
     public CUpdate cGetUpdateS(){
-        CUpdate r = new CUpdate(id, pSelf.getAttackMode(),pSelf.getJumpheight(),pSelf.getMovementspeed(),pSelf.isLookingRight(),pSelf.isJumping(),pSelf.isAttacking(),pSelf.getHb(), amall);
+        CUpdate r = new CUpdate(id, pSelf.getAttackMode(),pSelf.getJumpheight(),pSelf.getMovementspeed(),pSelf.isLookingRight(),pSelf.getPartikel().isJumping(),pSelf.isAttacking(),pSelf.getHb(), amall);
         pSelf.setAttacking(false);
         return r;
 
@@ -310,12 +306,12 @@ public class GameManager{
     public boolean intersect(Rectangle[] player, Rectangle damage) {
         for (Rectangle r : player) {
             if (!((damage.getRight() <= r.getLeft() || damage.getLeft() >= r.getRight()) && (damage.getBottom() >= r.getTop()))) {
-                pSelf.getPartikel().setGround(true);
+                pSelf.getPartikel().setJumping(false);
                 pSelf.getPartikel().updateGround(r);
                 return true;
             }
         }
-        pSelf.getPartikel().setGround(false);
+        pSelf.getPartikel().setJumping(true);
         return false;
     }
 

@@ -8,7 +8,7 @@ public class Partikel extends Thread{
   private double xVel, yVel, down, yVelw, fr1, fr2, fr, width; 
   private Rectangle gr;
   private Position pos;
-  private boolean ground = false;
+  private boolean isJumping;
   long last_time = System.nanoTime();
   /**
    * Stellt die grundlegende Fallbewegung ein
@@ -19,7 +19,6 @@ public class Partikel extends Thread{
       yVel = 0;
       yVelw = yVel;
       down = 600;
-      ground = false;
       fr1 = 80;
       fr2 = -fr1;
       gr = new Rectangle(new Position(0,0),1,1);
@@ -42,13 +41,6 @@ public class Partikel extends Thread{
     
   }
   /**
-   * Setzt ob das Objekt steht oder f�llt
-   * @param g Ob das Objekt steht oder nicht
-   */
-  public void setGround(boolean g){
-      ground = g;
-  }
-  /**
    * Thread der laufend den Standpunkt, Geschwindigkeit des OBjektes berechnet
    */
   public void run(){
@@ -66,7 +58,7 @@ public class Partikel extends Thread{
             
         }
       
-        if(ground == true){
+        if(!isJumping == true){
             yVel = yVelw;
             pos.setXPos(pos.getXPos()+dt / 1000000000* xVel);
             pos.setXPos(gr.getBottom()-width + 1);
@@ -123,5 +115,12 @@ public class Partikel extends Thread{
   public void updateGround(Rectangle gr){
       this.gr = gr;
   }
-  
+
+    public boolean isJumping() {
+        return isJumping;
+    }
+
+    public void setJumping(boolean jumping) {
+        isJumping = jumping;
+    }
 }

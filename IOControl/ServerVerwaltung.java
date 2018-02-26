@@ -52,10 +52,6 @@ public class ServerVerwaltung {
       if(local.cGetUUID() == id){
         return local.cGetNumberID();
       }
-      else{
-
-      }
-
     }
     return x;
   }
@@ -69,9 +65,8 @@ public class ServerVerwaltung {
               sUpdateHealth();
               for(int i = 0; i <= spielerListe.length; i++) {
                   GameManager local = spielerListe[i];
-                  if (local.getpSelf().isAttacking()){
-                      sAttack(local.cGetUUID(),local.getAmall());
-                  }
+                  if (local.getpSelf().isAttacking()){ sAttack(local.cGetUUID(),local.getAmall());}
+
               }
 
           }
@@ -325,12 +320,6 @@ public class ServerVerwaltung {
     spieler1.logout(s);
     spieler2.logout(s);
     boss.logout(s);
-  }
-  /**
-   * Berechnet den Jump der Spieler
-   */
-  public void sJump(){
-    //prÃ¼ft ob mÃ¶glich
   }
   /**
    * Bewegt die Spieler
