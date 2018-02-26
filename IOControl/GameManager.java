@@ -314,6 +314,27 @@ public class GameManager{
         pSelf.getPartikel().setJumping(true);
         return false;
     }
+    
+    
+  public void logout(String s){
+	  //zum Hauptbildschirm zurückkehren
+	  zeigen(s);
+  }
+  
+  public void zeigen(String s){
+	  //string an Grafik, vermutlich zu aufwendig
+  }
+  
+  public void spielstart(){
+	  //Map und andere Spieler zeigen / Spielgrafik starten / 
+  }
+  
+  public void auswahlSpieler(){
+	  //Spielerauswahl für Spieler oeffnen
+  }
+  public void auswahlBoss(){           
+	  //Spielerauswahl für Boss oeffnen
+  }
 
 
 
