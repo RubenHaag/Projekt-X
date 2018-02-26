@@ -317,7 +317,7 @@ public class GameManager{
         return false;
     }
   
- /*
+ /**
  * Einer der Spieler hat sich ausgeloggt oder das Spiel ist zu Ende
  * Der Spieler kehrt zum Hauptbildschirm zurück
  */
@@ -327,15 +327,15 @@ public class GameManager{
 	  zeigen(s);
   }
   
-  /* 
-  * @param String der auf dem Bildschirm angezeigt wird, um dem Spieler zu erklären was passiert ist
+  /**
+  * @param s String der auf dem Bildschirm angezeigt wird, um dem Spieler zu erklären was passiert ist
   * zum Beispiel welcher Spieler sich ausgeloggt hat oder wer gewonnen hat
   */  
   public void zeigen(String s){
 	  //string an Grafik, vermutlich zu aufwendig
   }
   
-  /*
+  /**
   * Spiel wird gestartet; Map, andere Spieler, andere Anzeigen etc. werden angezeigt 
   * und das Spiel beginnt
   */
@@ -344,7 +344,7 @@ public class GameManager{
   }
   
 	
-  /*
+  /**
   * Der Spieler ist ein normaler Spieler,
   * es wird die Charakterauswahl für Spielercharaktere geöffnet
   */
@@ -352,7 +352,7 @@ public class GameManager{
 	  //Spielerauswahl für Spieler oeffnen
   }
 	
-  /*
+  /**
   * Der Spieler ist der Boss Player
   * es wird die Charakterauswahl für den Bosscharakter geöffnen
   */

@@ -150,9 +150,10 @@ public class ServerVerwaltung {
    return(true) ;
   }
   
- /* spielerIstBoss,spielerIst1,spielerIst2 werden beim Login aufgerufen,
+ /**
+ *  spielerIstBoss,spielerIst1,spielerIst2 werden beim Login aufgerufen,
  *  getrennt für bessere Übersichtlichkeit
- * @param Gamemanager, der die Login funktion aufgerufen hat und sich gerade einloggt
+ * @param g Gamemanager, der die Login funktion aufgerufen hat und sich gerade einloggt
  */
   private void spielerIstBoss(GameManager g){// Das ist ein Konstruktor.. soll das ne Methode sein?
     spielerListe[0]=g;
