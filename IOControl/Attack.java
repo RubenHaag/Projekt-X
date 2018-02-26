@@ -1,23 +1,24 @@
 
-public class AttackMode {
+public class Attack {
 	private Rectangle damageBox;
 	private int damage;
-	
-	AttackMode(Rectangle damagebox, int damage) {
-		this.setDamagebox(damagebox);
-		this.setDamage(damage);
+
+	public Attack(Rectangle damageBox, int damage) {
+		this.damageBox = damageBox;
+		this.damage = damage;
 	}
-	private void setDamagebox(Rectangle damagebox) {
-		this.damageBox = damagebox;
-		
+
+	public void setDamageBox(Rectangle damageBox) {
+		this.damageBox = damageBox;
 	}
-	public Rectangle getDamagebox() {
+	public Rectangle getDamageBox() {
 		return damageBox;
 	}
 	public void setBoxBreiteHoehe(double width,double heigth) {
 		damageBox.setHeigth(heigth);
 		damageBox.setWidth(width);
 	}
+
 	public void setPosition(Position pos) {
 		damageBox.setPos(pos);
 	}
@@ -27,6 +28,6 @@ public class AttackMode {
 	public void setDamage(int damage) {
 		this.damage = damage;
 	}
-	
+
 
 }

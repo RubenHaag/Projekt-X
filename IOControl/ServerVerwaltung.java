@@ -19,7 +19,7 @@ public class ServerVerwaltung {
   GameManager spieler1=new GameManager();
   GameManager spieler2=new GameManager();
   GameManager boss=new GameManager();
-  private AttackMode am;
+  private Attack am;
   
   public ServerVerwaltung(){
 	  

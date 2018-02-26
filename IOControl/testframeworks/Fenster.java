@@ -1,8 +1,9 @@
+package testframeworks;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.awt.TextArea;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,17 +15,16 @@ import javax.swing.JTextArea;
 import javax.swing.Timer;
 
 
-public class Fenster extends JFrame implements KeyListener,
-ActionListener{
-	private int x = 0,y = 0, width = 700, height = 500, x1 = 150, y1 =150, speed = 5, w = 20, c= 50, b = 40;
+public class Fenster extends JFrame implements KeyListener, ActionListener {
+	private int x, y, width = 700, height = 500, x1 = 150, y1 =150, speed = 5, w = 20, c= 50, b = 40;
 	private int rx = 100, ry = 10, size = 105,r2x = 300,r2y= 200,widthDB = 50,heightDB = 50;
 	private Toolkit t;
 	private Rectangle r1, r2, r3, gr, pl, h1,db,r;
 	private boolean coll, coll1, ground, isLookingRight;
 	private int i= 0;
-	private Partikel pa = new Partikel(b, c, w, gr);
-	
-	
+	private PartikelAlt pa = new PartikelAlt(b, c, w, gr);
+
+
 	private static final long serialVersionUID = -3853732973302441381L;
 	JTextArea a;
 	Fenster(){
@@ -36,24 +36,24 @@ ActionListener{
 		setBounds(x,y, width,height);
 		pa.start();
 		Timer timer = new Timer(4, new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-            	Fenster.this.repaint();
-            	//pa.updateGround(gr);
-            	System.out.println(""+ ground);
-            }
-        });
+			public void actionPerformed(ActionEvent arg0) {
+				Fenster.this.repaint();
+				//pa.updateGround(gr);
+				System.out.println(""+ ground);
+			}
+		});
 		timer.start();
 
 	}
-	
+
 
 	private void onGround(boolean g){
 		pa.setGround(g);
-		
+
 	}
-	
+
 	private void initListeners() {
-		
+
 	}
 
 
@@ -73,24 +73,24 @@ ActionListener{
 		pl = new Rectangle(b, c, w, w);
 		h1 = new Rectangle(getWidth()*1/8,getHeight()- 180, getWidth()*1/4, 30);
 
-		
-	
+
+
 	}
 
 
 
 	public static void main(String[] args){ // MAIN IST DAAAA
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                createAndShowGUI();
-               
-            }
+			public void run() {
+				createAndShowGUI();
 
-			
-        });
-		
-       
-		
+			}
+
+
+		});
+
+
+
 	}
 
 
@@ -98,8 +98,7 @@ ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 
@@ -107,8 +106,8 @@ ActionListener{
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-	displayInfo(e, true);
-		
+		displayInfo(e, true);
+
 	}
 
 	public static void createAndShowGUI() {
@@ -116,15 +115,15 @@ ActionListener{
 		f1.initComponents();
 		f1.initListeners();
 		f1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		f1.setVisible(true);
-		
+
 	}
 
 	@Override
-    public void paint(Graphics g) 
-    {
-		
+	public void paint(Graphics g)
+	{
+
 		c = (int) pa.getyPos();
 		b = (int) pa.getxPos();
 		g.setColor(Color.GRAY);
@@ -139,7 +138,7 @@ ActionListener{
 		g.setColor(Color.MAGENTA);
 		//g.fillRect((int) pl.getMinX() - widthDB,(int) (pl.getMaxY() - heightDB), widthDB, heightDB);
 		g.setColor(Color.LIGHT_GRAY);
-		 //#portalgun
+		//#portalgun
 		if(pl.intersects(gr)){
 			if(pa.getYVel() >= 0 && (pl.getMaxY() + 10 < gr.getMinY() || pl.getMaxY() - 10 < gr.getMinY())) {
 				r = gr;
@@ -150,13 +149,13 @@ ActionListener{
 			//System.out.println(pl.getMaxY()+ " " + pl.getMinY());
 			if(pa.getYVel() >= 0 && (pl.getMaxY() + 10 < h1.getMinY() || pl.getMaxY() - 10 < h1.getMinY())) { //#luke
 				r =h1;
-				
+
 				ground = true;
 			}else{ground = false;}
 		}
 		else{
 			ground = false;
-			
+
 		}
 		pa.updateGround(r);
 		onGround(ground);
@@ -184,10 +183,10 @@ ActionListener{
 					}
         
         */
-    }
+	}
 	@Override
 	public void keyReleased(KeyEvent e) {
-		
+
 	}
 
 
@@ -197,7 +196,7 @@ ActionListener{
 	public void keyTyped(KeyEvent e) {
 		displayInfo(e, false);
 		collide();
-		
+
 	}
 
 
@@ -207,73 +206,73 @@ ActionListener{
 		}else{
 			coll = false;
 		}
-		
+
 	}
-	
-	
-		
-	
+
+
+
+
 
 	private void displayInfo(KeyEvent e, boolean p) {
 		char c = e.getKeyChar();
 		String keyString;
-		
+
 		if(p){
-		
-		if (c == 'w') {
+
+			if (c == 'w') {
             /*keyString = "vor";
             y1--;
             collide();
             repaint();
             */
-			if(ground){
-				ground = false;
-				onGround(ground);
-				pa.addyVel(500);
-			}
-			
-            
-        }else if (c == 's'){
+				if(ground){
+					ground = false;
+					onGround(ground);
+					pa.addyVel(500);
+				}
+
+
+			}else if (c == 's'){
         	/*
         	keyString = "zurück";
         	y1++;
             collide();
         	repaint();*/
-        } else if (c == 'a'){
+			} else if (c == 'a'){
         	/*keyString = "links";
         	x1--;
             collide();
         	repaint();*/
-        	pa.addxVel(-100);
-        	isLookingRight = false;
-        }else if (c == 'd'){
+				pa.addxVel(-100);
+				isLookingRight = false;
+			}else if (c == 'd'){
         	/*
         	keyString = "rechts";
         	x1++;
             collide();
         	repaint();
         	*/
-        	
-        	pa.addxVel(100);
-        	isLookingRight = true;
-        } else {keyString = "" + c;}
-		
+
+				pa.addxVel(100);
+				isLookingRight = true;
+			} else {keyString = "" + c;}
+
 		}else{
 			keyString = "";
 		}
-		
+
 		//a.setText(keyString);
-		
-	
-	
-		}
+
+
+
+	}
 	public void attack() {
 		if(isLookingRight){
 			db = new Rectangle((int) pl.getMaxX(),(int) (pl.getMaxY() - heightDB), widthDB, heightDB);
-			
+
 		}else{
 			db = new Rectangle((int) pl.getMinX() - widthDB,(int) (pl.getMaxY() - heightDB), widthDB, heightDB);
-			}
+		}
 	}
 }
 	
