@@ -14,6 +14,7 @@ public class ServerVerwaltung {
   private boolean s1=false;          //s1,s2,b : welche rolle ist schon vergeben, wird beim login benÃ¶tigt (s:Spieler b:Boss)
   private boolean s2=false;
   private boolean b=false;
+  int n = 0   			     // n: Anzahl der eingeloggten Spieler
   GameManager spieler1=new GameManager();
   GameManager spieler2=new GameManager();
   GameManager boss=new GameManager();
@@ -101,118 +102,73 @@ public class ServerVerwaltung {
     boolean b=false;
     double z=Math.random();
     
-    /*
+    public boolean sLogin(GameManager g){
+    //login der Spieler mit Zufallsauswahl ob der Spieler ein Spieler oder der Boss wird
+    int n=0;                   //n: wie viele angemeldete Spieler
+    boolean s1=false;          //s1,s2,b : wlecvhe rolle ist schon vergeben (s:Spieler b:Boss)
+    boolean s2=false;
+    boolean b=false;
+    double z=Math.random();
+    
     if (n==0&&z<=0.333333) {
       spielerIstBoss(g);
-      /*spielerListe[0]=g;
-      g.cSetBoss(true,0);
-      n++;
-      b=true;
-      //spieler1.loginErfolgreich(true);
-      *
     } // end of if
     else if (n==0&&z>0.333333&&z<=0.666666) {
       spielerIst1(g);
-      /*spielerListe[1]=g;
-      g.cSetBoss(false,1);
-      n++;
-      s1=true;
-      //spieler2.loginErfolgreich(true);
-      *
     } // end of if
     else if (n==0&&z>0.666666) {
       spielerIst2(g);
-      /*spielerListe[2]=g;
-      g.cSetBoss(false,2);
-      n++;
-      s2=true;
-      //boss.loginErfolgreich(false);
-      *
     } // end of if
 
     else if (n==1&&b&&z<=0.5) {
       spielerIst1(g);
-      /*spielerListe[1]=g;
-      g.cSetBoss(false,1);
-      n++;
-      s1=true;
-      //spieler1.loginErfolgreich(true);
-      *
     } // end of if
     else if (n==1&&s1&&z<=0.5) {
-      spielerIst2(g);
-      /*spielerListe[0]=g;
-      g.cSetBoss(true,0);
-      n++;
-      b=true;
-      //spieler2.loginErfolgreich(true);
-      *
+      spielerIstBoss(g);
     } // end of if
     else if (n==1&&s2&&z<=0.5) {
-      spielerIstBoss(g)
-      /*spielerListe[0]=g;
-      g.cSetBoss(true,0);
-      n++;
-      b=true;
-      //boss.loginErfolgreich(true);
-      *
+      spielerIstBoss(g);
     } // end of if
+    
     else if (n==1&&b&&z>0.5) {
       spielerIst2(g);
-      /*spielerListe[2]=g;
-      g.cSetBoss(false,2);n++;
-      n++;
-      s2=true;
-      //spieler2.loginErfolgreich(true);
-      *
     } // end of if
     else if (n==1&&s1&&z>0.5) {
       spielerIst2(g);
-      /*spielerListe[2]=g;
-      g.cSetBoss(false,2);
-      n++;
-      s2=true;
-      //spieler2.loginErfolgreich(true);
-      *
     } // end of if
     else if (n==1&&s2&&z>0.5) {
       spielerIst1(g);
-      /*spielerListe[1]=g;
-      g.cSetBoss(false,1);
-      n++;
-      s1=true;
-      //spieler1.loginErfolgreich(true);
-      *
     } // end of if
 
     else if (n==2&&s1&&s2) {
       spielerIstBoss(g);
-      /*spielerListe[0]=g;
-      g.cSetBoss(true,0);
-      n++;
-      b=true;
-      //boss.loginErfolgreich(false);
-      *
     } // end of if
     else if (n==2&&b&&s1) {
       spielerIst2(g);
-      /*spielerListe[2]=g;
-      g.cSetBoss(false,2);
-      n++;
-      s2=true;
-      //spieler2.loginErfolgreich(true);
-      *
     } // end of if
     else if (n==2&&b&&s2) {
-      spielerIst1(g)
-      /*spielerListe[1]=g;
-      g.cSetBoss(false,1);
-      n++;
-      s1=true;
-      spieler1.loginErfolgreich(true);
-      */
+      spielerIst1(g);
     } // end of if
-    */
+
+    if (n==3) {
+      //double aktZeit=System.currentTimeMillis();
+      String s="Alle Spieler eingeloggt! Start in 15s!";
+      for (int l=0; l<spielerListe.length; l++ ){
+      spielerListe[l].zeigen(s);
+        spielerListe[l].zeigen(s);
+      }
+      try{
+        Thread.sleep(15000);
+      }catch (InterruptedException e){}
+      //Spielstart
+      
+      for (int j=0; j<spielerListe.length; j++){
+        spielerListe[j].spielstart();
+      }
+    } // end of if
+      
+   return(true) ;
+  }
     
     if (n==0&&z<=0.333333) {
       spielerIstBoss(g);
@@ -308,18 +264,18 @@ public class ServerVerwaltung {
    */
   public void sLogout(GameManager gameManager) {
     String s="";
-    if (uuid==spieler1.uuid) {
+    if (gameManager.cGetUUID()==spielerListe[1].cGetUUID()) {
       s="Spieler 1";
     } // end of if
-    if (uuid==spieler2.uuid) {
+    if (gameManager.cGetUUID()==spielerListe[2].cGetUUID()) {
       s="Spieler 2";
     } // end of if
-    if (uuid==boss.uuid) {
+    if (gameManager.cGetUUID()==spielerListe[0].cGetUUID()) {
       s="Boss";
     } // end of if
-    spieler1.logout(s);
-    spieler2.logout(s);
-    boss.logout(s);
+    spielerListe[0].logout(s);
+    spielerListe[1].logout(s);
+    spielerListe[2].logout(s);
   }
   /**
    * Bewegt die Spieler
