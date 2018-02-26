@@ -11,8 +11,6 @@ public class ServerVerwaltung {
   private GameManager[] spielerListe = new GameManager[3];
   private int i = 0;
   private int k = 0;
-  private double h1, h2, h3;
-  private int regspeed1, regspeed2, regspeed3;
   private boolean s1=false;          //s1,s2,b : welche rolle ist schon vergeben, wird beim login benÃ¶tigt (s:Spieler b:Boss)
   private boolean s2=false;
   private boolean b=false;
@@ -31,9 +29,9 @@ public class ServerVerwaltung {
     int y = sGetNumberID(id);
     for(int i = 0; i <= spielerListe.length; i++){
       GameManager local = spielerListe[i];
-      spielerListe[i].cAttackg(y);
-      if(am.getDamageBox().intersect(spielerListe[i].getpSelf())){
-        spielerListe[i].cHit(am.getDamage());
+      if(am.getDamageBox().intersect(local.getpSelf().getHb())){
+        local.getpSelf().setHitted(true);
+        local.getpSelf().setHealth(local.getpSelf().getHealth()-spielerListe[y].getAmall().getDamage());
         //TODO Klappt noch nicht
         }
 
@@ -68,6 +66,13 @@ public class ServerVerwaltung {
       Timer timer = new Timer();
       timer.schedule(new TimerTask() {
           public void run() {
+              sUpdateHealth();
+              for(int i = 0; i <= spielerListe.length; i++) {
+                  GameManager local = spielerListe[i];
+                  if (local.getpSelf().isAttacking()){
+                      sAttack(local.cGetUUID(),local.getAmall());
+                  }
+              }
 
           }
       }, 0, 100);
@@ -338,15 +343,15 @@ public class ServerVerwaltung {
    * generelle Update Methode
    * @param c Reduziertes Spielerobjekt
    */
-  public void sUpdate(ReducedPlayer c){
+  public void sUpdate(){
     
   }
   
   public void sUpdateHealth() {
       for (int i = 0; i <= spielerListe.length; i++) {
           GameManager local = spielerListe[i];
-          if (local.cGetHealth() < 100) {
-              local.cSetHealth(local.cGetHealth() + 0.01 * regspeed1);
+          if (local.getpSelf().getHealth() < 100) {
+              local.getpSelf().setHealth(local.getpSelf().getHealth() + 0.01 * local.getpSelf().getRegSpeed());
           }
 
 

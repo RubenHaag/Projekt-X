@@ -1,7 +1,7 @@
 
 public class Attack {
 	private Rectangle damageBox;
-	private int damage;
+	private double damage;
 
 	public Attack(Rectangle damageBox, int damage) {
 		this.damageBox = damageBox;
@@ -22,10 +22,10 @@ public class Attack {
 	public void setPosition(Position pos) {
 		damageBox.setPos(pos);
 	}
-	public int getDamage() {
+	public double getDamage() {
 		return damage;
 	}
-	public void setDamage(int damage) {
+	public void setDamage(double damage) {
 		this.damage = damage;
 	}
 

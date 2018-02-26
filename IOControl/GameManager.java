@@ -20,24 +20,12 @@ public class GameManager{
      *
      * */
     private UUID id;
-    private int attackMode, numberIdSelf, numberIDother1, numberIDother2,mana, cooldown,jumpheight, movementspeed, playerwidth, playerheight, hbAnzahl;
-    private boolean isLookingRight, isSprinting, isBoss, isJumping;
-    private Position pos;
-    private Partikel pa;
-    private Attack amNormal,amSpec1,amSpec2;
-    private Rectangle gr;
-    private double health;
-    public Rectangle getpSelf() {
-        return pSelf;
-    }
-
-    private Rectangle pSelf;
-    private Rectangle pOther1;
-    private Rectangle pOther2;
+    private int hbAnzahl;
+    private Attack amall;
+    private Player pSelf;
+    private Player pOther1;
+    private Player pOther2;
     private Rectangle [] hbListe = new Rectangle[hbAnzahl];
-    //private Map map;
-
-
     private ServerVerwaltung server;
     /**
      *
@@ -54,21 +42,17 @@ public class GameManager{
      */
     public GameManager(){
 
-        this.attackMode = 0;
-        this.numberIdSelf = 0;
-        this.numberIDother1 = 0;
-        this.numberIDother2 = 0;
-        this.mana = 0;
-        this.health  = 0;
-        this.cooldown  = 0;
-        this.jumpheight = 100;
-        this.movementspeed = 100;
-        this.isLookingRight = true;
-        this.isSprinting = false;
-        this.isBoss = false;
-        this.isJumping = false;
-        pos = new Position(0, 0);
-        pa = new Partikel(pos, playerwidth, gr);
+        pSelf.setAttackMode(1);
+        pSelf.setMana(0);
+        pSelf.setHealth(0);
+        pSelf.setCooldown(0);
+        pSelf.setJumpheight(100);
+        pSelf.setMovementspeed(100);
+        pSelf.setLookingRight(false);
+        pSelf.setSprinting(false);
+        pSelf.setBoss(false);
+        pSelf.setJumping(false);
+        pSelf.setPartikel(new Partikel(pSelf.getHb().getPos(), pSelf.getHb().getWidth(),pSelf.getGr()));
 
 
         Timer timer = new Timer();
@@ -77,10 +61,20 @@ public class GameManager{
             @Override
             public void run() {
                 cUpdateG();
-                intersect(hbListe, pSelf);
+                intersect(hbListe, pSelf.getHb());
+                if(pSelf.isHitted()) {
+                    cHit(pSelf.getDamage());
+                }
             }
         }, 0, 100);
         server = null;
+    }
+    public Player getpSelf() {
+        return pSelf;
+    }
+
+    public Attack getAmall() {
+        return amall;
     }
     /**
      * Setzt den Server mit dem der Client kommuniziert
@@ -99,13 +93,13 @@ public class GameManager{
     public void inputKey(KeyEvent e) {
         switch (e.getKeyChar()) {
             case 'a':
-                isLookingRight = false;
-                isSprinting = false;
+                pSelf.setLookingRight(false);
+                pSelf.setSprinting(false);
                 cMoveSelf();
                 break;
             case 'd':
-                isLookingRight = true;
-                isSprinting = false;
+                pSelf.setLookingRight(true);
+                pSelf.setSprinting(false);
                 cMoveSelf();
                 break;
             case ' ':
@@ -115,7 +109,7 @@ public class GameManager{
             case '2':
             case '3':
                 try {
-                    attackMode = Integer.parseInt(Character.toString(e.getKeyChar()));
+                    pSelf.setAttackMode(Integer.parseInt(Character.toString(e.getKeyChar())));
                 } catch (Exception ignored) {}
                 break;
         }
@@ -128,15 +122,15 @@ public class GameManager{
     public void inputMouse(MouseEvent m) {
         if(m.getButton()==1){
             System.out.println("click");
-            switch(attackMode){
+            switch(pSelf.getAttackMode()){
                 case 1:
-                    cAttack(amNormal);
+                    cAttack(pSelf.getAmNormal());
                     break;
                 case 2:
-                    cAttack(amSpec1);
+                    cAttack(pSelf.getAmSpec1());
                     break;
                 case 3:
-                    cAttack(amSpec2);
+                    cAttack(pSelf.getAmSpec2());
                     break;
             }
         }
@@ -146,16 +140,16 @@ public class GameManager{
      */
     public void cMoveSelf(){
         System.out.println("bewegung");
-        if (isLookingRight) {
-            pa.addxVel(movementspeed);
-        }else if (!isLookingRight) {
-            pa.addxVel(-movementspeed);
+        if (pSelf.isLookingRight()) {
+            pSelf.getPartikel().addxVel(pSelf.getMovementspeed());
+        }else if (!pSelf.isLookingRight()) {
+            pSelf.getPartikel().addxVel(-pSelf.getMovementspeed());
         }
         //System.out.println("move - right?" + isLookingRight+ " - Sprint?" + isSprinting);
     }
     public void cJumpSelf(){
-        pa.addyVel(jumpheight);
-        isJumping = true;
+        pSelf.getPartikel().addyVel(pSelf.getJumpheight());
+        pSelf.setJumping(true);
     }
   /*
   public void cJumpOther(GameManager other1, GameManager other2){
@@ -170,16 +164,17 @@ public class GameManager{
      * F�hrt die Methode sAttack(ID, attackMode) beim Server aus.
      */
     public void cAttack(Attack am) {
-        Position clone = new Position(pos.getXPos(), pos.getYPos());
-       if(isLookingRight){
-           clone.setXPos(pSelf.getRight());
-           clone.setYPos(pSelf.getTop());
+        Position clone = new Position(pSelf.getHb().getLeft(), pSelf.getHb().getTop());
+       if(pSelf.isLookingRight()){
+           clone.setXPos(pSelf.getHb().getRight());
+           clone.setYPos(pSelf.getHb().getTop());
        }else{
-           clone.setXPos(pSelf.getLeft()-am.getDamageBox().getWidth());
-           clone.setYPos(pSelf.getTop());
+           clone.setXPos(pSelf.getHb().getLeft()-am.getDamageBox().getWidth());
+           clone.setYPos(pSelf.getHb().getTop());
        }
         am.setPosition(clone);
-        server.sAttack(id, am);
+        amall = am;
+        pSelf.setAttacking(true);
         //TODO an grafik spieler attakiert senden
 
 
@@ -187,7 +182,7 @@ public class GameManager{
     /**
      * �bergibt der Grafik, dass Schaden an einen Spieler ausgef�hrt wurde
      */
-    public void cHit(int damage) {
+    public void cHit(double damage) {
         //todo
         //damage methode an client
         //leben umsetzen etc.
@@ -218,8 +213,8 @@ public class GameManager{
      * @param k eigene Nummer beim Server
      */
     public void cSetBoss(boolean b, int k) {
-        isBoss = b;
-        numberIdSelf = k;
+        pSelf.setBoss(b);
+        pSelf.setId(k);
 
     }
     /**
@@ -235,7 +230,7 @@ public class GameManager{
      * @return eigene ID
      */
     public int cGetNumberID(){
-        return numberIdSelf;
+        return pSelf.getId();
 
     }
     /**
@@ -251,8 +246,8 @@ public class GameManager{
      * @param id2 ID des zweiten anderen Spielers
      */
     public void cSetNumberIDother(int id1, int id2) {
-        numberIDother1 = id1;
-        numberIDother2 = id2;
+        pOther1.setId(id1);
+        pOther2.setId(id2);
     }
     /**
      * Methode um die Grafik �ber erschaffene Projectiles zu informieren
@@ -273,15 +268,13 @@ public class GameManager{
         //alle daten �bergeben
     }
     /**
-     * Methode die im Sekundentakt vom Server an den Client �bertragen wird
-     * @param mana Mana f�r die Spezialf�higkeit
-     * @param health Lebenpunkte des Spielers
-     * @param cooldown Cooldown seiner Spezialf�higkeit
+     *
      */
-    public void cUpdateS(int mana, int health, int cooldown){
-        this.mana = mana;
-        this.health = health;
-        this.cooldown = cooldown;
+    public CUpdate cGetUpdateS(){
+        CUpdate r = new CUpdate(id, pSelf.getAttackMode(),pSelf.getJumpheight(),pSelf.getMovementspeed(),pSelf.isLookingRight(),pSelf.isJumping(),pSelf.isAttacking(),pSelf.getHb(), amall);
+        pSelf.setAttacking(false);
+        return r;
+
     }
     //Update Nocheinmal mit anderen Parametern
     /**
@@ -314,22 +307,15 @@ public class GameManager{
 
     }
 
-    public void cSetHealth( double h){
-        this.health = h;
-    }
-    public double cGetHealth(){
-        return health;
-
-    }
     public boolean intersect(Rectangle[] player, Rectangle damage) {
         for (Rectangle r : player) {
             if (!((damage.getRight() <= r.getLeft() || damage.getLeft() >= r.getRight()) && (damage.getBottom() >= r.getTop()))) {
-                pa.setGround(true);
-                pa.updateGround(r);
+                pSelf.getPartikel().setGround(true);
+                pSelf.getPartikel().updateGround(r);
                 return true;
             }
         }
-        pa.setGround(false);
+        pSelf.getPartikel().setGround(false);
         return false;
     }
 

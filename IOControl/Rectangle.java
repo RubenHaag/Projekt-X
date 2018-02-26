@@ -27,7 +27,7 @@ public class Rectangle {
 	}
 	
 	public double getBottom() {
-		return pos.getYPos() + heigth;
+		return pos.getYPos() - heigth;
 	}
 
 	public double getWidth() {
