@@ -24,7 +24,7 @@ public class GameManager{
     private boolean isLookingRight, isSprinting, isBoss, isJumping;
     private Position pos;
     private Partikel pa;
-    private Attack attack;
+    private Attack amNormal,amSpec1,amSpec2;
     private Rectangle gr, pSelf, pOther1, pOther2;
     private Rectangle [] hbListe = new Rectangle[hbAnzahl];
     //private Map map;
@@ -122,16 +122,15 @@ public class GameManager{
             System.out.println("click");
             switch(attackMode){
                 case 1:
-                    attack.setAttackMode(AttackMode.NORMAL);
+                    cAttack(amNormal);
                     break;
                 case 2:
-                    attack.setAttackMode(AttackMode.SPEC1);
+                    cAttack(amSpec1);
                     break;
                 case 3:
-                    attack.setAttackMode(AttackMode.SPEC2);
+                    cAttack(amSpec2);
                     break;
             }
-            cAttack(attack);
         }
     }
     /**

@@ -17,9 +17,9 @@ public class ServerVerwaltung {
   GameManager spieler1=new GameManager();
   GameManager spieler2=new GameManager();
   GameManager boss=new GameManager();
-  private AttackMode am;
+  private Attack am;
   
-  public void sAttack(UUID id, AttackMode am){    //überprüfen ob möglich
+  public void sAttack(UUID id, Attack am){    //überprüfen ob möglich
     for(int i = 0; i < spielerListe.length; i++){
       GameManager local = spielerListe[i];
       int y = sGetNumberID(id);
