@@ -215,6 +215,15 @@ public class GameManager{
         pSelf.setNumberID(k);
 
     }
+
+    public Rectangle[] getHbListe() {
+        return hbListe;
+    }
+
+    public void setHbListe(Rectangle[] hbListe) {
+        this.hbListe = hbListe;
+    }
+
     /**
      * Erm�glicht dem Server die UUID des Clients zu bekommen.
      * @return �bergibt die UUID des Clients
