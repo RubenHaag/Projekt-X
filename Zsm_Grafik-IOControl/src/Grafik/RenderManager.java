@@ -10,7 +10,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-class RenderManager{				// Hauptklasse in der Grafik, managed wann was gezeichnet wird
+public class RenderManager{				// Hauptklasse in der Grafik, managed wann was gezeichnet wird
 	private static State state;					// In welchem State befindet sich das Programm? z.B Hauptmenü, Charakterauswahl, etc.
 	private static JFrame f;						// Fenster auf dem alles dargestellt wird
 	private static JPanel p;
@@ -56,6 +56,8 @@ class RenderManager{				// Hauptklasse in der Grafik, managed wann was gezeichne
 			break;
 		case SETTINGS:
 			p.remove(settings.getPanel());
+		case GAME:
+			p.remove(game.getPanel());
 		default:
 			break;
 		}

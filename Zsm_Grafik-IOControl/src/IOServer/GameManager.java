@@ -1,6 +1,11 @@
 package IOServer;
 import java.awt.event.KeyEvent;
+
+import Grafik.Game;
+import Grafik.MovementType;
 import Grafik.RenderManager;
+import Grafik.State;
+
 import java.awt.event.MouseEvent;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -77,6 +82,7 @@ public class GameManager{
                 if(endGame&&endHilfe==0) {
                     endHilfe++;
                     //TODO Grafik Ende senden
+                    RenderManager.changeState(State.HAUPTMENUE);
                 }
             }
         }, 0, 100);
@@ -162,12 +168,11 @@ public class GameManager{
             pa.addxVel(-pSelf.getMovementspeed());
         }
     }
+    
     public void cJumpSelf(){
        pa.addyVel(pSelf.getJumpheight());
     }
-    public void cJumpOtherG(Player p) {
-        //TODO sage grafik das p springt
-    }
+    
     /**
      * F�hrt die Methode sAttack(ID, attackMode) beim Server aus.
      */
@@ -185,7 +190,6 @@ public class GameManager{
             am.setPosition(clone);
             amAllg = am;
             pSelf.setAttacking(true);
-            //TODO an grafik spieler attakiert senden
 
         }
     }
@@ -194,6 +198,7 @@ public class GameManager{
      */
     public void cHit(Player p) {
         //TODO an grafik senden
+    	Game.takeDmg(p.getNumberID());
     }
     /**
      * F�hrt die sLogin(GameManager) beim Server auf, um eine Verbindung aufzubauen.
@@ -248,6 +253,7 @@ public class GameManager{
                 }
             }
             //TODO an Grafik TOD
+            Game.die(i);
         }
     }
     /**
@@ -264,18 +270,24 @@ public class GameManager{
      */
     public void cSpawnprojectile(){
         //an Grafik
+    	Game.spawnProjectile((int) pSelf.getHb().getPos().getXPos(), (int) pSelf.getHb().getPos().getYPos(), pSelf.isLookingRight());
     }
     /**
      * Methode um die Grafik �ber zerst�rte Projectiles zu informieren
      */
     public void cDestroyprojectile(){
         //an Grafik
+    	//Game.destroyProjectile(ProjektilPos.x, ProjektilPos.y);
     }
     /**
      * Alle Daten werden an die Grafik �bertragen
      */
     public static void cUpdateG(){
         //alle daten �bergeben
+    	/* Game.updatePlayer(1, x, y, mt, at, hp, mp);
+    	 Game.updatePlayer(2, x, y, mt, at, hp, mp);
+    	 Game.updatePlayer(3, x, y, mt, at, hp, mp);*/
+    	 
     }
     /**
      *
