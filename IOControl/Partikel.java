@@ -1,25 +1,24 @@
 
 /**
  * 
- * @author Patrick Waltermann mit geringer Unterstützung von Lukas Hofmann
+ * @author Patrick Waltermann mit geringer Unterstï¿½tzung von Lukas Hofmann
  *
  */
 public class Partikel extends Thread{
   private double xVel, yVel, down, yVelw, fr1, fr2, fr, width; 
   private Rectangle gr;
   private Position pos;
-  private boolean ground = false;
-  //Fenster f1;
+  private boolean isJumping;
   long last_time = System.nanoTime();
   /**
    * Stellt die grundlegende Fallbewegung ein
    */
+
   public Partikel(){
       xVel = 200;
       yVel = 0;
       yVelw = yVel;
       down = 600;
-      ground = false;
       fr1 = 80;
       fr2 = -fr1;
       gr = new Rectangle(new Position(0,0),1,1);
@@ -30,7 +29,7 @@ public class Partikel extends Thread{
    * 
    * @param pos Position des Rechtecks
    * @param w Breite
-   * @param gr Rechteck für das ein Partikelobjekt erstellt werden soll.
+   * @param gr Rechteck fï¿½r das ein Partikelobjekt erstellt werden soll.
    */
   public Partikel(Position pos, double w,Rectangle gr){
       this();
@@ -40,13 +39,6 @@ public class Partikel extends Thread{
       this.width = w;
       //this.f1 = f1;
     
-  }
-  /**
-   * Setzt ob das Objekt steht oder fällt
-   * @param g Ob das Objekt steht oder nicht
-   */
-  public void setGround(boolean g){
-      ground = g;
   }
   /**
    * Thread der laufend den Standpunkt, Geschwindigkeit des OBjektes berechnet
@@ -66,7 +58,7 @@ public class Partikel extends Thread{
             
         }
       
-        if(ground == true){
+        if(!isJumping == true){
             yVel = yVelw;
             pos.setXPos(pos.getXPos()+dt / 1000000000* xVel);
             pos.setXPos(gr.getBottom()-width + 1);
@@ -75,7 +67,6 @@ public class Partikel extends Thread{
               try {
                   this.sleep(1);
               } catch (InterruptedException e) {
-                  // TODO Auto-generated catch block
                   e.printStackTrace();
               }
               xVel = xVel + dt / 1000000000* fr;
@@ -96,8 +87,8 @@ public class Partikel extends Thread{
     
   }
   /**
-   * Gibt die Geschwindigkeit des Objektes zurück.
-   * @return gibt die Geschwindigkeit des Objektes zurück
+   * Gibt die Geschwindigkeit des Objektes zurï¿½ck.
+   * @return gibt die Geschwindigkeit des Objektes zurï¿½ck
    */
   public double getYVel(){
       return yVel;
@@ -124,5 +115,12 @@ public class Partikel extends Thread{
   public void updateGround(Rectangle gr){
       this.gr = gr;
   }
-  
+
+    public boolean isJumping() {
+        return isJumping;
+    }
+
+    public void setJumping(boolean jumping) {
+        isJumping = jumping;
+    }
 }

@@ -1,12 +1,14 @@
+package testframeworks;
+
 import java.awt.Rectangle;
 
-public class Partikel extends Thread{
+public class PartikelAlt extends Thread{
 	private double xVel, yVel, xpos, ypos, down, yVelw, fr1, fr2, fr, width; 
 	private Rectangle gr;
 	private boolean ground = false;
 	//Fenster f1;
 	long last_time = System.nanoTime();
-	public Partikel(){
+	public PartikelAlt(){
 		xVel = 200;
 		yVel = 0;
 		yVelw = yVel;
@@ -19,7 +21,7 @@ public class Partikel extends Thread{
 		gr = new Rectangle(0,0,1,1);
 		width = 20;
 	}
-	public Partikel(double xpos, double ypos, double w,Rectangle gr){
+	public PartikelAlt(double xpos, double ypos, double w, Rectangle gr){
 		this();
 		this.xpos = xpos;
 		this.ypos = ypos;
@@ -58,7 +60,6 @@ public class Partikel extends Thread{
 					try {
 						this.sleep(1);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					xVel = xVel + dt / 1000000000* fr;

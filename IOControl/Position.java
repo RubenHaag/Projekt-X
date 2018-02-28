@@ -14,12 +14,15 @@ public class Position {
 	public void setXPos(double x) {
 		this.x = x;
 	}
+
 	public double getXPos() {
 		return x;
 	}
+
 	public void setYPos(double y) {
 		this.y = y;
 	}
+
 	public double getYPos() {
 		return y;
 	}

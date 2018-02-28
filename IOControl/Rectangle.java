@@ -27,7 +27,7 @@ public class Rectangle {
 	}
 	
 	public double getBottom() {
-		return pos.getYPos() + heigth;
+		return pos.getYPos() - heigth;
 	}
 
 	public double getWidth() {
@@ -52,5 +52,16 @@ public class Rectangle {
 	
 	public void setWidth(double w){
 		width =w;
+	}
+	/**
+	 *
+	 * @param rectangle
+	 * @return �berlappt die Hitbox des eigenen Rechtecks mit einer Hitbox-> true oder false
+	 */
+	public boolean intersect(Rectangle rectangle) {
+			if (!((this.getRight() <= rectangle.getLeft() || this.getLeft() >= rectangle.getRight()) && (this.getBottom() >= rectangle.getTop()))) {
+				return true;
+			}
+		return false;
 	}
 }
