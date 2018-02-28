@@ -74,9 +74,7 @@ public class Menue {
 		@Override
 		public void mouseReleased(MouseEvent arg0) {
 			settings.changeClicked(false);
-			//LoginToServer()
-			//ChangeState(Heldenauswahl oder Bossauswahl)
-			System.out.println("Lass mich meine Einstellungen machen!");
+			RenderManager.changeState(State.SETTINGS);
 		}
 		
 	};
@@ -145,7 +143,7 @@ public class Menue {
 	  	public void paint(Graphics g) {
 	  		this.setBounds(0, 0, RenderManager.getFWidth(), RenderManager.getFHeight());
 	  		try {
-				bgi = ImageIO.read(new File("Assets/GUI/Main_Menue_v1.png"));  
+				bgi = ImageIO.read(new File("Assets/GUI/Main_Menue_v2.png"));  
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

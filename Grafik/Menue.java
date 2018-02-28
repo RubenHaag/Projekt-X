@@ -6,47 +6,75 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class Menue {
 	private MenueButton play;
-	//private MenueButton settings;
+	private MenueButton settings;
 	private MenueButton quit;
 	private BufferedImage bgi = null;
 	private MouseListener pl = new MouseListener(){
 
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
-			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
 		public void mouseEntered(MouseEvent arg0) {
-			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
 		public void mouseExited(MouseEvent arg0) {
-			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
 		public void mousePressed(MouseEvent arg0) {
-			// TODO Auto-generated method stub
 			play.changeClicked(true);
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent arg0) {
-			// TODO Auto-generated method stub
 			play.changeClicked(false);
 			//LoginToServer()
 			//ChangeState(Heldenauswahl oder Bossauswahl)
-			System.out.println("Lass mich spielen!");
+			RenderManager.changeState(State.GAME);
+		}
+		
+	};
+	
+	private MouseListener sl = new MouseListener(){
+
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+			settings.changeClicked(true);
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			settings.changeClicked(false);
+			RenderManager.changeState(State.SETTINGS);
 		}
 		
 	};
@@ -55,34 +83,28 @@ public class Menue {
 
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
-			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
 		public void mouseEntered(MouseEvent arg0) {
-			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
 		public void mouseExited(MouseEvent arg0) {
-			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
 		public void mousePressed(MouseEvent arg0) {
-			// TODO Auto-generated method stub
 			quit.changeClicked(true);
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent arg0) {
-			// TODO Auto-generated method stub
 			quit.changeClicked(false);
-			System.out.println("Geh weg!");
-			System.exit(0);
+			RenderManager.setRunning(false);
 		}
 		
 	};
@@ -91,11 +113,14 @@ public class Menue {
 	
 	public Menue(){
 		p = new MenuePanel();
-		play = new MenueButton("Play", pl, 180, 80, 200, 80);
-		quit = new MenueButton("Quit", ql, 180, 200, 200, 80);
-		//p.setLayout(new BorderLayout());
+		play = new MenueButton("Play", pl, 600, 250, 300, 120);
+		quit = new MenueButton("Quit", ql, 650, 500, 200, 80);
+		settings = new MenueButton("Settings", sl, 650, 400, 200, 80);
 		p.add(play.getPanel());
 		p.add(quit.getPanel());
+		p.add(settings.getPanel());
+		
+		
 	}
 	
 	public JPanel getPanel(){
@@ -111,14 +136,20 @@ public class Menue {
 	  class MenuePanel extends JPanel{
 	  	public MenuePanel() {
 	  		super();
+	  		
 	  	}
 	  	
 	  	@Override
 	  	public void paint(Graphics g) {
 	  		this.setBounds(0, 0, RenderManager.getFWidth(), RenderManager.getFHeight());
+	  		try {
+				bgi = ImageIO.read(new File("Assets/GUI/Main_Menue_v2.png"));  
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+  			g.drawImage(bgi, 0, 0, RenderManager.getFWidth(), RenderManager.getFHeight(), null);
 	  		this.paintComponents(g);
-	  		this.setBackground(Color.green);
 	  	}
 	  }
 }
-
