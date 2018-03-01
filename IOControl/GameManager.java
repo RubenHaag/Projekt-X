@@ -44,8 +44,8 @@ public class GameManager{
     /**
      * Konstruktor ohne Serverobjekt
      */
-    public GameManager(){
-
+    public GameManager() {
+        pSelf = new Player();
         pSelf.setAttackMode(1);
         pSelf.setMana(0);
         pSelf.setHealth(0);
@@ -54,30 +54,14 @@ public class GameManager{
         pSelf.setLookingRight(false);
         pSelf.setSprinting(false);
         pSelf.setBoss(false);
+        pSelf.setHb(new Rectangle(new Position(0, 0), 10, 10));
+        pSelf.setGr(new Rectangle(new Position(0, 0), 10, 10));
+        pa = new Partikel(pSelf.getHb().getPos(), pSelf.getHb().getWidth(), pSelf.getGr());
         pa.setJumping(false);
-        pa = new Partikel(pSelf.getHb().getPos(), pSelf.getHb().getWidth(),pSelf.getGr());
+        pOther1 = new Player();
+        pOther2 = new Player();
 
 
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-
-            @Override
-            public void run() {
-                cUpdateG();
-                intersect(hbListe, pSelf.getHb());
-                if(pSelf.isHitted()) {cHit(pSelf);}
-                if(pOther1.isHitted()) {cHit(pOther1);}
-                if(pOther2.isHitted()) {cHit(pOther2);}
-                if(pOther1.isJumping()){cJumpOtherG(pOther1);}
-                if(pOther2.isJumping()){cJumpOtherG(pOther2);}
-                if(pSelf.isDead()) {cSterben(pSelf.getNumberID());}
-                if(endGame&&endHilfe==0) {
-                    endHilfe++;
-                    //TODO Grafik Ende senden
-                }
-            }
-        }, 0, 100);
-        server = null;
     }
     public Player getpSelf() {
         return pSelf;
@@ -152,23 +136,23 @@ public class GameManager{
     /**
      * �bertr�gt die eigene Bewegung an den Server
      */
-    public void cMoveSelf(){
+    private void cMoveSelf(){
         if (pSelf.isLookingRight()) {
             pa.addxVel(pSelf.getMovementspeed());
         }else if (!pSelf.isLookingRight()) {
             pa.addxVel(-pSelf.getMovementspeed());
         }
     }
-    public void cJumpSelf(){
+    private void cJumpSelf(){
        pa.addyVel(pSelf.getJumpheight());
     }
-    public void cJumpOtherG(Player p) {
+    private void cJumpOtherG(Player p) {
         //TODO sage grafik das p springt
     }
     /**
      * F�hrt die Methode sAttack(ID, attackMode) beim Server aus.
      */
-    public void cAttack(Attack am) {
+    private void cAttack(Attack am) {
         if(pSelf.getMana()>=am.getCost()&&am.getCooldown()==0) {
 
             Position clone = new Position(pSelf.getHb().getLeft(), pSelf.getHb().getTop());
@@ -189,7 +173,7 @@ public class GameManager{
     /**
      * �bergibt der Grafik, dass Schaden an einen Spieler ausgef�hrt wurde
      */
-    public void cHit(Player p) {
+    private void cHit(Player p) {
         //TODO an grafik senden
     }
     /**
@@ -244,7 +228,7 @@ public class GameManager{
      * Signalisiert wenn ein Client stirbt
      * @param i ID des sterbenden Spielers
      */
-    public void cSterben(int i) {
+    private void cSterben(int i) {
         if(sterbeHilfe==0) {
             sterbeHilfe++;
             if (i == 0) {
@@ -280,7 +264,7 @@ public class GameManager{
     /**
      * Alle Daten werden an die Grafik �bertragen
      */
-    public static void cUpdateG(){
+    private void cUpdateG(){
         //alle daten �bergeben
     }
     /**
@@ -293,7 +277,56 @@ public class GameManager{
 
     }
     public void cSetUpdateS(SUpdate update){
-        //TODO fehlt!!!
+        endGame = update.isEndGame();
+        bosswin = update.isBosswin();
+        if(pSelf.getNumberID()==0){
+            // pSelf aus p1 updaten
+            pSelf.setUpdateSSelf(update.getP1());
+            if(pOther1.getNumberID()==1) {
+                //pOther1 aus p2 updaten
+                pOther1.setUpdateSOther(update.getP2());
+                //pOther2 aus p3 updaten
+                pOther2.setUpdateSOther(update.getP3());
+            }
+            else {
+                //pOther1 aus p3updaten
+                pOther1.setUpdateSOther(update.getP3());
+                //pOther2 aus p2 updaten
+                pOther2.setUpdateSOther(update.getP2());
+            }
+        }
+        else if(pSelf.getNumberID()==1){
+            //pSelf aus p2updaten
+            pSelf.setUpdateSSelf(update.getP2());
+            if(pOther1.getNumberID()==0){
+                //pOther1 aus p1 updaten
+                pOther1.setUpdateSOther(update.getP1());
+                //pOther2 aus p3 updaten
+                pOther2.setUpdateSOther(update.getP3());
+            }
+            else{
+                //pOther1 aus p3updaten
+                pOther1.setUpdateSOther(update.getP3());
+                //pOther2 aus p1 updaten
+                pOther2.setUpdateSOther(update.getP1());
+            }
+        }
+        else{
+            //pSelf aus p3updaten
+            pSelf.setUpdateSSelf(update.getP3());
+            if(pOther1.getNumberID()==0) {
+                //pOther1 aus p1
+                pOther1.setUpdateSOther(update.getP1());
+                //pOther2 aus p2
+                pOther2.setUpdateSOther(update.getP2());
+            }
+            else{
+                //pOther1 aus p2
+                pOther1.setUpdateSOther(update.getP2());
+                //pOther2 aus p1
+                pOther2.setUpdateSOther(update.getP1());
+            }
+        }
     }
     //Update Nocheinmal mit anderen Parametern
     /*
@@ -327,9 +360,10 @@ public class GameManager{
     public void cSetCharakter() {
         //TODO fehlt!!!
 
+
     }
 
-    public boolean intersect(Rectangle[] player, Rectangle damage) {
+    private boolean intersect(Rectangle[] player, Rectangle damage) {
         for (Rectangle r : player) {
             if (!((damage.getRight() <= r.getLeft() || damage.getLeft() >= r.getRight()) && (damage.getBottom() >= r.getTop()))) {
                 pa.setJumping(false);
@@ -366,7 +400,28 @@ public class GameManager{
   * und das Spiel beginnt
   */
   public void spielstart(){
-	  //Map und andere Spieler zeigen / Spielgrafik starten / 
+	  //Map und andere Spieler zeigen / Spielgrafik starten /
+
+      Timer timer = new Timer();
+      timer.schedule(new TimerTask() {
+
+          @Override
+          public void run() {
+              cUpdateG();
+              intersect(hbListe, pSelf.getHb());
+              if(pSelf.isHitted()) {cHit(pSelf);}
+              if(pOther1.isHitted()) {cHit(pOther1);}
+              if(pOther2.isHitted()) {cHit(pOther2);}
+              if(pOther1.isJumping()){cJumpOtherG(pOther1);}
+              if(pOther2.isJumping()){cJumpOtherG(pOther2);}
+              if(pSelf.isDead()) {cSterben(pSelf.getNumberID());}
+              if(endGame&&endHilfe==0) {
+                  endHilfe++;
+                  //TODO Grafik Ende senden
+              }
+          }
+      }, 0, 100);
+      server = null;
   }
   
 	

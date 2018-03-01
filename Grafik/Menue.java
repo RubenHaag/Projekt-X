@@ -42,9 +42,7 @@ public class Menue {
 		@Override
 		public void mouseReleased(MouseEvent arg0) {
 			play.changeClicked(false);
-			//LoginToServer()
-			//ChangeState(Heldenauswahl oder Bossauswahl)
-			RenderManager.changeState(State.GAME);
+			RenderManager.changeState(State.LOGIN);
 		}
 		
 	};
@@ -142,12 +140,14 @@ public class Menue {
 	  	@Override
 	  	public void paint(Graphics g) {
 	  		this.setBounds(0, 0, RenderManager.getFWidth(), RenderManager.getFHeight());
-	  		try {
-				bgi = ImageIO.read(new File("Assets/GUI/Main_Menue_v2.png"));  
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+	  		if(bgi == null){
+	  			try {
+	  				bgi = ImageIO.read(new File("Assets/GUI/Main_Menue_v2.png"));  
+	  			} catch (IOException e) {
+	  				// TODO Auto-generated catch block
+	  				e.printStackTrace();
+	  			}
+	  		}
   			g.drawImage(bgi, 0, 0, RenderManager.getFWidth(), RenderManager.getFHeight(), null);
 	  		this.paintComponents(g);
 	  	}

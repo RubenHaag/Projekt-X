@@ -60,20 +60,24 @@ class MenueButton{
   	public void paint(Graphics g) {
   		this.setBounds(x, y, width, height);
   		if(!clicked){
-  			try {
-  				image_ncl = ImageIO.read(new File("Assets/GUI/" + text + "_non_click.png"));
-  			} catch (IOException e) {
-  				// TODO Auto-generated catch block
-  				e.printStackTrace();
+  			if(image_ncl == null){
+  				try {
+  					image_ncl = ImageIO.read(new File("Assets/GUI/" + text + "_non_click.png"));
+  				} catch (IOException e) {
+  					// TODO Auto-generated catch block
+  					e.printStackTrace();
+  				}
   			}
   			g.drawImage(image_ncl, 0, 0, width, height, null);
   		}
   		else{
-  			 try {
-  				image_cl = ImageIO.read(new File("Assets/GUI/" + text + "_click.png"));
-  			} catch (IOException e) {
-  				// TODO Auto-generated catch block
-  				e.printStackTrace();
+  			if(image_cl == null){
+  				try {
+  					image_cl = ImageIO.read(new File("Assets/GUI/" + text + "_click.png"));
+  				} catch (IOException e) {
+  					// TODO Auto-generated catch block
+  					e.printStackTrace();
+  				}
   			}
   			g.drawImage(image_cl, 0, 0, width, height, null);
   		}
