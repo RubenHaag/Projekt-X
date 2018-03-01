@@ -41,6 +41,9 @@ public class Attack {
         return cooldown;
     }
 
+    public void resetCooldown() {
+        this.cooldown = cooldownZeit;
+    }
     public void setCooldown(double cooldown) {
         this.cooldown = cooldown;
     }

@@ -2,6 +2,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
 import java.lang.Thread;
+
 /**
  * 
  * @author Lukas Hofmann, Patrick Waltermann , Max Schulte
@@ -11,6 +12,8 @@ public class ServerVerwaltung {
   private GameManager[] spielerListe = new GameManager[3];
   private int i = 0;
   private int k = 0;
+  private int deathcounter = 0;
+  private boolean bosswin, endGame;
   private boolean s1=false;          //s1,s2,b : welche rolle ist schon vergeben, wird beim login benÃ¶tigt (s:Spieler b:Boss)
   private boolean s2=false;
   private boolean b=false;
@@ -20,6 +23,9 @@ public class ServerVerwaltung {
   GameManager boss=new GameManager();
   private Attack amP1, amP2, amP3;
   long last_time = System.nanoTime();
+    /**
+     * dt ist die Deltatime
+     */
   private double dt;
   public ServerVerwaltung(){
 
@@ -29,23 +35,37 @@ public class ServerVerwaltung {
   public void sAttack(UUID id,Attack am){
     //überprüfen ob möglich
     int y = sGetNumberID(id);
+      spielerListe[y].getpSelf().setMana(spielerListe[y].getpSelf().getMana()-am.getCost());
+      if(am== spielerListe[y].getpSelf().getAmSpec1()) {
+          spielerListe[y].getpSelf().getAmSpec1().resetCooldown();
+      }
+      if(am== spielerListe[y].getpSelf().getAmSpec2()) {
+          spielerListe[y].getpSelf().getAmSpec2().resetCooldown();
+      }
     for(int i = 0; i <= spielerListe.length; i++){
       GameManager local = spielerListe[i];
       if(am.getDamageBox().intersect(local.getpSelf().getHb())){
         local.getpSelf().setHitted(true);
-        local.getpSelf().setHealth(local.getpSelf().getHealth()-spielerListe[y].getAmall().getDamage());
-        //TODO Klappt noch nicht
+        local.getpSelf().setHealth(local.getpSelf().getHealth()-spielerListe[y].getAmAllg().getDamage());
+        if(local.getpSelf().getHealth()<=0){
+            local.getpSelf().setDead(true);
+            if (local.getpSelf().isBoss()){
+                endGame = true;
+                bosswin = true;
+            }else if (deathcounter ==1){
+                endGame = true;
+                bosswin = false;
+            }
+            deathcounter++;
         }
-
-      //int y = sGetNumberID(id);
-      //local.cAttackg(y);
-      //TODO hit usw. muss man noch einfügen
+        //TODO noch nie getetstet
+        }
     }
   }
   /**
-   * ÃœberprÃ¼ft die UUID mit der der Clients und liefert die interne ID zurÃ¼ck
+   * Ueberprueft die UUID mit der der Clients und liefert die interne ID zurueck
    * @param id UUID
-   * @return Interne ID
+   * @return NumberID
    */
   public int sGetNumberID(UUID id){
     int x = 5;//absichtlich falscher Int
@@ -72,7 +92,7 @@ public class ServerVerwaltung {
               sUpdateMana();
               for(int i = 0; i <= spielerListe.length; i++) {
                   GameManager local = spielerListe[i];
-                  if (local.getpSelf().isAttacking()){ sAttack(local.cGetUUID(),local.getAmall());}
+                  if (local.getpSelf().isAttacking()){ sAttack(local.cGetUUID(),local.getAmAllg());}
               }
           }
       }, 0, 100);
@@ -85,7 +105,7 @@ public class ServerVerwaltung {
    */
   public boolean sLogin(GameManager g){
     int n=0;                   //n: wie viele angemeldete Spieler
-    boolean s1=false;          //s1,s2,b : wlecvhe rolle ist schon vergeben (s:Spieler b:Boss)
+    boolean s1=false;          //s1,s2,b : wlecvhe rolle ist schon vergeben (s:Spieler b:Boss); weitere Anmerkung ich glaube, du kannst auch Attribute mit API versehen. Zudem ist s1,s2,boss für jeden client automatisch false.
     boolean s2=false;
     boolean b=false;
     double z=Math.random();
@@ -208,7 +228,7 @@ public class ServerVerwaltung {
     spielerListe[2].logout(s);
   }
   /**
-   * Bewegt die Spieler
+   * Wird voraussichtlich weggelassen
    */
   public void sMove() {
     //prÃ¼ft ob mÃ¶glich
@@ -216,12 +236,20 @@ public class ServerVerwaltung {
   }
   /**
    * generelle Update Methode
-
    */
-  public void sUpdate(){
-    
+  public SUpdate sGetUpdateC(){
+    SUpdate r = new SUpdate(spielerListe[0].getpSelf(),spielerListe[1].getpSelf(),spielerListe[2].getpSelf(), bosswin,endGame);
+    return r;
   }
-  
+  public void sSetUpdateC(CUpdate update){
+      int y = sGetNumberID(update.getId());
+      spielerListe[y].getpSelf().getHb().setPos(update.getPlayer().getHb().getPos());
+      spielerListe[y].setAmAllg(update.getAmAllg());
+      spielerListe[y].getpSelf().setJumping(update.getPlayer().isJumping());
+      spielerListe[y].getpSelf().setLookingRight(update.getPlayer().isLookingRight());
+      spielerListe[y].getpSelf().setAttacking(update.getPlayer().isAttacking());
+      spielerListe[y].getpSelf().setSprinting(update.getPlayer().isSprinting());
+  }
   public void sUpdateHealth() {
       for (int i = 0; i <= spielerListe.length; i++) {
           GameManager local = spielerListe[i];
