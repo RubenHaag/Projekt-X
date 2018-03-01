@@ -28,9 +28,6 @@ public class ServerVerwaltung {
 
     }
     /**
-     * @param id UUID zur eindeutigen Identifikation des schlagenden Spielers
-     * @param am Attack-Objekt um zwischen verschiedenen Attacken zu unterscheiden
-     *
      * Methode, die vom Boolean isAttacking in der run()-Methode ausgelöst wird.
      * Hier werden bei einer Attacke erst die Mana-Werte des Spielers gesenkt und der Cooldown
      * zurückgesetzt. Anschließend werden die getroffenen Spieler ermittelt, ihnen wird Leben
@@ -38,6 +35,11 @@ public class ServerVerwaltung {
      * und gegebenenfalls wird das Spiel beendet indem der boolean endGame auf true gesetzt wird.
      * Außerdem wird bei einem Tod ein Todeszähler (deathcounter) hochgesetzt und wenn deathcounter > 1 oder ein
      * Boss ist, entschieden, wer das Spiel gewonnen hat. Hierzu wird bosswin entweder auf true oder false gesetzt.
+     *
+     * @param id UUID zur eindeutigen Identifikation des schlagenden Spielers
+     * @param am Attack-Objekt um zwischen verschiedenen Attacken zu unterscheiden
+     *
+     *
      *
      * */
     private void sAttack(UUID id, Attack am) {
@@ -71,10 +73,12 @@ public class ServerVerwaltung {
     }
 
     /**
-     * Ueberprueft die UUID mit der der Clients und liefert die interne ID zurueck
+     * Wandelt die UUID eines Spielers in eine interne ID um und liefert diese zurueck.
+     * Wenn kein zur UUID passender Spieler gefunden wird, liefert die Methode einen zu hohen
+     * Wert zurück, damit dieser als Fehler erkannt wird
      *
-     * @param id UUID
-     * @return NumberID
+     * @param id UUID zur eindeutigen Identifikation eines Spielers
+     * @return NumberID int um Spieler leichter zu identifizieren
      */
     private int sGetNumberID(UUID id) {
         int x = 5;//absichtlich falscher Int
@@ -88,7 +92,8 @@ public class ServerVerwaltung {
     }
 
     /**
-     * Initiert das Spiel
+     * Initiert das Spiel. Beinhaltet einen Timer, d.h. den Thread der Serververwaltung.
+     * hier wird getestet, ob eine Attacke vorliegt und wenn dies der Fall ist, wird sAttack() ausgeführt.
      */
     public void sStartGame() {
         Timer timer = new Timer();
@@ -241,12 +246,18 @@ public class ServerVerwaltung {
     }
 
     /**
-     * generelle Update Methode
+     * @return Update-Objekt, mit dem die GameManager der Clients aktualisiert werden
      */
     public SUpdate sGetUpdateC() {
         return new SUpdate(spielerListe[0].getpSelf(), spielerListe[1].getpSelf(), spielerListe[2].getpSelf(), bosswin, endGame);
     }
-
+    /**
+     * In dieser Methode werden alle relevanten Informationen aus den GameManagern der Clients mit den GameManagern der
+     * Serververwaltung synchronisiert.
+     *
+     * @param update CUpdate-Objekt das vom GameManager in der cUpdateS() Methode erzeugt und
+     *              von der Serveruebertragung an die ServerVerwaltung weitergeleitet wird.
+     **/
     public void sSetUpdateC(CUpdate update) {
         int y = sGetNumberID(update.getId());
         spielerListe[y].getpSelf().getHb().setPos(update.getPlayer().getHb().getPos());
@@ -256,7 +267,10 @@ public class ServerVerwaltung {
         spielerListe[y].getpSelf().setAttacking(update.getPlayer().isAttacking());
         spielerListe[y].getpSelf().setSprinting(update.getPlayer().isSprinting());
     }
-
+    /**
+     * In dieser Methode wird die Regeneration der Leben der Spieler umgesetzt.
+     * Sie wird in der run() - Methode der Serververwaltung ausgeführt.
+     * */
     private void sUpdateHealth() {
         for (int i = 0; i <= spielerListe.length; i++) {
             GameManager local = spielerListe[i];
@@ -265,7 +279,10 @@ public class ServerVerwaltung {
             }
         }
     }
-
+    /**
+     * In dieser Methode wird der Cooldown der Spieler herabgesetzt.
+     * Sie wird in der run() - Methode der Serververwaltung ausgeführt.
+     * */
     private void sUpdateCooldown() {
         for (int i = 0; i <= spielerListe.length; i++) {
             GameManager local = spielerListe[i];
@@ -281,7 +298,10 @@ public class ServerVerwaltung {
             }
         }
     }
-
+    /**
+     * In dieser Methode wird die Regeneration des Manas der Spieler umgesetzt.
+     * Sie wird in der run() - Methode der Serververwaltung ausgeführt.
+     * */
     private void sUpdateMana() {
         for (int i = 0; i <= spielerListe.length; i++) {
             GameManager local = spielerListe[i];
