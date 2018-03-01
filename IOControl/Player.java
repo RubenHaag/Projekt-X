@@ -57,6 +57,28 @@ public class Player {
 		this.amSpec2 = new Attack(new Rectangle(new Position(0,0), 10, 10), 2, 0, 0);
 		this.gr = new Rectangle(new Position(0,0), 10, 10);
 	}
+
+    public void setUpdateSSelf(Player p) {
+        health = p.getHealth();
+        damage = p.getDamage();
+        mana = p.getMana();
+        isDead = p.isDead();
+        isHitted = p.isHitted();
+        amSpec1.setCooldown(p.getAmSpec1().getCooldown());
+        amSpec2.setCooldown(p.getAmSpec2().getCooldown());
+    }
+
+    public void setUpdateSOther(Player p) {
+        health = p.getHealth();
+        damage = p.getDamage();
+        mana = p.getMana();
+        isDead = p.isDead();
+        isHitted = p.isHitted();
+        isJumping = p.isJumping();
+        isAttacking = p.isAttacking();
+        isLookingRight = p.isLookingRight();
+        hb.setPos(p.getHb().getPos());
+    }
 	public int getNumberID() {
         return numberID;
     }

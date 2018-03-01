@@ -1,6 +1,7 @@
 public class SUpdate {
     private Player p1,p2,p3;
     private boolean bosswin, endGame;
+    private double cooldown;
 
     public SUpdate(Player p1, Player p2, Player p3, boolean bosswin, boolean endGame) {
         this.p1 = p1;
@@ -49,4 +50,5 @@ public class SUpdate {
     public void setEndGame(boolean endGame) {
         this.endGame = endGame;
     }
+
 }
