@@ -10,7 +10,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 class MenueButton{
-  private MouseListener listener;									// Listener fÃ¼r diesen Button
+  private MouseListener listener;									// Listener für diesen Button
   private ButtonPanel panel; 										// Panel auf welchem gezeichnet wird
   private String text;												// Buttontext
   private BufferedImage image_cl = null;		// Bild des Buttons
@@ -42,6 +42,14 @@ class MenueButton{
 	  this.clicked = clicked;
   }
   
+  public void changeText(String t) {
+	  text = t;
+  }
+  
+  public String getText() {
+	  return text;
+  }
+  
   @SuppressWarnings("serial")
   class ButtonPanel extends JPanel{
   	public ButtonPanel() {
@@ -53,7 +61,7 @@ class MenueButton{
   		this.setBounds(x, y, width, height);
   		if(!clicked){
   			try {
-  				image_ncl = ImageIO.read(new File("Assets\\GUI\\Button_v1_non_click.png"));
+  				image_ncl = ImageIO.read(new File("Assets/GUI/" + text + "_non_click.png"));
   			} catch (IOException e) {
   				// TODO Auto-generated catch block
   				e.printStackTrace();
@@ -62,15 +70,14 @@ class MenueButton{
   		}
   		else{
   			 try {
-  				image_cl = ImageIO.read(new File("Assets\\GUI\\Button_v1_click.png"));
+  				image_cl = ImageIO.read(new File("Assets/GUI/" + text + "_click.png"));
   			} catch (IOException e) {
   				// TODO Auto-generated catch block
   				e.printStackTrace();
   			}
   			g.drawImage(image_cl, 0, 0, width, height, null);
   		}
-  		//Hier fehlt noch die Einstellung des Fonts
-  		g.drawString(text, width/2, height/2);
+  		
   	}
   }
 }

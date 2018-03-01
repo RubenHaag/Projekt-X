@@ -4,40 +4,81 @@ import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 class RenderManager{				// Hauptklasse in der Grafik, managed wann was gezeichnet wird
-	private static State state;					// In welchem State befindet sich das Programm? z.B HauptmenÃ¼, Charakterauswahl, etc.
+	private static State state;					// In welchem State befindet sich das Programm? z.B Hauptmenü, Charakterauswahl, etc.
 	private static JFrame f;						// Fenster auf dem alles dargestellt wird
-	
+	private static JPanel p;
 	private static Menue menue;
+	private static Game game;
+	private static SettingsMenue settings;
+	private static boolean running;
+	private static WindowAdapter wa = new WindowAdapter() {
+		public void windowClosing(WindowEvent e){
+	         RenderManager.setRunning(false);
+	    }
+	};
 	
 	public static void main(String[] args) {
 		f = new JFrame("Project-X");
 		f.setSize(1024, 760);
 		f.setVisible(true);
-		f.setLayout(new BorderLayout());
+		f.setResizable(false);
+		f.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		f.addWindowListener(wa);
+		
 		state = State.HAUPTMENUE;
+		p = new JPanel();
+		p.setLayout(new BorderLayout());
 		menue = new Menue();
-		f.add(menue.getPanel());
-		while(true){
+		game = new Game();
+		settings = new SettingsMenue();
+		f.add(p);
+		p.add(menue.getPanel());
+		running = true;
+		int a = 0;
+		int b = 0;
+		while(running){
 			render();
 		}
+		System.exit(0);
 	}
 	
 	public static void changeState(State s){
+		switch(state) {
+		case HAUPTMENUE:
+			p.remove(menue.getPanel());
+			break;
+		case SETTINGS:
+			p.remove(settings.getPanel());
+		default:
+			break;
+		}
+		switch(s) {
+		case GAME:
+			p.add(game.getPanel());
+			p.validate();
+			break;
+		case SETTINGS:
+			p.add(settings.getPanel());
+			p.validate();
+		case HAUPTMENUE:
+			p.add(menue.getPanel());
+			p.validate();
+		default:
+			break;	
+		}
 		state = s;
 	}
 	
 	public static void render() {
-		switch(state) {
-		case HAUPTMENUE: 
-			menue.render();
-			break;
-		default:
-			break;
-		}
+		p.repaint();
+		
 	}
 	
 	public static int getFWidth(){
@@ -46,5 +87,9 @@ class RenderManager{				// Hauptklasse in der Grafik, managed wann was gezeichne
 	
 	public static int getFHeight(){
 		return f.getHeight();
+	}
+	
+	public static void setRunning(boolean b) {
+		running = b;
 	}
 }

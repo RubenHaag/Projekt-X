@@ -14,26 +14,25 @@ import javax.swing.JComponent;
  */
 class Player extends JComponent{			 		
 	private int x;					
-	private int y;			
-	private String name;            // Name des Charakters WICHTIG: ungleich Name des Spielers
+	private int y;				
 	private int width;
 	private int height;
-	
+	private String name;						// Name des Charakters WICHTIG: ungleich Name des Spielers
 	private MovementType movement;
 	private Image image;
 	private AttackType attack;
 	
 	// Initialisiert den Spieler
 	Player(String name, int x, int y, int w, int h){
-	    this.name = name;
-	    this.x = x;
-	    this.y = y;
-	    width = w;
-	    height = h;
-	    movement = MovementType.IDLE;
-	    attack = AttackType.NON;
-	    image = null;
-	  }
+		this.name = name;
+		this.x = x;
+		this.y = y;
+		width = w;
+		height = h;
+		movement = MovementType.IDLE;
+		attack = AttackType.NON;
+		image = null;
+	}
 	
 	public void updatePos(int xPos, int yPos){
 		x = xPos;
@@ -44,36 +43,8 @@ class Player extends JComponent{
 		movement = mt;
 	}
 	
-	public void updateAttackType(int at, boolean right){
-		switch(at) {
-		case 0:
-			attack = AttackType.NON;
-			break;
-		case 1:
-			if(right) {
-				attack = AttackType.NORMAL_R;
-			}
-			else {
-				attack = AttackType.NORMAL_L;
-			}
-			break;
-		case 2:
-			if(right) {
-				attack = AttackType.SPECIAL1_R;
-			}
-			else {
-				attack = AttackType.SPECIAL1_L;
-			}
-			break;
-		case 3:
-			if(right) {
-				attack = AttackType.SPECIAL2_R;
-			}
-			else {
-				attack = AttackType.SPECIAL2_L;
-			}
-			break;
-		}
+	public void updateAttackType(AttackType at){
+		attack = at;
 	}
 	
 	public void paint(Graphics g) {
@@ -93,6 +64,9 @@ class Player extends JComponent{
 	    	break;
 	    case JUMPING:
 	    	image = toolkit.getImage("Assets/Charaktere/" + name + "_jumping.gif");		    
+	    	break;
+	    case FALLING:
+	    	image = toolkit.getImage("Assets/Charaktere/" + name + "_falling.gif");
 	    	break;
 	    default:
 	    	System.out.println("Irgendwas ist schiefgelaufen");

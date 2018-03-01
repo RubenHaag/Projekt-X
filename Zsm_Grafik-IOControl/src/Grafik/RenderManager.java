@@ -16,6 +16,7 @@ public class RenderManager{				// Hauptklasse in der Grafik, managed wann was ge
 	private static JPanel p;
 	private static Menue menue;
 	private static Game game;
+	private static SettingsMenue settings;
 	private static boolean running;
 	private static WindowAdapter wa = new WindowAdapter() {
 		public void windowClosing(WindowEvent e){
@@ -36,6 +37,7 @@ public class RenderManager{				// Hauptklasse in der Grafik, managed wann was ge
 		p.setLayout(new BorderLayout());
 		menue = new Menue();
 		game = new Game();
+		settings = new SettingsMenue();
 		f.add(p);
 		p.add(menue.getPanel());
 		running = true;
@@ -52,6 +54,10 @@ public class RenderManager{				// Hauptklasse in der Grafik, managed wann was ge
 		case HAUPTMENUE:
 			p.remove(menue.getPanel());
 			break;
+		case SETTINGS:
+			p.remove(settings.getPanel());
+		case GAME:
+			p.remove(game.getPanel());
 		default:
 			break;
 		}
@@ -60,6 +66,12 @@ public class RenderManager{				// Hauptklasse in der Grafik, managed wann was ge
 			p.add(game.getPanel());
 			p.validate();
 			break;
+		case SETTINGS:
+			p.add(settings.getPanel());
+			p.validate();
+		case HAUPTMENUE:
+			p.add(menue.getPanel());
+			p.validate();
 		default:
 			break;	
 		}

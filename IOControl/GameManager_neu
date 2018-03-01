@@ -1,11 +1,6 @@
 package IOServer;
 import java.awt.event.KeyEvent;
-
-import Grafik.Game;
-import Grafik.MovementType;
 import Grafik.RenderManager;
-import Grafik.State;
-
 import java.awt.event.MouseEvent;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -16,7 +11,7 @@ import java.util.UUID;
 
 /**
  *
- * @author Lukas Hofmann, Patrick Waltermann
+ * @author Lukas Hofmann, Patrick Waltermann, (max Schulte)
  *
  */
 public class GameManager{
@@ -38,6 +33,7 @@ public class GameManager{
     private Rectangle [] hbListe = new Rectangle[hbAnzahl];
     private ServerVerwaltung server;
     private Partikel pa;
+    private cLoginUpdate clu=new cLoginUpdate(0,null);
     /**
      *
      * @param s Server, der angebunden werden soll.
@@ -52,7 +48,7 @@ public class GameManager{
      * Konstruktor ohne Serverobjekt
      */
     public GameManager(){
-    	
+      
         pSelf.setAttackMode(1);
         pSelf.setMana(0);
         pSelf.setHealth(0);
@@ -70,7 +66,7 @@ public class GameManager{
 
             @Override
             public void run() {
-            	Grafik.RenderManager.render();
+              Grafik.RenderManager.render();
                 cUpdateG();
                 intersect(hbListe, pSelf.getHb());
                 if(pSelf.isHitted()) {cHit(pSelf);}
@@ -82,7 +78,6 @@ public class GameManager{
                 if(endGame&&endHilfe==0) {
                     endHilfe++;
                     //TODO Grafik Ende senden
-                    RenderManager.changeState(State.HAUPTMENUE);
                 }
             }
         }, 0, 100);
@@ -168,11 +163,12 @@ public class GameManager{
             pa.addxVel(-pSelf.getMovementspeed());
         }
     }
-    
     public void cJumpSelf(){
        pa.addyVel(pSelf.getJumpheight());
     }
-    
+    public void cJumpOtherG(Player p) {
+        //TODO sage grafik das p springt
+    }
     /**
      * F�hrt die Methode sAttack(ID, attackMode) beim Server aus.
      */
@@ -190,6 +186,7 @@ public class GameManager{
             am.setPosition(clone);
             amAllg = am;
             pSelf.setAttacking(true);
+            //TODO an grafik spieler attakiert senden
 
         }
     }
@@ -198,15 +195,14 @@ public class GameManager{
      */
     public void cHit(Player p) {
         //TODO an grafik senden
-    	Game.takeDmg(p.getNumberID());
     }
     /**
      * F�hrt die sLogin(GameManager) beim Server auf, um eine Verbindung aufzubauen.
      */
-    public void cLogin(){ //�bergabe der ServerID!!!
+    /*public void cLogin1(){ //�bergabe der ServerID!!!
         id = UUID.randomUUID();
         server.sLogin(this);
-    }
+    }*/
     /**
      * F�hrt die Methode sLogout(GameManager) beim Server aus, um seine Verbindung mit diesem zu trennen.
      */
@@ -253,7 +249,6 @@ public class GameManager{
                 }
             }
             //TODO an Grafik TOD
-            Game.die(i);
         }
     }
     /**
@@ -270,24 +265,18 @@ public class GameManager{
      */
     public void cSpawnprojectile(){
         //an Grafik
-    	Game.spawnProjectile((int) pSelf.getHb().getPos().getXPos(), (int) pSelf.getHb().getPos().getYPos(), pSelf.isLookingRight());
     }
     /**
      * Methode um die Grafik �ber zerst�rte Projectiles zu informieren
      */
     public void cDestroyprojectile(){
         //an Grafik
-    	//Game.destroyProjectile(ProjektilPos.x, ProjektilPos.y);
     }
     /**
      * Alle Daten werden an die Grafik �bertragen
      */
     public static void cUpdateG(){
         //alle daten �bergeben
-    	/* Game.updatePlayer(1, x, y, mt, at, hp, mp);
-    	 Game.updatePlayer(2, x, y, mt, at, hp, mp);
-    	 Game.updatePlayer(3, x, y, mt, at, hp, mp);*/
-    	 
     }
     /**
      *
@@ -300,54 +289,54 @@ public class GameManager{
     }
     public void cSetUpdateS(SUpdate update){
         //TODO fehlt!!!
-    	if(pSelf.getNumberID()==0){
-    		// pSelf aus p1 updaten
-    		pSelf.setUpdateSSelf(update.getP1());
-    		if(pOther1.getNumberID()==1) {
-    			//pOther1 aus p2 updaten
-    			pOther1.setUpdateSOther(update.getP2());
-    			//pOther2 aus p3 updaten
-    			pOther2.setUpdateSOther(update.getP3());
-    		}
-    		else {
-    			//pOther1 aus p3updaten
-    			pOther1.setUpdateSOther(update.getP3());
-    			//pOther2 aus p2 updaten
-    			pOther2.setUpdateSOther(update.getP2());
-    		}
-    	}
-    	else if(pSelf.getNumberID()==1){
-    		//pSelf aus p2updaten
-    		pSelf.setUpdateSSelf(update.getP2());
-    		if(pOther1.getNumberID()==0){
-    			//pOther1 aus p1 updaten
-    			pOther1.setUpdateSOther(update.getP1());
-    			//pOther2 aus p3 updaten
-    			pOther2.setUpdateSOther(update.getP3());
-    		}
-    		else{
-    			//pOther1 aus p3updaten
-    			pOther1.setUpdateSOther(update.getP3());
-    			//pOther2 aus p1 updaten
-    			pOther2.setUpdateSOther(update.getP1());
-    		}
-    	}
-    	else{
-    		//pSelf aus p3updaten
-    		pSelf.setUpdateSSelf(update.getP3());
-    		if(pOther1.getNumberID()==0) {
-    			//pOther1 aus p1
-    			pOther1.setUpdateSOther(update.getP1());
-    			//pOther2 aus p2
-    			pOther2.setUpdateSOther(update.getP2());
-    		}
-    		else{
-    			//pOther1 aus p2
-    			pOther1.setUpdateSOther(update.getP2());
-    			//pOther2 aus p1
-    			pOther2.setUpdateSOther(update.getP1());
-    		}
-    	}
+      if(pSelf.getNumberID()==0){
+        // pSelf aus p1 updaten
+        pSelf.setUpdateSSelf(update.getP1());
+        if(pOther1.getNumberID()==1) {
+          //pOther1 aus p2 updaten
+          pOther1.setUpdateSOther(update.getP2());
+          //pOther2 aus p3 updaten
+          pOther2.setUpdateSOther(update.getP3());
+        }
+        else {
+          //pOther1 aus p3updaten
+          pOther1.setUpdateSOther(update.getP3());
+          //pOther2 aus p2 updaten
+          pOther2.setUpdateSOther(update.getP2());
+        }
+      }
+      else if(pSelf.getNumberID()==1){
+        //pSelf aus p2updaten
+        pSelf.setUpdateSSelf(update.getP2());
+        if(pOther1.getNumberID()==0){
+          //pOther1 aus p1 updaten
+          pOther1.setUpdateSOther(update.getP1());
+          //pOther2 aus p3 updaten
+          pOther2.setUpdateSOther(update.getP3());
+        }
+        else{
+          //pOther1 aus p3updaten
+          pOther1.setUpdateSOther(update.getP3());
+          //pOther2 aus p1 updaten
+          pOther2.setUpdateSOther(update.getP1());
+        }
+      }
+      else{
+        //pSelf aus p3updaten
+        pSelf.setUpdateSSelf(update.getP3());
+        if(pOther1.getNumberID()==0) {
+          //pOther1 aus p1
+          pOther1.setUpdateSOther(update.getP1());
+          //pOther2 aus p2
+          pOther2.setUpdateSOther(update.getP2());
+        }
+        else{
+          //pOther1 aus p2
+          pOther1.setUpdateSOther(update.getP2());
+          //pOther2 aus p1
+          pOther2.setUpdateSOther(update.getP1());
+        }
+      }
     }
     //Update Nocheinmal mit anderen Parametern
     /*
@@ -397,14 +386,35 @@ public class GameManager{
         return false;
     }
   
+    
+    public cLoginUpdate cLogin(){
+     if (clu.getMode()==0){
+        this.id = UUID.randomUUID();
+        clu.setUUID(id);
+        return clu;
+     }
+     else if (clu.getMode()==1){
+       if(clu.getIstBoss()){
+         this.auswahlBoss(clu);
+       }
+       else{
+         this.auswahlSpieler(clu);
+       }
+       return clu;
+     }
+     else{
+       return null;
+     }
+   }
+    
  /**
  * Einer der Spieler hat sich ausgeloggt oder das Spiel ist zu Ende
  * Der Spieler kehrt zum Hauptbildschirm zurück
  */
     
   public void logout(String s){
-	  //zum Hauptbildschirm zurückkehren
-	  zeigen(s);
+    //zum Hauptbildschirm zurückkehren
+    zeigen(s);
   }
   
   /**
@@ -412,7 +422,7 @@ public class GameManager{
   * zum Beispiel welcher Spieler sich ausgeloggt hat oder wer gewonnen hat
   */  
   public void zeigen(String s){
-	  //string an Grafik, vermutlich zu aufwendig
+    //string an Grafik, vermutlich zu aufwendig
   }
   
   /**
@@ -420,24 +430,25 @@ public class GameManager{
   * und das Spiel beginnt
   */
   public void spielstart(){
-	  //Map und andere Spieler zeigen / Spielgrafik starten / 
+    //Map und andere Spieler zeigen / Spielgrafik starten / 
   }
   
-	
+  
   /**
   * Der Spieler ist ein normaler Spieler,
   * es wird die Charakterauswahl für Spielercharaktere geöffnet
   */
-  public void auswahlSpieler(){
-	  //Spielerauswahl für Spieler oeffnen
+  public void auswahlSpieler(cLoginUpdate clu){
+    //Spielerauswahl für Spieler oeffnen
   }
-	
+  
   /**
   * Der Spieler ist der Boss Player
   * es wird die Charakterauswahl für den Bosscharakter geöffnen
   */
-  public void auswahlBoss(){           
-	  //Spielerauswahl für Boss oeffnen
+  public void auswahlBoss(cLoginUpdate clu){           
+    //Spielerauswahl für Boss oeffnen
+    //slogin
   }
 
     public Partikel getPartikel() {
