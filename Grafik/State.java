@@ -1,5 +1,5 @@
 package Grafik;
 
 public enum State {
-	HAUPTMENUE, SETTINGS, GAME, PAUSE
+	HAUPTMENUE, SETTINGS, GAME, PAUSE, LOGIN
 }
