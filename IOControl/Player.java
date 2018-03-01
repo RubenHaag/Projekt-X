@@ -7,8 +7,57 @@ public class Player {
     private Attack amNormal,amSpec1,amSpec2;
     private Rectangle gr;
 
-
-    public int getNumberID() {
+    public Player(int numberID, int attackMode, int jumpheight, int movementspeed, Rectangle hb, double health,
+			double damage, double regSpeed, double mana, boolean isJumping, boolean isHitted, boolean isAttacking,
+			boolean isLookingRight, boolean isSprinting, boolean isBoss, boolean isDead, Attack amNormal,
+			Attack amSpec1, Attack amSpec2, Rectangle gr) {
+		super();
+		this.numberID = numberID;
+		this.attackMode = attackMode;
+		this.jumpheight = jumpheight;
+		this.movementspeed = movementspeed;
+		this.hb = hb;
+		this.health = health;
+		this.damage = damage;
+		this.regSpeed = regSpeed;
+		this.mana = mana;
+		this.isJumping = isJumping;
+		this.isHitted = isHitted;
+		this.isAttacking = isAttacking;
+		this.isLookingRight = isLookingRight;
+		this.isSprinting = isSprinting;
+		this.isBoss = isBoss;
+		this.isDead = isDead;
+		this.amNormal = amNormal;
+		this.amSpec1 = amSpec1;
+		this.amSpec2 = amSpec2;
+		this.gr = gr;
+	}
+    
+    public Player() {
+		super();
+		this.numberID = 0;
+		this.attackMode = 0;
+		this.jumpheight = 0;
+		this.movementspeed = 0;
+		this.hb = new Rectangle(new Position(0,0), 10, 10);
+		this.health = 0;
+		this.damage = 0;
+		this.regSpeed = 0;
+		this.mana = 0;
+		this.isJumping = false;
+		this.isHitted = false;
+		this.isAttacking = false;
+		this.isLookingRight = false;
+		this.isSprinting = false;
+		this.isBoss = false;
+		this.isDead = false;
+		this.amNormal = new Attack(new Rectangle(new Position(0,0), 10, 10), 0, 0, 0);
+		this.amSpec1 = new Attack(new Rectangle(new Position(0,0), 10, 10), 1, 0, 0);
+		this.amSpec2 = new Attack(new Rectangle(new Position(0,0), 10, 10), 2, 0, 0);
+		this.gr = new Rectangle(new Position(0,0), 10, 10);
+	}
+	public int getNumberID() {
         return numberID;
     }
 

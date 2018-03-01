@@ -45,7 +45,7 @@ public class GameManager{
      * Konstruktor ohne Serverobjekt
      */
     public GameManager(){
-
+    	pSelf = new Player();
         pSelf.setAttackMode(1);
         pSelf.setMana(0);
         pSelf.setHealth(0);
@@ -54,8 +54,13 @@ public class GameManager{
         pSelf.setLookingRight(false);
         pSelf.setSprinting(false);
         pSelf.setBoss(false);
-        pa.setJumping(false);
+        pSelf.setHb(new Rectangle(new Position(0,0), 10, 10));
+        pSelf.setGr(new Rectangle(new Position(0,0), 10, 10));
         pa = new Partikel(pSelf.getHb().getPos(), pSelf.getHb().getWidth(),pSelf.getGr());
+        pa.setJumping(false);
+        pOther1 = new Player();
+        pOther2 = new Player();
+        
 
 
         Timer timer = new Timer();
