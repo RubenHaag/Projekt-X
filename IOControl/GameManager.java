@@ -44,8 +44,8 @@ public class GameManager{
     /**
      * Konstruktor ohne Serverobjekt
      */
-    public GameManager(){
-    	pSelf = new Player();
+    public GameManager() {
+        pSelf = new Player();
         pSelf.setAttackMode(1);
         pSelf.setMana(0);
         pSelf.setHealth(0);
@@ -54,35 +54,14 @@ public class GameManager{
         pSelf.setLookingRight(false);
         pSelf.setSprinting(false);
         pSelf.setBoss(false);
-        pSelf.setHb(new Rectangle(new Position(0,0), 10, 10));
-        pSelf.setGr(new Rectangle(new Position(0,0), 10, 10));
-        pa = new Partikel(pSelf.getHb().getPos(), pSelf.getHb().getWidth(),pSelf.getGr());
+        pSelf.setHb(new Rectangle(new Position(0, 0), 10, 10));
+        pSelf.setGr(new Rectangle(new Position(0, 0), 10, 10));
+        pa = new Partikel(pSelf.getHb().getPos(), pSelf.getHb().getWidth(), pSelf.getGr());
         pa.setJumping(false);
         pOther1 = new Player();
         pOther2 = new Player();
-        
 
 
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-
-            @Override
-            public void run() {
-                cUpdateG();
-                intersect(hbListe, pSelf.getHb());
-                if(pSelf.isHitted()) {cHit(pSelf);}
-                if(pOther1.isHitted()) {cHit(pOther1);}
-                if(pOther2.isHitted()) {cHit(pOther2);}
-                if(pOther1.isJumping()){cJumpOtherG(pOther1);}
-                if(pOther2.isJumping()){cJumpOtherG(pOther2);}
-                if(pSelf.isDead()) {cSterben(pSelf.getNumberID());}
-                if(endGame&&endHilfe==0) {
-                    endHilfe++;
-                    //TODO Grafik Ende senden
-                }
-            }
-        }, 0, 100);
-        server = null;
     }
     public Player getpSelf() {
         return pSelf;
@@ -421,7 +400,28 @@ public class GameManager{
   * und das Spiel beginnt
   */
   public void spielstart(){
-	  //Map und andere Spieler zeigen / Spielgrafik starten / 
+	  //Map und andere Spieler zeigen / Spielgrafik starten /
+
+      Timer timer = new Timer();
+      timer.schedule(new TimerTask() {
+
+          @Override
+          public void run() {
+              cUpdateG();
+              intersect(hbListe, pSelf.getHb());
+              if(pSelf.isHitted()) {cHit(pSelf);}
+              if(pOther1.isHitted()) {cHit(pOther1);}
+              if(pOther2.isHitted()) {cHit(pOther2);}
+              if(pOther1.isJumping()){cJumpOtherG(pOther1);}
+              if(pOther2.isJumping()){cJumpOtherG(pOther2);}
+              if(pSelf.isDead()) {cSterben(pSelf.getNumberID());}
+              if(endGame&&endHilfe==0) {
+                  endHilfe++;
+                  //TODO Grafik Ende senden
+              }
+          }
+      }, 0, 100);
+      server = null;
   }
   
 	
