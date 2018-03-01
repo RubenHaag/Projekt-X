@@ -27,9 +27,20 @@ public class ServerVerwaltung {
 
 
     }
-
+    /**
+     * @param id UUID zur eindeutigen Identifikation des schlagenden Spielers
+     * @param am Attack-Objekt um zwischen verschiedenen Attacken zu unterscheiden
+     *
+     * Methode, die vom Boolean isAttacking in der run()-Methode ausgelöst wird.
+     * Hier werden bei einer Attacke erst die Mana-Werte des Spielers gesenkt und der Cooldown
+     * zurückgesetzt. Anschließend werden die getroffenen Spieler ermittelt, ihnen wird Leben
+     * abgezogen und falls einer der Spieler tot ist, wird auch dies in den Boolean isDead gesichert
+     * und gegebenenfalls wird das Spiel beendet indem der boolean endGame auf true gesetzt wird.
+     * Außerdem wird bei einem Tod ein Todeszähler (deathcounter) hochgesetzt und wenn deathcounter > 1 oder ein
+     * Boss ist, entschieden, wer das Spiel gewonnen hat. Hierzu wird bosswin entweder auf true oder false gesetzt.
+     *
+     * */
     private void sAttack(UUID id, Attack am) {
-        //überprüfen ob möglich
         int y = sGetNumberID(id);
         spielerListe[y].getpSelf().setMana(spielerListe[y].getpSelf().getMana() - am.getCost());
         if (am == spielerListe[y].getpSelf().getAmSpec1()) {
@@ -47,10 +58,10 @@ public class ServerVerwaltung {
                     local.getpSelf().setDead(true);
                     if (local.getpSelf().isBoss()) {
                         endGame = true;
-                        bosswin = true;
+                        bosswin = false;
                     } else if (deathcounter == 1) {
                         endGame = true;
-                        bosswin = false;
+                        bosswin = true;
                     }
                     deathcounter++;
                 }
