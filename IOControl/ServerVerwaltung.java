@@ -127,32 +127,34 @@ public class ServerVerwaltung {
     }
 
     /**
-     * @param g Der Client der die Methode aufruft
-     * @return
+     *
+     * 
      */
-    public void loginStart(){
-	  if (allCLU[0]==null){
-		  this.allCLU[0]=naechsteCLU;
-	  }
-	  else if (allCLU[0].getUUID()!=naechsteCLU.getUUID()&&allCLU[1]==null){
-		  this.allCLU[1]=naechsteCLU;
-	  }
-	  else if (allCLU[0].getUUID()!=naechsteCLU.getUUID()&&allCLU[1].getUUID()!=naechsteCLU.getUUID()&&allCLU[2]==null){
-		  this.allCLU[2]=naechsteCLU;
-		  this.alleVorhanden=true;
-	  }
-	  else {
-		  this.alleVorhanden=true;
-	  }
-	  for (int m=0; m<allCLU.length; m++){
-		  if (allCLU[m]!=null){
-			  allCLU[m]=sLogin(allCLU[m]);
+      public void loginStart(){
+	  if (naechsteCLU!=null){
+		  if (allCLU[0]==null){
+			  this.allCLU[0]=naechsteCLU;
+		  }
+		  else if (allCLU[0].getUUID()!=naechsteCLU.getUUID()&&allCLU[1]==null){
+			  this.allCLU[1]=naechsteCLU;
+		  }
+		  else if (allCLU[0].getUUID()!=naechsteCLU.getUUID()&&allCLU[1].getUUID()!=naechsteCLU.getUUID()&&allCLU[2]==null){
+			  this.allCLU[2]=naechsteCLU;
+			  this.alleVorhanden=true;
+		  }
+		  else {
+			  this.alleVorhanden=true;
+		  }
+		  for (int m=0; m<allCLU.length; m++){
+			  if (allCLU[m]!=null){
+				  allCLU[m]=sLogin(allCLU[m]);
+			  }
 		  }
 	  }
 	  allCLU[0]=CLU0;
 	  allCLU[1]=CLU1;
 	  allCLU[2]=CLU2;
-  }
+  	}
   
   /**
   * 
