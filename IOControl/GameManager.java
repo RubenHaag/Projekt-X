@@ -25,9 +25,9 @@ public class GameManager {
     private Rectangle[] hbListe = new Rectangle[hbAnzahl];
     private ServerVerwaltung server;
     private Partikel pa;
-    private cLoginUpdate CLU0;								//CLU0;CLU1;CLU2 : fuer Werteuebergabe von Server zu CLient
-    private cLoginUpdate CLU1;
-    private cLoginUpdate CLU2;
+    private cLoginUpdate CLU0=new cLoginUpdate;								//CLU0;CLU1;CLU2 : fuer Werteuebergabe von Server zu CLient
+    private cLoginUpdate CLU1=new cLoginUpdate;
+    private cLoginUpdate CLU2=new cLoginUpdate;
     private cLoginUpdate ownCLU=new cLoginUpdate(0,null);
     private int charakter;
 
