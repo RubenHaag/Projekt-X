@@ -30,11 +30,10 @@ class SoundManager{  // muss vllt ein eigener Thread sein
             DataLine.Info info      = new DataLine.Info(Clip.class, af, size);
             audioInputStream.read(audio, 0, size);
            
-            //for(int i=0; i < 32; i++) {
-                clip = (Clip) AudioSystem.getLine(info);
-                clip.open(af, audio, 0, size);
-                clip.start();
-            //}
+            clip = (Clip) AudioSystem.getLine(info);
+            clip.open(af, audio, 0, size);
+            clip.start();
+            
         }catch(Exception e){ 
           e.printStackTrace(); 
         }

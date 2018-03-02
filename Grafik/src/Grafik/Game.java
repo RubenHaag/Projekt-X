@@ -18,7 +18,7 @@ public class Game{
   private static Player p2;     //Spieler2
   private static Player b1;     //Spieler3(Boss)
   private BufferedImage map = null;
-  private GamePanel gp;
+  private static GamePanel gp;
   private PlayerAnzeige lm;
   private static ArrayList<Projectile> projectiles;
   
@@ -146,13 +146,21 @@ public class Game{
      * @param p2 Charaktername des zweiten Spielers
      * @param b1 Charaktername des Bosses
      */
-  public void initGame(String p1, String p2, String b1){
-        this.p1 = new Player(p1, 0, 0, 100, 200, true);
-        gp.add(this.p1);
-        this.p2 = new Player(p2, 0, 0, 100, 200, true);
-        gp.add(this.p2);
-        this.b1 = new Player(b1, 0, 0, 200, 400, true);
-        gp.add(this.b1);
+  public static void initGame(String pn1, String pn2, String bn1){
+        p1 = new Player(pn1, 0, 0, 100, 200, true);
+        gp.add(p1);
+        p2 = new Player(pn2, 0, 0, 100, 200, true);
+        gp.add(p2);
+        b1 = new Player(bn1, 0, 0, 200, 400, true);
+        gp.add(b1);
+  }
+  
+  /**
+   * Entfernt den übergebenen Spieler, der Spieler wird danach nicht mehr gezeichnet
+   * @param p Spieler welcher vom Spiel entfernt werden soll
+   */
+  public static void delPlayer(Player p) {
+	  gp.remove(p);
   }
     
    /**

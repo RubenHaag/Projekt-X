@@ -5,7 +5,10 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 
 /**
@@ -22,9 +25,10 @@ class Player extends JComponent{
   private boolean right;
   private boolean takedmg;
   private boolean dead;
-  
+  private int zaehler;
   private MovementType movement;
   private Image image;
+  private BufferedImage idle;
   private AttackType attack;
   
   /**
@@ -43,10 +47,11 @@ class Player extends JComponent{
       this.y = y;
       width = w;
       height = h;
-      movement = MovementType.MOVE;
+      movement = MovementType.IDLE;
       attack = AttackType.NON;
       image = null;
       right = r;
+      zaehler = 0;
     }
   
   /**
@@ -110,19 +115,25 @@ class Player extends JComponent{
    * Zeichnet den Spieler je nach Bewegungsart, Angriffstyp und ob er gerade Schaden erlitten hat oder gestorben ist
    */
   public void paint(Graphics g) {
-      Graphics2D g2d = (Graphics2D) g;
+      //Graphics2D g2d = (Graphics2D) g;
       Toolkit toolkit = Toolkit.getDefaultToolkit();
       this.setBounds(x, y, width, height);
       // erst Bewegungsanamation laden
       switch(movement){
       case IDLE:
-        image = toolkit.getImage("Assets/Charaktere/" + name + "_idle.gif");
-        break;
+    	  if(idle == null){
+              try {
+                idle = ImageIO.read(new File("Assets/Charaktere/" + name + "_idle.png"));
+              } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+              }
+            }
       case MOVE:
         image = toolkit.getImage("Assets/Charaktere/" + name + "_move.gif");       
         break;
       case JUMPING:
-        image = toolkit.getImage("Assets/Charaktere/" + name + "_jumping.gif");       
+        image = toolkit.getImage("Assets/Charaktere/" + name + "_jumping.gif"); 
         break;
       default:
         System.out.println("Irgendwas ist schiefgelaufen");
@@ -137,17 +148,30 @@ class Player extends JComponent{
         image = toolkit.getImage("Assets/Charaktere/" + name + "_attack.gif");
         break;
       case SPECIAL1:
-        image = toolkit.getImage("Assets/Charaktere/" + name + "_att_special1.gif");
+        image = toolkit.getImage("Assets/Charaktere/" + name + "_attack.gif");
         break;
       case SPECIAL2:
-        image = toolkit.getImage("Assets/Charaktere/" + name + "_att_special2_r.gif");
+        image = toolkit.getImage("Assets/Charaktere/" + name + "_attack.gif");
         break;
       }
-      if(right) {
-    	  g2d.drawImage(image, 0, 0, width, height, this);
+      if(dead) {
+    	  image = toolkit.getImage("Assets/Charaktere/" + name + "_dead.gif");
+    	  zaehler++;
       }
-      else {
-    	  g2d.drawImage(image, width-1, 0, -width, height, this);
+      if(right && movement != MovementType.IDLE) {
+    	  g.drawImage(image, 0, 0, width, height, this);
+      }
+      else if(!right && movement != MovementType.IDLE){
+    	  g.drawImage(image, width-1, 0, -width, height, this);
+      }
+      else if(right && movement == MovementType.IDLE) {
+    	  g.drawImage(idle, 0, 0, width, height, null);
+      }
+      else if(!right && movement == MovementType.IDLE) {
+    	  g.drawImage(idle, width-1, 0, -width, height, null);
+      }
+      if(zaehler >= 5) {
+    	  Game.delPlayer(this);
       }
   }
   
