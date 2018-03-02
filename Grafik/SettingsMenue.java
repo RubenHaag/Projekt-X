@@ -146,12 +146,14 @@ public class SettingsMenue {
 		
 		public void paint(Graphics g) {
 			this.setBounds(0, 0, RenderManager.getFWidth(), RenderManager.getFHeight());
-	  		try {
-  				bgi = ImageIO.read(new File("Assets/GUI/Settings_Screen_v2.png"));
-  			} catch (IOException e) {
-  				// TODO Auto-generated catch block
-  				e.printStackTrace();
-  			}
+	  		if(bgi == null){
+	  			try {
+	  				bgi = ImageIO.read(new File("Assets/GUI/Settings_Screen_v2.png"));
+	  			} catch (IOException e) {
+	  				// TODO Auto-generated catch block
+	  				e.printStackTrace();
+	  			}
+	  		}
   			g.drawImage(bgi, 0, 0, RenderManager.getFWidth(), RenderManager.getFHeight(), null);
 	  		this.paintComponents(g);
 		}

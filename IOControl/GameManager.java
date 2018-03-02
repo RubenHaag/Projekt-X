@@ -5,47 +5,42 @@ import java.util.TimerTask;
 import java.util.UUID;
 
 
-
-
 /**
- *
  * @author Lukas Hofmann, Patrick Waltermann
- *
  */
-public class GameManager{
+public class GameManager {
 
     /**
-     *
      * Anmerkung BrutForce soll jetzt benutzt werden (1/20 Sekunde)
-     *
-     * */
-    private int sterbeHilfe=0;
-    private int endHilfe =0;
+     */
+    private int sterbeHilfe = 0;
+    private int endHilfe = 0;
     private boolean endGame, bosswin;
     private UUID id;
     private int hbAnzahl;
-    private Attack amAllg;
     private Player pSelf;
+    private Attack amAllg = pSelf.getAmNormal();
     private Player pOther1;
     private Player pOther2;
-    private Rectangle [] hbListe = new Rectangle[hbAnzahl];
+    private Rectangle[] hbListe = new Rectangle[hbAnzahl];
     private ServerVerwaltung server;
     private Partikel pa;
+
     /**
-     *
      * @param s Server, der angebunden werden soll.
-     * Konstruktor: der GameManager bekommt ein Serverobjekt zum Methodenaufrufen
+     *          Konstruktor: der GameManager bekommt ein Serverobjekt zum Methodenaufrufen
      */
-    public GameManager(ServerVerwaltung s){
+    public GameManager(ServerVerwaltung s) {
         this();
         server = s;
 
     }
+
     /**
      * Konstruktor ohne Serverobjekt
      */
-    public GameManager(){
-
+    public GameManager() {
+        pSelf = new Player();
         pSelf.setAttackMode(1);
         pSelf.setMana(0);
         pSelf.setHealth(0);
@@ -54,71 +49,75 @@ public class GameManager{
         pSelf.setLookingRight(false);
         pSelf.setSprinting(false);
         pSelf.setBoss(false);
+        pSelf.setHb(new Rectangle(new Position(0, 0), 10, 10));
+        pSelf.setGr(new Rectangle(new Position(0, 0), 10, 10));
+        pa = new Partikel(pSelf.getHb().getPos(), pSelf.getHb().getWidth(), pSelf.getGr());
         pa.setJumping(false);
-        pa = new Partikel(pSelf.getHb().getPos(), pSelf.getHb().getWidth(),pSelf.getGr());
+        pOther1 = new Player();
+        pOther2 = new Player();
 
 
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-
-            @Override
-            public void run() {
-                cUpdateG();
-                intersect(hbListe, pSelf.getHb());
-                if(pSelf.isHitted()) {cHit(pSelf);}
-                if(pOther1.isHitted()) {cHit(pOther1);}
-                if(pOther2.isHitted()) {cHit(pOther2);}
-                if(pOther1.isJumping()){cJumpOtherG(pOther1);}
-                if(pOther2.isJumping()){cJumpOtherG(pOther2);}
-                if(pSelf.isDead()) {cSterben(pSelf.getNumberID());}
-                if(endGame&&endHilfe==0) {
-                    endHilfe++;
-                    //TODO Grafik Ende senden
-                }
-            }
-        }, 0, 100);
-        server = null;
     }
+
+    /**
+     * Getter der den eigenen Spieler zurueck gibt
+     *
+     * @return Playerobjekt des Clients
+     */
     public Player getpSelf() {
         return pSelf;
     }
 
+    /**
+     * Getter der die zuletzt ausgefuehrte Attacke zuruek gibt
+     *
+     * @return Attackobjekt
+     */
     public Attack getAmAllg() {
         return amAllg;
     }
+
+    /**
+     * Setter der die Attacke die zuletzt ausgefuehrt wird setzt
+     *
+     * @param amAllg zuletzt ausgefuehrtes Attackobjekt
+     */
     public void setAmAllg(Attack amAllg) {
         this.amAllg = amAllg;
     }
+
     /**
      * Setzt den Server mit dem der Client kommuniziert
      * @param s der Server mit dem der Client kommuniziert
      */
-    public void cSetServer(ServerVerwaltung s){
+    public void cSetServer(ServerVerwaltung s) {
         server = s;
     }
+
     /**
-     * Diese Methode wird vom InputListener aufgerufen und f�hrt die Methode cMoveSelf() aus.
-     * Au�erdem werden die Attribute isLookingRight und isSprinting ver�ndert
+     * Diese Methode wird vom InputListener aufgerufen und fuehrt die Methode cMoveSelf() aus.
+     * Ausserdem werden die Attribute isLookingRight und isSprinting veraendert
+     * Sie dient zur Verarbeitung der auf der Tastatur gedruekten Tasten
+     * Ausserdem gibt es eine If-Schleife die eine weitere Eingabe nach dem Tod des Spielers verhindert
      * @param e Die aktivierte Taste
-     * w/leertaste muss noch erg�nzend werden
      */
     public void inputKey(KeyEvent e) {
-        if(!pSelf.isDead()) {
+        if (!pSelf.isDead()) { //If-Schleife: verhindert weitere Eingabe nach dem Tod des Spielers
             switch (e.getKeyChar()) {
-                case 'a':
+                case 'a': //Bewegung nach Links bei dem Tastendruck von 'A'
                     pSelf.setLookingRight(false);
                     pSelf.setSprinting(false);
                     cMoveSelf();
                     break;
-                case 'd':
+                case 'd': //Bewegung nach Rechts bei dem Tastendruck von 'D'
                     pSelf.setLookingRight(true);
                     pSelf.setSprinting(false);
                     cMoveSelf();
                     break;
-                case ' ':
+                case ' ': //Sprung bei dem Tastendruck von ''bzw der Leertaste
                     cJumpSelf();
                     break;
-                case '1':
+                case '1': //Auswahl der Attackmodi
                 case '2':
                 case '3':
                     try {
@@ -131,12 +130,13 @@ public class GameManager{
     }
 
     /**
-     Diese Methode wird vom InputListener aufgerufen, wenn ein Mausklick registriert wurde.
-     Sie l�st die Methode attack() aus, wenn die linke Maustaste gedr�ckt wurde, wertet also den Mausinput aus
+     * Diese Methode wird vom InputListener aufgerufen, wenn ein Mausklick registriert wurde.
+     * Sie loest die Methode attack() aus, wenn die linke Maustaste gedrueckt wurde, wertet also den Mausinput aus
+     * Ausserdem gibt es eine If-Schleife die eine weitere Eingabe nach dem Tod des Spielers verhindert
      */
     public void inputMouse(MouseEvent m) {
-        if(m.getButton()==1&&!pSelf.isDead()){
-            switch(pSelf.getAttackMode()){
+        if (m.getButton() == 1 && !pSelf.isDead()) { //If-Schleife: verhindert weitere Eingabe nach dem Tod des Spielers
+            switch (pSelf.getAttackMode()) { //Attacke wird in Abhaengigkeit zum eingegebenen Attackmodus ausgefuehrt
                 case 1:
                     cAttack(pSelf.getAmNormal());
                     break;
@@ -149,27 +149,45 @@ public class GameManager{
             }
         }
     }
+
     /**
-     * �bertr�gt die eigene Bewegung an den Server
+     * Umsetzung der bei InputKey() eingegebenen eigenen Bewegungen in X-Richtung
+     * Hierfuer wird das Partikel bewegt
      */
-    public void cMoveSelf(){
+    private void cMoveSelf() {
         if (pSelf.isLookingRight()) {
             pa.addxVel(pSelf.getMovementspeed());
-        }else if (!pSelf.isLookingRight()) {
+        } else if (!pSelf.isLookingRight()) {
             pa.addxVel(-pSelf.getMovementspeed());
         }
     }
-    public void cJumpSelf(){
-       pa.addyVel(pSelf.getJumpheight());
+
+    /**
+     * Umsetzung der bei InputKey() eingegebenen eigenen Sprungbewegung
+     * Hierfuer wird das Partikel bewegt bzw. mit einer Y-Velocity ausgestattet
+     */
+    private void cJumpSelf() {
+        pa.addyVel(pSelf.getJumpheight());
     }
-    public void cJumpOtherG(Player p) {
+
+    /**
+     * TODO
+     * @param p Playerobjekt
+     */
+    private void cJumpOtherG(Player p) {
         //TODO sage grafik das p springt
     }
+
     /**
-     * F�hrt die Methode sAttack(ID, attackMode) beim Server aus.
+     * Methode, die durch InputMouse ausgeloest wird und die Position des Spielers klont. Abhängig von der Richtung in die der Spieler schaut wird die Position des Klons gesetzt.
+     * Der Klon uebergibt seine Koordinate an die Attacke bzw die Hitbox der Attacke.
+     * Zu erwaehnen ist, dass dies nur passiert, wenn die Mana ausreichend vorhanden ist und der Cooldown der Attacke abgelaufen ist.
+     * Abschliessend wird das abgeaenderte Attackobjekt im Attackobjekt amAllg abgespeichert.
+     * Danach wird der Boolean isAttacking auf true gesetzt, sodass bei der naechsten Abfrage des Servers das Attackobjekt amAllg übertragen wird und isAttacking im Server auf true gesetzt.
+     * @param am Attackobjekt das ausgewaehlt ist
      */
-    public void cAttack(Attack am) {
-        if(pSelf.getMana()>=am.getCost()&&am.getCooldown()==0) {
+    private void cAttack(Attack am) {
+        if (pSelf.getMana() >= am.getCost() && am.getCooldown() == 0) {
 
             Position clone = new Position(pSelf.getHb().getLeft(), pSelf.getHb().getTop());
             if (pSelf.isLookingRight()) {
@@ -186,25 +204,29 @@ public class GameManager{
 
         }
     }
+
     /**
-     * �bergibt der Grafik, dass Schaden an einen Spieler ausgef�hrt wurde
+     * Uebergibt der Grafik, dass Schaden an einen Spieler ausgef�hrt wurde
      */
-    public void cHit(Player p) {
+    private void cHit(Player p) {
         //TODO an grafik senden
     }
+
     /**
-     * F�hrt die sLogin(GameManager) beim Server auf, um eine Verbindung aufzubauen.
+     * Fuehrt die sLogin(GameManager) beim Server auf, um eine Verbindung aufzubauen.
      */
-    public void cLogin(){ //�bergabe der ServerID!!!
+    public void cLogin() { //�bergabe der ServerID!!!
         id = UUID.randomUUID();
         server.sLogin(this);
     }
+
     /**
      * F�hrt die Methode sLogout(GameManager) beim Server aus, um seine Verbindung mit diesem zu trennen.
      */
-    public void cLogout(){
+    public void cLogout() {
         server.sLogout(this);
     }
+
     /**
      * Signalisiert welche Charackterauswahl dir angezeigt werden soll.
      * @param b Ob Boss oder nicht
@@ -225,27 +247,29 @@ public class GameManager{
     }
 
     /**
-     * Erm�glicht dem Server die UUID des Clients zu bekommen.
-     * @return �bergibt die UUID des Clients
+     * Ermoeglicht die Auslese der UUID.
+     * @return Gibt die UUid des Clients zurueck
      */
-    public UUID cGetUUID(){
+    public UUID cGetUUID() {
         return id;
 
     }
+
     /**
-     * �bergibt die interne ID zur Erkennung um welchen Client es sich handelt.
-     * @return eigene ID
+     * Uebergibt die interne ID des eigenen Players zur Erkennung um welchen Spieler es sich handelt.
+     * @return Id des eigenen Spielers
      */
-    public int cGetNumberID(){
+    public int cGetNumberID() {
         return pSelf.getNumberID();
 
     }
+
     /**
      * Signalisiert wenn ein Client stirbt
      * @param i ID des sterbenden Spielers
      */
-    public void cSterben(int i) {
-        if(sterbeHilfe==0) {
+    private void cSterben(int i) {
+        if (sterbeHilfe == 0) {
             sterbeHilfe++;
             if (i == 0) {
                 try {
@@ -256,8 +280,9 @@ public class GameManager{
             //TODO an Grafik TOD
         }
     }
+
     /**
-     * �bergibt die IDs der anderen Clients an diesen Client
+     * Uebergibt die IDs der anderen Clients an diesen Client
      * @param id1 ID des ersten anderen Spielers
      * @param id2 ID des zweiten anderen Spielers
      */
@@ -265,35 +290,84 @@ public class GameManager{
         pOther1.setNumberID(id1);
         pOther2.setNumberID(id2);
     }
+
     /**
-     * Methode um die Grafik �ber erschaffene Projectiles zu informieren
+     * Methode um die Grafik ueber erschaffene Projectiles zu informieren
      */
-    public void cSpawnprojectile(){
+    public void cSpawnprojectile() {
         //an Grafik
     }
+
     /**
      * Methode um die Grafik �ber zerst�rte Projectiles zu informieren
      */
-    public void cDestroyprojectile(){
+    public void cDestroyprojectile() {
         //an Grafik
     }
+
     /**
      * Alle Daten werden an die Grafik �bertragen
      */
-    public static void cUpdateG(){
+    private void cUpdateG() {
         //alle daten �bergeben
     }
+
     /**
      *
      */
-    public CUpdate cGetUpdateS(){
-        CUpdate r = new CUpdate(id, amAllg,pSelf);
+    public CUpdate cGetUpdateS() {
+        CUpdate r = new CUpdate(id, amAllg, pSelf);
         pSelf.setAttacking(false);
         return r;
 
     }
-    public void cSetUpdateS(SUpdate update){
-        //TODO fehlt!!!
+
+    public void cSetUpdateS(SUpdate update) {
+        endGame = update.isEndGame();
+        bosswin = update.isBosswin();
+        if (pSelf.getNumberID() == 0) {
+            // pSelf aus p1 updaten
+            pSelf.setUpdateSSelf(update.getP1());
+            if (pOther1.getNumberID() == 1) {
+                //pOther1 aus p2 updaten
+                pOther1.setUpdateSOther(update.getP2());
+                //pOther2 aus p3 updaten
+                pOther2.setUpdateSOther(update.getP3());
+            } else {
+                //pOther1 aus p3updaten
+                pOther1.setUpdateSOther(update.getP3());
+                //pOther2 aus p2 updaten
+                pOther2.setUpdateSOther(update.getP2());
+            }
+        } else if (pSelf.getNumberID() == 1) {
+            //pSelf aus p2updaten
+            pSelf.setUpdateSSelf(update.getP2());
+            if (pOther1.getNumberID() == 0) {
+                //pOther1 aus p1 updaten
+                pOther1.setUpdateSOther(update.getP1());
+                //pOther2 aus p3 updaten
+                pOther2.setUpdateSOther(update.getP3());
+            } else {
+                //pOther1 aus p3updaten
+                pOther1.setUpdateSOther(update.getP3());
+                //pOther2 aus p1 updaten
+                pOther2.setUpdateSOther(update.getP1());
+            }
+        } else {
+            //pSelf aus p3updaten
+            pSelf.setUpdateSSelf(update.getP3());
+            if (pOther1.getNumberID() == 0) {
+                //pOther1 aus p1
+                pOther1.setUpdateSOther(update.getP1());
+                //pOther2 aus p2
+                pOther2.setUpdateSOther(update.getP2());
+            } else {
+                //pOther1 aus p2
+                pOther1.setUpdateSOther(update.getP2());
+                //pOther2 aus p1
+                pOther2.setUpdateSOther(update.getP1());
+            }
+        }
     }
     //Update Nocheinmal mit anderen Parametern
     /*
@@ -307,29 +381,34 @@ public class GameManager{
     this.pos = pos;
     this.isLookingRight = isLookingRight;
   }*/
+
     /**
-     * �bergibt den laufenden Countdown an die Grafik
+     * Uebergibt den laufenden Countdown an die Grafik
+     *
      * @param countdown Countdown bis Spielbeginn
      */
     public void startCountdown(int countdown) {
         //TODO fehlt!!!
         //an grafik und Preparingphase initialisieren
     }
+
     /**
      * Wird vom Server aufgerufen, signalisiert die Preparingphase
      */
     public void cCharakterauswahlStarten() {
 
     }
+
     /**
      * Setzt den/die Character der Spieler
      */
     public void cSetCharakter() {
         //TODO fehlt!!!
 
+
     }
 
-    public boolean intersect(Rectangle[] player, Rectangle damage) {
+    private boolean intersect(Rectangle[] player, Rectangle damage) {
         for (Rectangle r : player) {
             if (!((damage.getRight() <= r.getLeft() || damage.getLeft() >= r.getRight()) && (damage.getBottom() >= r.getTop()))) {
                 pa.setJumping(false);
@@ -342,49 +421,80 @@ public class GameManager{
         pa.setJumping(true);
         return false;
     }
-  
- /**
- * Einer der Spieler hat sich ausgeloggt oder das Spiel ist zu Ende
- * Der Spieler kehrt zum Hauptbildschirm zurück
- */
-    
-  public void logout(String s){
-	  //zum Hauptbildschirm zurückkehren
-	  zeigen(s);
-  }
-  
-  /**
-  * @param s String der auf dem Bildschirm angezeigt wird, um dem Spieler zu erklären was passiert ist
-  * zum Beispiel welcher Spieler sich ausgeloggt hat oder wer gewonnen hat
-  */  
-  public void zeigen(String s){
-	  //string an Grafik, vermutlich zu aufwendig
-  }
-  
-  /**
-  * Spiel wird gestartet; Map, andere Spieler, andere Anzeigen etc. werden angezeigt 
-  * und das Spiel beginnt
-  */
-  public void spielstart(){
-	  //Map und andere Spieler zeigen / Spielgrafik starten / 
-  }
-  
-	
-  /**
-  * Der Spieler ist ein normaler Spieler,
-  * es wird die Charakterauswahl für Spielercharaktere geöffnet
-  */
-  public void auswahlSpieler(){
-	  //Spielerauswahl für Spieler oeffnen
-  }
-	
-  /**
-  * Der Spieler ist der Boss Player
-  * es wird die Charakterauswahl für den Bosscharakter geöffnen
-  */
-  public void auswahlBoss(){           
-	  //Spielerauswahl für Boss oeffnen
-  }
+
+    /**
+     * Einer der Spieler hat sich ausgeloggt oder das Spiel ist zu Ende
+     * Der Spieler kehrt zum Hauptbildschirm zurück
+     */
+
+    public void logout(String s) {
+        //zum Hauptbildschirm zurückkehren
+        zeigen(s);
+    }
+
+    /**
+     * @param s String der auf dem Bildschirm angezeigt wird, um dem Spieler zu erklären was passiert ist
+     *          zum Beispiel welcher Spieler sich ausgeloggt hat oder wer gewonnen hat
+     */
+    public void zeigen(String s) {
+        //string an Grafik, vermutlich zu aufwendig
+    }
+
+    /**
+     * Spiel wird gestartet; Map, andere Spieler, andere Anzeigen etc. werden angezeigt
+     * und das Spiel beginnt
+     */
+    public void spielstart() {
+        //Map und andere Spieler zeigen / Spielgrafik starten /
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            public void run() {
+                cUpdateG();
+                intersect(hbListe, pSelf.getHb());
+                if (pSelf.isHitted()) {
+                    cHit(pSelf);
+                }
+                if (pOther1.isHitted()) {
+                    cHit(pOther1);
+                }
+                if (pOther2.isHitted()) {
+                    cHit(pOther2);
+                }
+                if (pOther1.isJumping()) {
+                    cJumpOtherG(pOther1);
+                }
+                if (pOther2.isJumping()) {
+                    cJumpOtherG(pOther2);
+                }
+                if (pSelf.isDead()) {
+                    cSterben(pSelf.getNumberID());
+                }
+                if (endGame && endHilfe == 0) {
+                    endHilfe++;
+                    //TODO Grafik Ende senden
+                }
+            }
+        }, 0, 100);
+        server = null;
+    }
+
+
+    /**
+     * Der Spieler ist ein normaler Spieler,
+     * es wird die Charakterauswahl für Spielercharaktere geöffnet
+     */
+    public void auswahlSpieler() {
+        //Spielerauswahl für Spieler oeffnen
+    }
+
+    /**
+     * Der Spieler ist der Boss Player
+     * es wird die Charakterauswahl für den Bosscharakter geöffnen
+     */
+    public void auswahlBoss() {
+        //Spielerauswahl für Boss oeffnen
+    }
 
     public Partikel getPartikel() {
         return pa;
