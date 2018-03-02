@@ -7,6 +7,7 @@ public class cLoginUpdate extends Update {
   private boolean istBoss;                                //ist Spieler Boss oder nicht
   private int charakter;
   private UUID UUID;
+  private boolean spielStart;
 
   public cLoginUpdate(){
   }
@@ -25,7 +26,7 @@ public class cLoginUpdate extends Update {
   }
   
   public void modeErhoehen(){
-    this.mode++;
+	  this.mode++;
   }
   
   public UUID getUUID(){
@@ -51,5 +52,13 @@ public class cLoginUpdate extends Update {
   
   public int getCharakter(){
     return charakter;
+  }
+  
+  public boolean getSpielStart(){
+	  return spielStart;
+  }
+  
+  public void setSpielStart(boolean spielStart){
+	  this.spielStart=spielStart;
   }
 }
