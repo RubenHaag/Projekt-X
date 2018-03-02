@@ -13,10 +13,13 @@ public class ServerVerwaltung {
     private boolean s1 = false;          //s1,s2,b : welche rolle ist schon vergeben, wird beim login benÃ¶tigt (s:Spieler b:Boss)
     private boolean s2 = false;
     private boolean b = false;
-    private int n = 0;                 // n: Anzahl der eingeloggten Spieler
-    private GameManager spieler1 = new GameManager();
-    private GameManager spieler2 = new GameManager();
-    private GameManager boss = new GameManager();
+    private int n = 0;             					// n: Anzahl der eingeloggten Spieler
+    private boolean alleVorhanden=false;  			// wenn alle Spieler versucht haben sich einzuloggen true 
+    private cLoginUpdate[] allCLU=new cLoginUpdate[3];		//alle clientLoginUpdate Objekte
+    private cLoginUpdate CLU0;					//CLU0;CLU1;CLU2 : Wie allCLU, aber als eigene Objekte, da einfacher fuer Übertragung auszulesen
+    private cLoginUpdate CLU1;
+    private cLoginUpdate CLU2;
+    private cLoginUpdate naechsteCLU;
     private long last_time = System.nanoTime();
     /**
      * dt ist die Deltatime
