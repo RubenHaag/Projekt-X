@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 /**
- * 
+ * Menue in welchem die Server ID eingegeben wird
  * @author Fabian Scherer
  *
  */
@@ -90,7 +90,7 @@ public class LoginMenue {
   private JPanel mp;
   
   /**
-   * 
+   * Konstruktor, dient zur Initialisierung
    */
   LoginMenue(){
     login = new MenueButton("Login_button", ll, 200, 400, 600, 180);
@@ -117,7 +117,7 @@ public class LoginMenue {
   }
   
   /**
-   * 
+   * Gibt das Panel, auf welchem gezeichnet wird, zurück
    * @return
    */
   public JPanel getPanel() {

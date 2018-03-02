@@ -9,8 +9,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 /**
- * 
- * @author F
+ * Lebens- und Manaanzeige des spielenden Spielers
+ * @author Fabian Scherer
  *
  */
 public class PlayerAnzeige{
@@ -22,9 +22,9 @@ public class PlayerAnzeige{
   private AnzeigePanel p;
   
   /**
-   * 
-   * @param hp
-   * @param mp
+   * Initialisiert die Lebens- und Manaanzeige
+   * @param hp Lebenspunkte in Prozent
+   * @param mp Manapunkte in Prozent
    */
   PlayerAnzeige(double hp, double mp){
     p = new AnzeigePanel();
@@ -47,16 +47,16 @@ public class PlayerAnzeige{
   }
   
   /**
-   * 
-   * @return
+   * Gibt das Panel, auf welchem gezeichnet wird, zurück
+   * @return  Panel, auf welchem gezeichnet wird
    */
   public JPanel getPanel() {
     return p;
   }
   
   /**
-   * 
-   * @param p
+   * Aktualisiert die Lebensanzeige
+   * @param p Neuer Lebensprozentsatz
    */
   public void updateHP(int p) {
     if(p > 100) {
@@ -69,8 +69,8 @@ public class PlayerAnzeige{
   }
   
   /**
-   * 
-   * @param p
+   * Aktualisiert die Manaanzeige
+   * @param p Neuer Manaprozentsatz
    */
   public void updateMP(int p) {
     if(p > 100) {
@@ -83,7 +83,7 @@ public class PlayerAnzeige{
   }
   
   /**
-   * 
+   * Hilfsklasse
    * @author F
    *
    */

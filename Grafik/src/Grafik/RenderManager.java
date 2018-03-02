@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 
 /**
- * 
+ * Hauptklasse der Grafik, managed das Fenster und das Zeichnen auf diesem
  * @author Fabian Scherer
  *
  */
@@ -32,7 +32,8 @@ public class RenderManager{       // Hauptklasse in der Grafik, managed wann was
   };
   
   /**
-   * 
+   * Main-Methode der Grafik
+   * Initialisiert das Fenster und sämtliche anderen Attr
    * @param args
    */
   public static void main(String[] args) {
@@ -62,8 +63,8 @@ public class RenderManager{       // Hauptklasse in der Grafik, managed wann was
   }
   
   /**
-   * 
-   * @param s
+   * Aktualisiert den Programmstatus
+   * @param s State in dem sich das Programm befindet
    */
   public static void changeState(State s){
     switch(state) {
@@ -106,7 +107,7 @@ public class RenderManager{       // Hauptklasse in der Grafik, managed wann was
   }
   
   /**
-   * 
+   * Zeichnet das Bild neu
    */
   public static void render() {
     p.repaint();
@@ -114,26 +115,34 @@ public class RenderManager{       // Hauptklasse in der Grafik, managed wann was
   }
   
   /**
-   * 
-   * @return
+   * Gibt die Fensterbreite zurück
+   * @return Fensterbreite
    */
   public static int getFWidth(){
     return f.getWidth();
   }
   
   /**
-   * 
-   * @return
+   * Gibt die Fensterhöhe zurück
+   * @return Fensterhöhe
    */
   public static int getFHeight(){
     return f.getHeight();
   }
   
   /**
-   * 
-   * @param b
+   * Setter für running
+   * @param b Läuft das Fenster noch?
    */
   public static void setRunning(boolean b) {
     running = b;
+  }
+  
+  /**
+   * Gibt das Fenster zurück
+   * @return Fenster
+   */
+  public static JFrame getFrame() {
+	  return f;
   }
 }

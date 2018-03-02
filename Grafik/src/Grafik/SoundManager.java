@@ -8,10 +8,19 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 
+
+/**
+ * Stellt Methoden zum Abspielen von Sound-Dateien bereit
+ * @author Fabian Scherer
+ *
+ */
 class SoundManager{  // muss vllt ein eigener Thread sein
   private static Clip clip = null;
   
-  // spielt den per Dateinamen uebergebenen sound ab
+  /**
+   * Spielt die übergebene Sound-Datei ab
+   * @param dateiname Datei-Pfad der Sound-Datei
+   */
   public static void playSound(String dateiname){
     try{
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(dateiname));
@@ -30,14 +39,6 @@ class SoundManager{  // muss vllt ein eigener Thread sein
           e.printStackTrace(); 
         }
         
-  }
-  
-  public static void stopSound() {
-    clip.stop();
-  }
-  
-  public static void closeSound() {
-    clip.close();
   }
 
 }

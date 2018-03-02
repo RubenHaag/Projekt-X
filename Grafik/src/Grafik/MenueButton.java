@@ -10,7 +10,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 /**
- * 
+ * Button-Klasse, dient zur Darstellung und Verwaltung eines Buttons
  * @author Fabian Scherer
  *
  */
@@ -28,12 +28,12 @@ class MenueButton{
   
   /**
    * 
-   * @param name
-   * @param l
-   * @param x
-   * @param y
-   * @param width
-   * @param height
+   * @param name Text der auf dem Button stehen soll bzw. Dateianfang
+   * @param l MouseListener, welcher den Button steuert
+   * @param x X-Position der linken oberen Ecke
+   * @param y Y-Position der linken oberen Ecke
+   * @param width Breite des Buttons
+   * @param height Höhe des Buttons
    */
   public MenueButton(String name, MouseListener l, int x, int y, int width, int height) {
     panel = new ButtonPanel();
@@ -49,39 +49,39 @@ class MenueButton{
   }
   
   /**
-   * 
-   * @return
+   * Gibt das Panel, auf welchem gezeichnet wird, zurück
+   * @return Panel, auf welchem gezeichnet wird
    */
   public JPanel getPanel() {
     return panel;
   }
   
   /**
-   * 
-   * @param clicked
+   * Veraendert den Buttonstatus zu geklickt oder ungeklickt
+   * @param clicked Wurde der Button geklickt?
    */
   public void changeClicked(boolean clicked){
     this.clicked = clicked;
   }
   
   /**
-   * 
-   * @param t
+   * Veraendert die Buttonaufschrift
+   * @param t Neue Buttonaufschrift
    */
   public void changeText(String t) {
     text = t;
   }
   
   /**
-   * 
-   * @return
+   * Gibt die Buttonaufschrift zurück
+   * @return Buttonaufschrift
    */
   public String getText() {
     return text;
   }
   
   /**
-   * 
+   * Hilfsklasse zum Zeichnen des Buttons
    * @author F
    *
    */

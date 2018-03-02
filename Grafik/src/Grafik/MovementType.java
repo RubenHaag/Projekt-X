@@ -1,7 +1,8 @@
 package Grafik;
 
 /**
- * 
+ * Bewegungsart eines Charakters
+ * Types: IDLE, MOVE, JUMPING
  * @author Fabian Scherer
  *
  */

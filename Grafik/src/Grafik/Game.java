@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-/**Hauptklasse des Spiels innerhalb der Grafik. Verwaltet den Start und die Grafik des Spiels
+/**
+ * Hauptklasse für das Spiel im Grafikbereich. Beinhaltet die Schnittstellen für das Zeichnen der Charaktere
  * @author Fabian Scherer
   */
 public class Game{
@@ -22,7 +23,8 @@ public class Game{
   private static ArrayList<Projectile> projectiles;
   
   /**
-   * 
+   * Konstruktor des Game-Objekts
+   * Initialisiert alle Attribute, darunter auch die Charaktere mit Standardwerten
    */
   Game(){
     gp = new GamePanel();
@@ -35,8 +37,8 @@ public class Game{
   }
   
   /**
-   * 
-   * @param player
+   * Lässt einen Spieler Schaden nehmen(grafisch)
+   * @param player Spieler der Schaden bekommen soll
    */
   public static void takeDmg(int player) {
     switch (player) {
@@ -55,8 +57,8 @@ public class Game{
   }
   
   /**
-   * 
-   * @param player
+   * Lässt einen Spieler sterben
+   * @param player Spieler der sterben soll
    */
   public static void die(int player) {
     switch (player) {
@@ -75,19 +77,19 @@ public class Game{
   }
   
   /**
-   * 
-   * @param x
-   * @param y
-   * @param right
+   * Lässt ein Projektil an der übergebenen Position erscheinen
+   * @param x X-Position der oberen linken Ecke des Projektils
+   * @param y Y-Position der oberen linken Ecke des Projektils
+   * @param right Flugrichtung des Projektils, true = rechts
    */
   public static void spawnProjectile(int x, int y, boolean right) {
-    projectiles.add(new Projectile(x, y, "Manabar"));
+    projectiles.add(new Projectile(x, y, "Pfeil"));
   }
   
   /**
-   * 
-   * @param x
-   * @param y
+   * Lässt das Projektil an der übergebenen Position verschwinden
+   * @param x X-Position der oberen linken Ecke des Projektils
+   * @param y Y-Position der oberen linken Ecke des Projektils
    */
   public static void destroyProjectile(int x, int y) {
     for(Projectile p:projectiles) {
@@ -115,21 +117,21 @@ public class Game{
         if(mt != b1.getMT()){
           b1.updateMovementType(mt, right);
         }
-        b1.updateAttackType(at, right);
+        b1.updateAttackType(at);
         break;
       case 1:
         p1.updatePos(x, y);
         if(mt != p1.getMT()){
           p1.updateMovementType(mt, right);
         }
-        p1.updateAttackType(at, right);  
+        p1.updateAttackType(at);  
         break;
       case 2:
         p2.updatePos(x, y);
         if(mt != p2.getMT()){
           p2.updateMovementType(mt, right);
         }
-        p2.updateAttackType(at, right);  
+        p2.updateAttackType(at);  
         break;
       default:
         System.out.println("Irgendwas ist schiefgelaufen beim Update der Spieler");
@@ -137,39 +139,40 @@ public class Game{
       }
   } 
   
-    /** Initialisiert alle fuer das Spiel wichtige Grfikkomponenten
-     * 
+    /** 
+     * Initialisiert die Charaktere des Spiels
+     * NOTE: derzeit nicht im Gebrauch aufgrund fehlender Charakterauswahl
      * @param p1 Charaktername des ersten Spielers
      * @param p2 Charaktername des zweiten Spielers
      * @param b1 Charaktername des Bosses
-     *
+     */
   public void initGame(String p1, String p2, String b1){
-        this.p1 = new Player(p1, 0, 0, 100, 200);
+        this.p1 = new Player(p1, 0, 0, 100, 200, true);
         gp.add(this.p1);
-        this.p2 = new Player(p2, 0, 0, 100, 200);
+        this.p2 = new Player(p2, 0, 0, 100, 200, true);
         gp.add(this.p2);
-        this.b1 = new Player(b1, 0, 0, 200, 400);
+        this.b1 = new Player(b1, 0, 0, 200, 400, true);
         gp.add(this.b1);
-  }*/
+  }
     
    /**
-    * 
-    * @return
+    * Gibt das Panel, auf welchem gezeichnet wird, zurück
+    * @return Panel, auf welchem gezeichnet wird
     */
     public JPanel getPanel() {
       return gp;
       
     }
     
-    /**Zeichnet das Panel neu
-     * 
+    /**
+     * Zeichnet das Panel neu
      */
     public void render() {
       gp.repaint();
     }
     
-    /** Hilfsklasse fuer das Game Objekt, auf diesem Panel wird gezeichnet
-     * 
+    /** 
+     * Hilfsklasse fuer das Game Objekt, auf diesem Panel wird gezeichnet
      * @author Fabian Scherer
      *
      */

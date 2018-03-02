@@ -1,6 +1,7 @@
 package Grafik;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -12,7 +13,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 /**
- * 
+ * Element, welches im LoginMenue gebraucht wird zur Eingabe der Server IP
  * @author Fabian Scherer
  *
  */
@@ -37,17 +38,24 @@ public class LoginTextfield {
     @Override
     public void keyTyped(KeyEvent arg0) {
       // TODO Auto-generated method stub
-      text = text + arg0.getKeyChar();
+    	if(arg0.getKeyChar() >= 32 && arg0.getKeyChar() <= 126) {
+    		text = text + arg0.getKeyChar();
+    	}
+    	if(arg0.getKeyChar() == 127) {
+    		if(text.length() != 0) {
+    			text = text.substring(0, text.length()-1);
+    		}
+      }
     }
     
   };
   
   /**
-   * 
-   * @param x
-   * @param y
-   * @param width
-   * @param height
+   * Konstruktor, Initialisiert alle Attribute
+   * @param x Die X-Position der oberen linken Ecke
+   * @param y Die Y-Position der oberen linken Ecke
+   * @param width Die Breite des Textfields
+   * @param height Die Höhe des Textfields
    */
   LoginTextfield(int x, int y, int width, int height){
     p = new JPanel() {
@@ -63,24 +71,28 @@ public class LoginTextfield {
         }
         g.drawImage(img, 0, 0, width, height, null);
         g.setColor(Color.DARK_GRAY);
-        g.drawString(text, 5, 20);
+        Font font = new Font("TimesRoman", Font.BOLD, 50);
+        g.setFont(font);
+        g.drawString(text, 30, 175);
+        g.fillRect(30+25*text.length(), 125, 10, 50);
       }
     };
     text = "";
-    p.addKeyListener(kl);
+    RenderManager.getFrame().addKeyListener(kl);
+    
   }
   
   /**
-   * 
-   * @return
+   * Gibt den bisher geschrieben Text zurück
+   * @return Text der bisher im Textfield geschrieben wurde
    */
   public String getText(){
     return text;
   }
   
   /**
-   * 
-   * @return
+   * Gibt das Panel, auf welchem gezeichnet wird, zurück
+   * @return Panel, auf welchem gezeichnet wird
    */
   public JPanel getPanel() {
     return p;

@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 
 /**
- * 
+ * Projektilklasse, verwaltet immer ein Projektil
  * @author Fabian Scherer
  *
  */
@@ -20,10 +20,10 @@ public class Projectile extends JComponent{
   private BufferedImage pi = null;
   
   /**
-   * 
-   * @param x
-   * @param y
-   * @param dat
+   * Konstruktor
+   * @param x X-Position der oberen linken Ecke
+   * @param y Y-Position der oberen linken Ecke
+   * @param dat Dateiname(kein Pfad und auch keine Dateiendung)
    */
   Projectile(int x, int y, String dat){
     dateiname = dat;
@@ -32,9 +32,9 @@ public class Projectile extends JComponent{
   }
   
   /**
-   * 
-   * @param x
-   * @param y
+   * Aktualisiert ddie Position des Projektils
+   * @param x X-Position der oberen linken Ecke
+   * @param y Y-Position der oberen linken Ecke
    */
   public void updatePos(int x, int y) {
     this.x = x;
@@ -42,21 +42,21 @@ public class Projectile extends JComponent{
   }
   
   /**
-   * 
+   * Gibt die X-Position der oberen linken Ecke zurück
    */
   public int getX() {
      return x;
   }
    
   /**
-   * 
+   * Gibt die Y-Position der oberen linken Ecke zurück
    */
   public int getY() {
      return y;
   }
   
   /**
-   * 
+   * Paint-Methode: Zeichnet das Projektil
    */
   public void paint(Graphics g) {
     this.setBounds(x, y, 50, 50);

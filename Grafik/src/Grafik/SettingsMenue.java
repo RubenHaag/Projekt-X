@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 /**
- * 
+ * Menue um Einstellungen vorzunehmen
  * @author Fabian Scherer
  *
  */
@@ -130,7 +130,7 @@ public class SettingsMenue {
   };
   
   /**
-   * 
+   * Konstruktor
    */
   SettingsMenue(){
     music = new MenueButton("Music_On", musicl, 300, 200, 400, 160);
@@ -144,15 +144,15 @@ public class SettingsMenue {
   }
   
   /**
-   * 
-   * @return
+   * Gibt das Panel, auf welchem gezeichnet wird, zurück
+   * @return Panel, auf welchem gezeichnet wird
    */
   public JPanel getPanel() {
     return p;
   }
   
   /**
-   * 
+   * Hilfsklasse
    * @author Fabian Scherer
    *
    */

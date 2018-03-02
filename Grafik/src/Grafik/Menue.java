@@ -115,7 +115,7 @@ public class Menue {
   private MenuePanel p;
   
   /**
-   * 
+   * Konstruktor
    */
   public Menue(){
     p = new MenuePanel();
@@ -130,22 +130,22 @@ public class Menue {
   }
   
   /**
-   * 
-   * @return
+   * Gibt das Panel, auf welchem gezeichnet wird, zurück
+   * @return Panel, auf welchem gezeichnet wird
    */
   public JPanel getPanel(){
     return p;
   }
   
   /**
-   * 
+   * Zeichnet das Panel neu
    */
   public void render(){
     p.repaint();
   }
   
   /**
-   * 
+   * Hilfsklasse für das Menue
    * @author Fabian Scherer
    *
    */

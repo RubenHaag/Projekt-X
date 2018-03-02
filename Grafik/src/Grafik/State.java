@@ -1,5 +1,11 @@
 package Grafik;
 
+/**
+ * Status in dem sich das Programm befindet
+ * Types: HAUPTMENUE, SETTINGS, GAME, LOGIN
+ * @author F
+ *
+ */
 public enum State {
-  HAUPTMENUE, SETTINGS, GAME, PAUSE, LOGIN
+  HAUPTMENUE, SETTINGS, GAME, LOGIN
 }

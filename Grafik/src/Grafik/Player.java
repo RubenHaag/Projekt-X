@@ -9,29 +9,33 @@ import java.awt.image.BufferedImage;
 import javax.swing.JComponent;
 
 /**
- * ReprÃ¤sentiert einen Spieler mit all seinen Animation
+ * Repraesentiert einen Spieler mit all seinen Animation
  * @author Fabian Scherer
  */
+@SuppressWarnings("serial")
 class Player extends JComponent{          
   private int x;          
   private int y;      
-  private String name;            // Name des Charakters WICHTIG: ungleich Name des Spielers
+  private String name;            // Name des Charakters bzw. der Datei
   private int width;
   private int height;
   private boolean right;
+  private boolean takedmg;
+  private boolean dead;
   
   private MovementType movement;
   private Image image;
   private AttackType attack;
   
   /**
-   * 
-   * @param name
-   * @param x
-   * @param y
-   * @param w
-   * @param h
-   * @param r
+   * Konstruktor des Player Objekts
+   * Initialisiert alle Attribute mit den übergebenen Werten und zusätzlichen Standardwerten
+   * @param name Dateianfang bzw. Charaktername
+   * @param x X-Position der oberen linken Ecke
+   * @param y Y-Position der oberen linken Ecke
+   * @param w Breite des Spielers
+   * @param h Höhe des Spielers
+   * @param r Blickrichtung des Spielers, true = rechts
    */
   Player(String name, int x, int y, int w, int h, boolean r){
       this.name = name;
@@ -46,9 +50,9 @@ class Player extends JComponent{
     }
   
   /**
-   * 
-   * @param xPos
-   * @param yPos
+   * Aktualisiert die Position des Spielers
+   * @param xPos neue X-Position
+   * @param yPos neue Y-Position
    */
   public void updatePos(int xPos, int yPos){
     x = xPos;
@@ -56,9 +60,9 @@ class Player extends JComponent{
   }
   
   /**
-   * 
-   * @param mt
-   * @param r
+   * Aktualisiert die Bewegungsart und die Blickrichtung des Spielers (Stehend, Bewegend, Springend)
+   * @param mt  Bewegungsart des Spielers
+   * @param r Blickrichtung des Spielers, wenn true, Blickrichtung = rechts
    */
   public void updateMovementType(MovementType mt, boolean r){
     movement = mt;
@@ -66,11 +70,11 @@ class Player extends JComponent{
   }
   
   /**
-   * 
-   * @param at
-   * @param right
+   * Aktualisiert den Angriffstyp
+   * NOTE: Es gibt trotzdem nur eine Angriffs-Animation pro Charakter
+   * @param at Angriffstyp des Charakters
    */
-  public void updateAttackType(int at, boolean right){
+  public void updateAttackType(int at){
     switch(at) {
     case 0:
       attack = AttackType.NON;
@@ -88,27 +92,28 @@ class Player extends JComponent{
   }
   
   /**
-   * 
+   * Lässt den Spieler Schaden nehmen(grafisch)
    */
   public void takeDmg() {
-    
+    takedmg =  true;
   }
   
   /**
-   * 
+   * Lässt den Spieler sterben(grafisch)
    */
   public void die() {
-    
+    dead = true;
   }
   
   /**
-   * 
+   * Paint Methode des Spielers
+   * Zeichnet den Spieler je nach Bewegungsart, Angriffstyp und ob er gerade Schaden erlitten hat oder gestorben ist
    */
   public void paint(Graphics g) {
       Graphics2D g2d = (Graphics2D) g;
       Toolkit toolkit = Toolkit.getDefaultToolkit();
       this.setBounds(x, y, width, height);
-      // erst Bewegungsanamation zeichnen
+      // erst Bewegungsanamation laden
       switch(movement){
       case IDLE:
         image = toolkit.getImage("Assets/Charaktere/" + name + "_idle.gif");
@@ -147,24 +152,16 @@ class Player extends JComponent{
   }
   
   /**
-   * 
-   * @return
-   */
-  public String getCN(){
-    return name;
-  }
-  
-  /**
-   * 
-   * @return
+   * Gibt die Bewegungsart zurück
+   * @return Bewegungsart des Spielers
    */
   public MovementType getMT(){
     return movement;
   }
   
   /**
-   * 
-   * @return
+   * Gibt den Angriffstyp des Spielers zurück
+   * @return Angriffstyp des Spielers
    */
   public AttackType getAT(){
     return attack;
