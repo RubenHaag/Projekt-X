@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/ServerVerwaltung.java" line="278" />
+    <bookmark url="file://$PROJECT_DIR$/ServerVerwaltung.java" line="295" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="daf0fae5-d325-4024-9c74-90d2de446fa2" name="Default" comment="" />
@@ -18,7 +18,7 @@
       <file leaf-file-name="GameManager.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/GameManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
+            <state relative-caret-position="3310">
               <caret line="401" column="19" lean-forward="false" selection-start-line="401" selection-start-column="19" selection-end-line="401" selection-end-column="19" />
               <folding>
                 <element signature="e#1672#1673#0" expanded="true" />
@@ -51,11 +51,11 @@
       <file leaf-file-name="ServerVerwaltung.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ServerVerwaltung.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="39" column="115" lean-forward="false" selection-start-line="39" selection-start-column="115" selection-end-line="39" selection-end-column="115" />
+            <state relative-caret-position="454">
+              <caret line="301" column="79" lean-forward="false" selection-start-line="301" selection-start-column="79" selection-end-line="301" selection-end-column="79" />
               <folding>
-                <element signature="e#3746#4341#0" expanded="true" />
-                <element signature="e#4340#4341#0" expanded="true" />
+                <element signature="e#4174#4769#0" expanded="true" />
+                <element signature="e#4768#4769#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -375,7 +375,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="3" />
+      <option name="time" value="8" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -416,8 +416,8 @@
         <state relative-caret-position="315">
           <caret line="15" column="35" lean-forward="true" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
           <folding>
-            <element signature="e#3746#4341#0" expanded="true" />
-            <element signature="e#4340#4341#0" expanded="true" />
+            <element signature="e#4174#4769#0" expanded="true" />
+            <element signature="e#4768#4769#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -511,8 +511,8 @@
         <state relative-caret-position="4199">
           <caret line="250" column="80" lean-forward="false" selection-start-line="250" selection-start-column="80" selection-end-line="250" selection-end-column="80" />
           <folding>
-            <element signature="e#3746#4341#0" expanded="true" />
-            <element signature="e#4340#4341#0" expanded="true" />
+            <element signature="e#4174#4769#0" expanded="true" />
+            <element signature="e#4768#4769#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -581,8 +581,8 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#3746#4341#0" expanded="true" />
-            <element signature="e#4340#4341#0" expanded="true" />
+            <element signature="e#4174#4769#0" expanded="true" />
+            <element signature="e#4768#4769#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -756,9 +756,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Player.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="840">
+          <caret line="143" column="5" lean-forward="false" selection-start-line="143" selection-start-column="5" selection-end-line="143" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/GameManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
+        <state relative-caret-position="3310">
           <caret line="401" column="19" lean-forward="false" selection-start-line="401" selection-start-column="19" selection-end-line="401" selection-end-column="19" />
           <folding>
             <element signature="e#1672#1673#0" expanded="true" />
@@ -787,6 +795,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
     <entry file="file://$PROJECT_DIR$/Player.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -802,13 +811,15 @@
         </state>
       </provider>
     </entry>
+=======
+>>>>>>> Stashed changes
     <entry file="file://$PROJECT_DIR$/ServerVerwaltung.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="39" column="115" lean-forward="false" selection-start-line="39" selection-start-column="115" selection-end-line="39" selection-end-column="115" />
+        <state relative-caret-position="454">
+          <caret line="301" column="79" lean-forward="false" selection-start-line="301" selection-start-column="79" selection-end-line="301" selection-end-column="79" />
           <folding>
-            <element signature="e#3746#4341#0" expanded="true" />
-            <element signature="e#4340#4341#0" expanded="true" />
+            <element signature="e#4174#4769#0" expanded="true" />
+            <element signature="e#4768#4769#0" expanded="true" />
           </folding>
         </state>
       </provider>
