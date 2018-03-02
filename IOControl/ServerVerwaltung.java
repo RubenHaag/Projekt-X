@@ -262,6 +262,10 @@ public class ServerVerwaltung {
 	      }catch (InterruptedException e){}
 	      //Spielstart
 	      
+	      CLU0.setSpielStart(true);
+	      CLU1.setSpielStart(true);
+	      CLU2.setSpielStart(true);
+		  
 	      for (int j=0; j<spielerListe.length; j++){
 	        spielerListe[j].spielstart();
 	      }
