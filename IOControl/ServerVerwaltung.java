@@ -27,6 +27,13 @@ public class ServerVerwaltung {
 
 
     }
+    
+    //muss waehrend der login phase durchgängig ausgefürt werden:
+    public void login(){
+	    this.loginStart();
+	    this.login2();
+    }
+    
     /**
      * Methode, die vom Boolean isAttacking in der run()-Methode ausgelöst wird.
      * Hier werden bei einer Attacke erst die Mana-Werte des Spielers gesenkt und der Cooldown
@@ -120,102 +127,144 @@ public class ServerVerwaltung {
      * @param g Der Client der die Methode aufruft
      * @return
      */
-    public boolean sLogin(GameManager g) {
-        double z = Math.random();
-
-        if (n == 0 && z <= 0.333333) {
-            spielerIstBoss(g);
-        } // end of if
-        else if (n == 0 && z > 0.333333 && z <= 0.666666) {
-            spielerIst1(g);
-        } // end of if
-        else if (n == 0 && z > 0.666666) {
-            spielerIst2(g);
-        } // end of if
-
-        else if (n == 1 && b && z <= 0.5) {
-            spielerIst1(g);
-        } // end of if
-        else if (n == 1 && s1 && z <= 0.5) {
-            spielerIstBoss(g);
-        } // end of if
-        else if (n == 1 && s2 && z <= 0.5) {
-            spielerIstBoss(g);
-        } // end of if
-
-        else if (n == 1 && b && z > 0.5) {
-            spielerIst2(g);
-        } // end of if
-        else if (n == 1 && s1 && z > 0.5) {
-            spielerIst2(g);
-        } // end of if
-        else if (n == 1 && s2 && z > 0.5) {
-            spielerIst1(g);
-        } // end of if
-
-        else if (n == 2 && s1 && s2) {
-            spielerIstBoss(g);
-        } // end of if
-        else if (n == 2 && b && s1) {
-            spielerIst2(g);
-        } // end of if
-        else if (n == 2 && b && s2) {
-            spielerIst1(g);
-        } // end of if
-
-        if (n == 3) {
-            //double aktZeit=System.currentTimeMillis();
-            String s = "Alle Spieler eingeloggt! Start in 15s!";
-            for (int l = 0; l < spielerListe.length; l++) {
-                spielerListe[l].zeigen(s);
-                spielerListe[l].zeigen(s);
-            }
-            try {
-                Thread.sleep(15000);
-            } catch (InterruptedException e) {
-            }
-            //Spielstart
-
-            for (int j = 0; j < spielerListe.length; j++) {
-                spielerListe[j].spielstart();
-            }
-        } // end of if
-
-        return (true);
+    public void loginStart(){
+	  if (allCLU[0]==null){
+		  this.allCLU[0]=naechsteCLU;
+	  }
+	  else if (allCLU[0].getUUID()!=naechsteCLU.getUUID()&&allCLU[1]==null){
+		  this.allCLU[1]=naechsteCLU;
+	  }
+	  else if (allCLU[0].getUUID()!=naechsteCLU.getUUID()&&allCLU[1].getUUID()!=naechsteCLU.getUUID()&&allCLU[2]==null){
+		  this.allCLU[2]=naechsteCLU;
+		  this.alleVorhanden=true;
+	  }
+	  else {
+		  this.alleVorhanden=true;
+	  }
+	  for (int m=0; m<allCLU.length; m++){
+		  if (allCLU[m]!=null){
+			  allCLU[m]=sLogin(allCLU[m]);
+		  }
+	  }
+	  allCLU[0]=CLU0;
+	  allCLU[1]=CLU1;
+	  allCLU[2]=CLU2;
+  }
+  
+  /**
+  * 
+  * @param clu Das cLoginUpdate Ojekt, bei dem die Login Parameter aktualisiert werden 
+  * @return
+  */
+  public cLoginUpdate sLogin(cLoginUpdate clu){
+    double z=Math.random();
+    if (clu.getMode()==0){
+    	if (n==0&&z<=0.333333) {
+    		spielerIstBoss(clu);
+    	} // end of if
+    	else if (n==0&&z>0.333333&&z<=0.666666) {
+    		spielerIst1(clu);
+    	} // end of if
+    	else if (n==0&&z>0.666666) {
+    		spielerIst2(clu);
+    	} // end of if
+    	else if (n==1&&b&&z<=0.5) {
+    		spielerIst1(clu);
+    	} // end of if
+    	else if (n==1&&s1&&z<=0.5) {
+    		spielerIstBoss(clu);
+    	} // end of if
+    	else if (n==1&&s2&&z<=0.5) {
+    		spielerIstBoss(clu);
+    	} // end of if
+    	else if (n==1&&b&&z>0.5) {
+    		spielerIst2(clu);
+    	} // end of if
+    	else if (n==1&&s1&&z>0.5) {
+    		spielerIst2(clu);
+    	} // end of if
+    	else if (n==1&&s2&&z>0.5) {
+    		spielerIst1(clu);
+    	} // end of if
+    	
+    	else if (n==2&&s1&&s2) {
+    		spielerIstBoss(clu);
+    	} // end of if
+    	else if (n==2&&b&&s1) {
+    		spielerIst2(clu);
+    	} // end of if
+    	else if (n==2&&b&&s2) {
+    		spielerIst1(clu);
+    	} // end of if
     }
-
-    /**
-     * spielerIstBoss,spielerIst1,spielerIst2 werden beim Login aufgerufen,
-     * getrennt für bessere Übersichtlichkeit
-     *
-     * @param g Gamemanager, der die Login funktion aufgerufen hat und sich gerade einloggt
-     */
-    private void spielerIstBoss(GameManager g) {// Das ist ein Konstruktor.. soll das ne Methode sein?
-        spielerListe[0] = g;
-        g.cSetBoss(true, 0);
-        n++;
-        b = true;
-        g.auswahlBoss();                //Boss auswahl Screen Ã¶ffnen, direkt an grafik weiterleiten
-        //boss.loginErfolgreich(true);
+    else if (clu.getMode()==1){
+    	for (int l=0; l<spielerListe.length;l++){
+    		if (spielerListe[l].cGetUUID()==clu.getUUID()){
+    			spielerListe[l].cSetCharakter(clu.getCharakter());                //Charakter in GM nicht enthalten. vergessen oder Absicht?
+    		}
+    	return clu;
+    	}
     }
-
-    private void spielerIst1(GameManager g) {
-        spielerListe[1] = g;
-        g.cSetBoss(false, 1);
-        n++;
-        s1 = true;
-        g.auswahlSpieler();             //Spieler auswahl Screen Ã¶ffnen, direkt an grafik weiterleiten
-        //spieler1.loginErfolgreich(true);
-    }
-
-    private void spielerIst2(GameManager g) {
-        spielerListe[2] = g;
-        g.cSetBoss(true, 2);
-        n++;
-        s2 = true;
-        g.auswahlSpieler();             //Spieler auswahl Screen Ã¶ffnen, direkt an grafik weiterleiten
-        //spieler2.loginErfolgreich(true);
-    }
+    //else{    
+    	return clu;
+    //}
+  }
+  
+  
+  /**
+  *  spielerIstBoss,spielerIst1,spielerIst2 werden beim Login aufgerufen,
+  *  getrennt fÃ¼r bessere Ãœbersichtlichkeit
+  * @param g Gamemanager, der die Login funktion aufgerufen hat und sich gerade einloggt
+  */
+  private void spielerIstBoss(cLoginUpdate clu){
+    spielerListe[0]=new GameManager();
+    //spielerListe[0].UUID=clu.getUUID();
+    n++;
+    b=true;
+    clu.setIstBoss(true);
+    spielerListe[0].cSetCharakter(0);					//Standard Charakter für Boss: 0
+    clu.setCharakter(0);
+    clu.modeErhoehen();
+  }
+  private void spielerIst1(cLoginUpdate clu){
+    spielerListe[1]=new GameManager();
+    //spielerListe[1].UUID=clu.getUUID();
+    n++;
+    s1=true;
+    clu.setIstBoss(false);
+    spielerListe[1].cSetCharakter(1);					//Standard Charakter für Spieler1: 1
+    clu.setCharakter(1);
+    clu.modeErhoehen();
+  }
+  private void spielerIst2(cLoginUpdate clu){
+    spielerListe[2]=new GameManager();
+    //spielerListe[2].UUID=clu.getUUID();
+    n++;
+    s2=true;
+    clu.setIstBoss(false);           
+    spielerListe[2].cSetCharakter(2);					//Standard Charakter für Spieler2: 2
+    clu.setCharakter(2);
+    clu.modeErhoehen();
+  }
+  
+  public void login2(){
+	  if (this.alleVorhanden) {
+	      //double aktZeit=System.currentTimeMillis();
+	      String s="Alle Spieler eingeloggt! Start in 15s!";
+	      /*for (int l=0; l<spielerListe.length; l++ ){
+	      spielerListe[l].zeigen(s);
+	      }*/
+	      try{
+	        Thread.sleep(15000);
+	      }catch (InterruptedException e){}
+	      //Spielstart
+	      
+	      for (int j=0; j<spielerListe.length; j++){
+	        spielerListe[j].spielstart();
+	      }
+	  } // end of if
+	    
+  }
 
 
     //private void setSkin (int Skin, Gamemanager g){   //skin entweder int oder enum
