@@ -16,9 +16,9 @@ public class ServerVerwaltung {
     private int n = 0;             					// n: Anzahl der eingeloggten Spieler
     private boolean alleVorhanden=false;  			// wenn alle Spieler versucht haben sich einzuloggen true 
     private cLoginUpdate[] allCLU=new cLoginUpdate[3];		//alle clientLoginUpdate Objekte
-    private cLoginUpdate CLU0();					//CLU0;CLU1;CLU2 : Wie allCLU, aber als eigene Objekte, da einfacher fuer Übertragung auszulesen
-    private cLoginUpdate CLU1();
-    private cLoginUpdate CLU2();
+    private cLoginUpdate CLU0;					//CLU0;CLU1;CLU2 : Wie allCLU, aber als eigene Objekte, da einfacher fuer Übertragung auszulesen
+    private cLoginUpdate CLU1;
+    private cLoginUpdate CLU2;
     private cLoginUpdate naechsteCLU;
     private long last_time = System.nanoTime();
     /**
