@@ -3,12 +3,12 @@ import java.net.DatagramSocket;
 import java.io.ByteArrayInputStream;
 import java.io.ObjectInputStream;
 
-public class UDPserverListener extends Thread{
-  /*
+/*
    * @author Oskar Moritz
-   * @version 1.0 
+   * @version 1.2 
    * Beschreibung: ein Thread der sowohl vom CLient als auch Server genutzt wird um auf ankommende Packete zu horchen
    */
+public class UDPserverListener extends Thread{
   private DatagramPacket packet;
   private DatagramSocket client;
   private int port; //der port auf den der UDPserverListener horcht (den ein CLient anschreibt)

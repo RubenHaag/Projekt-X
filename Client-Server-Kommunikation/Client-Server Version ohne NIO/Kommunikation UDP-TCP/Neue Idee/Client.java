@@ -10,14 +10,13 @@ import java.nio.channels.DatagramChannel;
  * @author Oskar Moritz
  * @version 1.7 Zusammenführung von UDP und TCP Client
  */
-
 public class Client extends Thread{
   
   private int port;
   private InetAddress ip;
   private Socket server;
   private DatagramSocket datagramSocketSend;
-  private UDPserverListener listener;
+  private UDPserverListener listener1,listener2,listener3;
   private Update spieler1;
   
   
@@ -45,33 +44,37 @@ public class Client extends Thread{
     }
     System.out.println(datagramSocketSend);
     //ein neuer Thread wird gestartet um alle eingehenden Packete zu empfangen
-    listener = new UDPserverListener(3555);
-    //listener.start();
-      while ( true ){
-        //zusätzlich sendet der CLient durch diese "while(true)" schleife alle 100ms eigene Packete
-        try {
-          send();
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
-        
-        try {
-          Thread.sleep(100);
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
+    listener1 = new UDPserverListener(3555);
+    listener2 = new UDPserverListener(4409);
+    listener3 = new UDPserverListener(4519);
+    listener1.start();
+    listener2.start();
+    listener3.start();
+    while ( true ){
+      //zusätzlich sendet der CLient durch diese "while(true)" schleife alle 100ms eigene Packete
+      try {
+        send();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      
+      try {
+        Thread.sleep(100);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
       }
     }
+  }
 
      /**
        *  Die send()-Methode ist zum Senden, der Daten notwendig. 
        *  Mit dieser Methode werden Daten an den Server gesendet. 
        *  Dies passiert über den datagramSocketSend und das „DatagramPacket“.
        */
-    private void send() throws IOException {
-      byte[] sandData = spieler1.getbyte();
-      DatagramPacket packet = new DatagramPacket( sandData, sandData.length, ip, port );
-      datagramSocketSend.send(packet);      
-    }
+  private void send() throws IOException {
+    byte[] sandData = spieler1.getbyte();
+    DatagramPacket packet = new DatagramPacket( sandData, sandData.length, ip, port );
+    datagramSocketSend.send(packet);      
+  }
 }
 
