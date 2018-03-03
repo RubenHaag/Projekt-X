@@ -17,7 +17,7 @@ public class Client extends Thread{
   private Socket server;
   private DatagramSocket datagramSocketSend;
   private UDPserverListener listener1,listener2,listener3;
-  private Update spieler1;
+  private cLoginUpdate spieler1;
   
   
   public Client(String addresse) { //die IP des servers

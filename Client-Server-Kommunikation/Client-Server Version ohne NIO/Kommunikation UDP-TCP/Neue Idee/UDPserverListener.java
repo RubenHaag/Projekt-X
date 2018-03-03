@@ -12,7 +12,7 @@ public class UDPserverListener extends Thread{
   private DatagramPacket packet;
   private DatagramSocket client;
   private int port; //der port auf den der UDPserverListener horcht (den ein CLient anschreibt)
-  private Update u;
+  private cLoginUpdate u;
   
   
   public UDPserverListener(int port) {
