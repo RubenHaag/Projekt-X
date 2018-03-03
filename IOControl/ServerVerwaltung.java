@@ -142,6 +142,15 @@ public class ServerVerwaltung {
 			  this.allCLU[2]=naechsteCLU;
 			  this.alleVorhanden=true;
 		  }
+		  else if (allCLU[0].getUUID()==naechsteCLU.getUUID()){
+			  allCLU[0]=naechsteCLU
+		  }
+		  else if (allCLU[1].getUUID()==naechsteCLU.getUUID()){
+			  allCLU[1]=naechsteCLU
+		  }
+		  else if (allCLU[2].getUUID()==naechsteCLU.getUUID()){
+			  allCLU[2]=naechsteCLU
+		  }
 		  else {
 			  this.alleVorhanden=true;
 		  }

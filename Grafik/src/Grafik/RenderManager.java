@@ -56,8 +56,11 @@ public class RenderManager{       // Hauptklasse in der Grafik, managed wann was
     p.add(menue.getPanel());
     running = true;
     SoundManager.playSound("Assets/Sound/Menu Music.wav");
+    int i = 0;
     while(running){
       render();
+      game.updatePlayer(1, (int)i/10000, 6, MovementType.MOVE, 0, true, 0, 0);
+      i++;
     }
     System.exit(0);
   }
