@@ -14,7 +14,7 @@ import java.io.ObjectOutputStream;
 
    /*
    * @author Moritz Oskar 
-   * @version 1.8 ZUsammenführung von UDP + TCP Server
+   * @version 1.8 ZUsammenfÃ¼hrung von UDP + TCP Server
    * 
    */
 public class Server extends Thread{
@@ -26,18 +26,18 @@ public class Server extends Thread{
   private DatagramSocket sendSocket;
   private UDPserverListener listener1,listener2,listener3;
   // Die Spieler Objekte, die versendet werden.
-  private cLoginUpdate spieler1, spieler2, spieler3;
+  private cLoginUpdate spieler1, spieler2, spieler3, eigeneDaten;
   
   public Server() {
     port.add(3556);
     port.add(3557);
     port.add(3558);
-    //ein Port für jeden CLient
+    //ein Port fÃ¼r jeden CLient
     try {
       connect = new ServerSocket(3555); //zu Anfang verbinden sich alle Clients mit diesem Socket
       portsTauschen();
       sendSocket = new DatagramSocket( );
-      this.run(); //sobald alle freien Ports an verschiedene CLients vergeben wurden, startet die UDP Datenübertragung
+      this.run(); //sobald alle freien Ports an verschiedene CLients vergeben wurden, startet die UDP DatenÃ¼bertragung
       
     } catch (IOException e) {
       e.printStackTrace();
@@ -47,7 +47,7 @@ public class Server extends Thread{
   public void run() {
     
     System.out.println("Mit allen Clients verbunden\nThread wird gestartet");
-    //für jeden Client wird ein UDPserverListener gestartet
+    //fÃ¼r jeden Client wird ein UDPserverListener gestartet
     listener1 = new UDPserverListener(clientDatas[0].getZugewiesenerPort());
     listener1.start();
     listener2 = new UDPserverListener(clientDatas[1].getZugewiesenerPort());
@@ -114,6 +114,6 @@ public class Server extends Thread{
     int p = port.get(port.size()-1);
     port.remove(port.size()-1);
     return p;
-    //gibt einen noch nicht genutzen port zurück
+    //gibt einen noch nicht genutzen port zurÃ¼ck
   }
 }
