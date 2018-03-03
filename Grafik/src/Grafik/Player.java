@@ -26,9 +26,11 @@ class Player extends JComponent{
   private boolean takedmg;
   private boolean dead;
   private int zaehler;
+  private int zaehler2;
   private MovementType movement;
   private Image image;
   private BufferedImage idle;
+  private BufferedImage dmg;
   private AttackType attack;
   
   /**
@@ -52,6 +54,7 @@ class Player extends JComponent{
       image = null;
       right = r;
       zaehler = 0;
+      zaehler2 = 0;
     }
   
   /**
@@ -129,6 +132,7 @@ class Player extends JComponent{
                 e.printStackTrace();
               }
             }
+    	  break;
       case MOVE:
         image = toolkit.getImage("Assets/Charaktere/" + name + "_move.gif");       
         break;
@@ -158,21 +162,44 @@ class Player extends JComponent{
     	  image = toolkit.getImage("Assets/Charaktere/" + name + "_dead.gif");
     	  zaehler++;
       }
-      if(right && movement != MovementType.IDLE) {
+      if(takedmg) {
+    	  if(dmg == null){
+              try {
+                dmg = ImageIO.read(new File("Assets/Charaktere/" + name + "_damage.png"));
+              } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+              }
+          }
+      }
+      if(right && movement != MovementType.IDLE && !takedmg) {
     	  g.drawImage(image, 0, 0, width, height, this);
       }
-      else if(!right && movement != MovementType.IDLE){
+      else if(!right && movement != MovementType.IDLE && !takedmg){
     	  g.drawImage(image, width-1, 0, -width, height, this);
       }
-      else if(right && movement == MovementType.IDLE) {
+      else if(right && movement == MovementType.IDLE && !takedmg) {
     	  g.drawImage(idle, 0, 0, width, height, null);
       }
-      else if(!right && movement == MovementType.IDLE) {
+      else if(!right && movement == MovementType.IDLE && !takedmg) {
     	  g.drawImage(idle, width-1, 0, -width, height, null);
+      }
+      else if(right && takedmg) {
+    	  g.drawImage(dmg, 0, 0, width, height, null);
+    	  zaehler2++;
+      }
+      else {
+    	  g.drawImage(dmg, width-1, 0, -width, height, null);
+    	  zaehler2++;
       }
       if(zaehler >= 5) {
     	  Game.delPlayer(this);
       }
+      if(zaehler2 >= 5) {
+    	  takedmg = false;
+    	  zaehler2 = 0;
+      }
+      
   }
   
   /**

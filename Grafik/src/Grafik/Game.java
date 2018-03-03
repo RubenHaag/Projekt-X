@@ -28,7 +28,7 @@ public class Game{
    */
   Game(){
     gp = new GamePanel();
-    lm = new PlayerAnzeige(50.0, 20.0);
+    lm = new PlayerAnzeige(50.0, 50.0);
     p1 = new Player("Boy", 400, 200, 100, 200, false);
     p2 = new Player("Girl", 700, 300, 100, 200, false);
     gp.add(lm.getPanel());
