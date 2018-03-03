@@ -25,10 +25,11 @@ class Player extends JComponent{
   private boolean right;
   private boolean takedmg;
   private boolean dead;
-  private int zaehler;
-  private int zaehler2;
+  private short zaehler;
+  private short zaehler2;
   private MovementType movement;
-  private Image image;
+  private Image[] image;
+  private short imageZaehler;
   private BufferedImage idle;
   private BufferedImage dmg;
   private AttackType attack;
@@ -49,12 +50,25 @@ class Player extends JComponent{
       this.y = y;
       width = w;
       height = h;
-      movement = MovementType.IDLE;
+      movement = MovementType.MOVE;
       attack = AttackType.NON;
       image = null;
       right = r;
       zaehler = 0;
       zaehler2 = 0;
+      image = new Image[6];
+      imageZaehler = 0;
+      Toolkit toolkit = Toolkit.getDefaultToolkit();
+      image[0] = toolkit.createImage("Assets/Charaktere/" + name + "_move.gif");
+      image[1] = toolkit.createImage("Assets/Charaktere/" + name + "_jumping.gif");
+      image[2] = toolkit.createImage("Assets/Charaktere/" + name + "_attack.gif");
+      image[3] = toolkit.createImage("Assets/Charaktere/" + name + "_attack.gif");
+      image[4] = toolkit.createImage("Assets/Charaktere/" + name + "_attack.gif");
+      image[5] = toolkit.createImage("Assets/Charaktere/" + name + "_dead.gif");
+      for(Image i:image) {
+    	  i = i.getScaledInstance(width, height, 0);
+    	  i.setAccelerationPriority((float) 0.999);
+      }
     }
   
   /**
@@ -75,6 +89,28 @@ class Player extends JComponent{
   public void updateMovementType(MovementType mt, boolean r){
     movement = mt;
     right = r;
+    System.out.println(r);
+    switch(movement){
+    case IDLE:
+  	  if(idle == null){
+            try {
+              idle = ImageIO.read(new File("Assets/Charaktere/" + name + "_idle.png"));
+            } catch (IOException e) {
+              // TODO Auto-generated catch block
+              e.printStackTrace();
+            }
+          }
+  	  break;
+    case MOVE:
+    	imageZaehler = 0;
+    	break;
+    case JUMPING:
+    	imageZaehler = 1;
+    	break;
+    default:
+    	System.out.println("Irgendwas ist schiefgelaufen");
+    	break;
+    }
   }
   
   /**
@@ -89,12 +125,15 @@ class Player extends JComponent{
       break;
     case 1:
       attack = AttackType.NORMAL;
+      imageZaehler = 2;
       break;
     case 2:
       attack = AttackType.SPECIAL1;
+      imageZaehler = 3;
       break;
     case 3:
       attack = AttackType.SPECIAL2;
+      imageZaehler = 4;
       break;
     }
   }
@@ -112,56 +151,39 @@ class Player extends JComponent{
   public void die() {
     dead = true;
   }
+  public void repaint() {
+	  super.repaint(0, x, y, width, height);
+	  
+  }
   
   /**
    * Paint Methode des Spielers
    * Zeichnet den Spieler je nach Bewegungsart, Angriffstyp und ob er gerade Schaden erlitten hat oder gestorben ist
    */
-  public void paint(Graphics g) {
+  public void paintComponent(Graphics g) {
       //Graphics2D g2d = (Graphics2D) g;
-      Toolkit toolkit = Toolkit.getDefaultToolkit();
       this.setBounds(x, y, width, height);
       // erst Bewegungsanamation laden
-      switch(movement){
-      case IDLE:
-    	  if(idle == null){
-              try {
-                idle = ImageIO.read(new File("Assets/Charaktere/" + name + "_idle.png"));
-              } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-              }
-            }
-    	  break;
-      case MOVE:
-        image = toolkit.getImage("Assets/Charaktere/" + name + "_move.gif");       
-        break;
-      case JUMPING:
-        image = toolkit.getImage("Assets/Charaktere/" + name + "_jumping.gif"); 
-        break;
-      default:
-        System.out.println("Irgendwas ist schiefgelaufen");
-        break;
-      }
+      
       //dann Angriff
-      switch(attack){
-      case NON:
-        //falls kein Angriff ausgeführt wird, normal die Bewegung zeichnen
-        break;
-      case NORMAL:
-        image = toolkit.getImage("Assets/Charaktere/" + name + "_attack.gif");
-        break;
-      case SPECIAL1:
-        image = toolkit.getImage("Assets/Charaktere/" + name + "_attack.gif");
-        break;
-      case SPECIAL2:
-        image = toolkit.getImage("Assets/Charaktere/" + name + "_attack.gif");
-        break;
-      }
-      if(dead) {
-    	  image = toolkit.getImage("Assets/Charaktere/" + name + "_dead.gif");
-    	  zaehler++;
-      }
+//      switch(attack){
+//      case NON:
+//        //falls kein Angriff ausgeführt wird, normal die Bewegung zeichnen
+//        break;
+//      case NORMAL:
+//    	imageZaehler = 2;
+//    	  break;
+//      case SPECIAL1:
+//    	imageZaehler = 3;
+//        break;
+//      case SPECIAL2:
+//    	imageZaehler = 4;
+//        break;
+//      }
+//      if(dead) {
+//    	  imageZaehler = 5;
+//    	  zaehler++;
+//      }
       if(takedmg) {
     	  if(dmg == null){
               try {
@@ -173,10 +195,10 @@ class Player extends JComponent{
           }
       }
       if(right && movement != MovementType.IDLE && !takedmg) {
-    	  g.drawImage(image, 0, 0, width, height, this);
+    	  g.drawImage(image[imageZaehler], 0, 0, width, height, this);
       }
       else if(!right && movement != MovementType.IDLE && !takedmg){
-    	  g.drawImage(image, width-1, 0, -width, height, this);
+    	  g.drawImage(image[imageZaehler], width-1, 0, -width, height, this);
       }
       else if(right && movement == MovementType.IDLE && !takedmg) {
     	  g.drawImage(idle, 0, 0, width, height, null);

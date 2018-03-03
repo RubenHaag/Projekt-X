@@ -110,27 +110,25 @@ public class Game{
    * @param hp Lebenspunkte des Spielers als Prozent
    * @param mp Manapunkte des Spielers als Prozent
    */
-   public static void updatePlayer(int player, int x, int y, MovementType mt, int at, boolean right, double hp, double mp){
+   public void updatePlayer(int player, int x, int y, MovementType mt, int at, boolean right, double hp, double mp){
       switch(player) {
       case 0:
         b1.updatePos(x, y);
-        if(mt != b1.getMT()){
-          b1.updateMovementType(mt, right);
-        }
+        
+        b1.updateMovementType(mt, right);
+        
         b1.updateAttackType(at);
         break;
       case 1:
         p1.updatePos(x, y);
-        if(mt != p1.getMT()){
-          p1.updateMovementType(mt, right);
-        }
+        p1.updateMovementType(mt, right);
+        
         p1.updateAttackType(at);  
         break;
       case 2:
         p2.updatePos(x, y);
-        if(mt != p2.getMT()){
-          p2.updateMovementType(mt, right);
-        }
+        p2.updateMovementType(mt, right);
+        
         p2.updateAttackType(at);  
         break;
       default:
@@ -169,14 +167,16 @@ public class Game{
     */
     public JPanel getPanel() {
       return gp;
-      
     }
     
     /**
-     * Zeichnet das Panel neu
+     * Zeichnet die Charaktere neu
      */
     public void render() {
-      gp.repaint();
+      //gp.repaint();
+    	p1.repaint();
+    	p2.repaint();
+    	b1.repaint();
     }
     
     /** 

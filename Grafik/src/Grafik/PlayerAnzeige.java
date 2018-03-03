@@ -146,6 +146,7 @@ public class PlayerAnzeige{
     	  g.drawImage(mpwhite, (int) (3*mpp + 27- 2*27*mpp/100 ), 0, (int) (300 - 3*mpp), 100, null);
       }*/
       this.paintComponents(g);
+      
     }
   }
 }
