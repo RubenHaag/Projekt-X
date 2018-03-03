@@ -29,8 +29,14 @@ public class Game{
   Game(){
     gp = new GamePanel();
     lm = new PlayerAnzeige(50.0, 50.0);
-    p1 = new Player("Boy", 400, 200, 100, 200, false);
-    p2 = new Player("Girl", 700, 300, 100, 200, false);
+    try {
+		p1 = new Player("Boy", 400, 200, 100, 200, false);
+		p2 = new Player("Girl", 700, 300, 100, 200, false);
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+    
     gp.add(lm.getPanel());
     gp.add(p1);
     gp.add(p2);
@@ -143,8 +149,9 @@ public class Game{
      * @param p1 Charaktername des ersten Spielers
      * @param p2 Charaktername des zweiten Spielers
      * @param b1 Charaktername des Bosses
+     * @throws IOException 
      */
-  public static void initGame(String pn1, String pn2, String bn1){
+  public static void initGame(String pn1, String pn2, String bn1) throws IOException{
         p1 = new Player(pn1, 0, 0, 100, 200, true);
         gp.add(p1);
         p2 = new Player(pn2, 0, 0, 100, 200, true);
