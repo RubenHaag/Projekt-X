@@ -26,7 +26,7 @@ public class Server extends Thread{
   private DatagramSocket sendSocket;
   private UDPserverListener listener1,listener2,listener3;
   // Die Spieler Objekte, die versendet werden.
-  private Update spieler1, spieler2, spieler3;
+  private cLoginUpdate spieler1, spieler2, spieler3;
   
   public Server() {
     port.add(3556);
@@ -86,7 +86,6 @@ public class Server extends Thread{
       sandData = spieler3.getbyte();
       packet = new DatagramPacket( sandData, sandData.length, i.getIa(), 4519 );
       sendSocket.send(packet);
-      // ende person 1
     }
   }
   
