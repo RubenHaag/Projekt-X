@@ -26,7 +26,7 @@ public class Server extends Thread{
   private DatagramSocket sendSocket;
   private UDPserverListener listener1,listener2,listener3;
   // Die Spieler Objekte, die versendet werden.
-  private cLoginUpdate spieler1, spieler2, spieler3, eigeneDaten;
+  private cLoginUpdate spieler1, spieler2, spieler3;
   
   public Server() {
     port.add(3556);
