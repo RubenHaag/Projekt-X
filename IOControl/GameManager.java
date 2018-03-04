@@ -6,7 +6,7 @@ import java.util.UUID;
 
 
 /**
- * @author Lukas Hofmann, Patrick Waltermann
+ * @author Lukas Hofmann, Patrick Waltermann, Max Schulte
  */
 public class GameManager {
 
@@ -25,6 +25,11 @@ public class GameManager {
     private Rectangle[] hbListe = new Rectangle[hbAnzahl];
     private ServerVerwaltung server;
     private Partikel pa;
+    private cLoginUpdate CLU0=new cLoginUpdate;								//CLU0;CLU1;CLU2 : fuer Werteuebergabe von Server zu CLient
+    private cLoginUpdate CLU1=new cLoginUpdate;
+    private cLoginUpdate CLU2=new cLoginUpdate;
+    private cLoginUpdate ownCLU=new cLoginUpdate(0,null);
+    private int charakter;
 
     /**
      * @param s Server, der angebunden werden soll.
@@ -214,12 +219,14 @@ public class GameManager {
 
     /**
      * Fuehrt die sLogin(GameManager) beim Server auf, um eine Verbindung aufzubauen.
+     
      */
+    /*
     public void cLogin() { //�bergabe der ServerID!!!
         id = UUID.randomUUID();
         server.sLogin(this);
     }
-
+    */
     /**
      * F�hrt die Methode sLogout(GameManager) beim Server aus, um seine Verbindung mit diesem zu trennen.
      */
@@ -403,6 +410,7 @@ public class GameManager {
      * Setzt den/die Character der Spieler
      */
     public void cSetCharakter() {
+        this.charakter=charakter;
         //TODO fehlt!!!
 
 
@@ -421,6 +429,15 @@ public class GameManager {
         pa.setJumping(true);
         return false;
     }
+    
+    
+     /**
+     * Fuehrt die sLogin(GameManager) beim Server auf, um eine Verbindung aufzubauen.
+     */
+    public void cLogin() { //�bergabe der ServerID!!!
+        id = UUID.randomUUID();
+        server.sLogin(this);
+    }
 
     /**
      * Einer der Spieler hat sich ausgeloggt oder das Spiel ist zu Ende
@@ -428,7 +445,7 @@ public class GameManager {
      */
 
     public void logout(String s) {
-        //zum Hauptbildschirm zurückkehren
+        RenderManager.changeState(State.HAUPTMENUE);
         zeigen(s);
     }
 
@@ -478,22 +495,60 @@ public class GameManager {
         }, 0, 100);
         server = null;
     }
-
-
+    
+    /**
+     * Fuehrt die sLogin(GameManager) beim Server auf, um eine Verbindung aufzubauen.
+     */
+    public void cLogin() { //�bergabe der ServerID!!!
+        if (id==null){
+    		this.id = UUID.randomUUID();
+    		ownCLU.setUUID(id);
+    	}
+    	else if(id==CLU0.getUUID()){
+    		ownCLU=CLU0;
+    	}
+    	else if(id==CLU1.getUUID()){
+    		ownCLU=CLU1;
+    	}
+    	else if(id==CLU2.getUUID()){
+    		ownCLU=CLU2;
+    	}
+    	if (ownCLU.getMode()==1){
+    		if (ownCLU.getSpielStart()){
+    			this.spielstart();
+    		}
+    		else{
+    		 
+    			if(ownCLU.getIstBoss()){
+    				this.auswahlBoss(ownCLU);
+    			}
+    			else{
+    				this.auswahlSpieler(ownCLU);
+    			}
+    		}
+    	}
+    	else{
+    	}
+    }
+    
+    	
+    
     /**
      * Der Spieler ist ein normaler Spieler,
      * es wird die Charakterauswahl für Spielercharaktere geöffnet
      */
-    public void auswahlSpieler() {
-        //Spielerauswahl für Spieler oeffnen
+    public void auswahlSpieler(cLoginUpdate ownCLU){
+      //ownCLU.setCharakter=(Spielerauswahl fÃ¼r Spieler oeffnen)/rückgabewert von grafik, sonst standardauswahl;
+  	  ownCLU.setMode(2);
     }
 
     /**
      * Der Spieler ist der Boss Player
      * es wird die Charakterauswahl für den Bosscharakter geöffnen
      */
-    public void auswahlBoss() {
-        //Spielerauswahl für Boss oeffnen
+    public void auswahlBoss(cLoginUpdate ownCLU){           
+      //ownCLU.setCharakter=(Spielerauswahl fÃ¼r Boss oeffnen)/rückgabewert von Grafik sonst standartauswahl
+  	  ownCLU.setMode(2);
     }
 
     public Partikel getPartikel() {
