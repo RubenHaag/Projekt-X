@@ -219,12 +219,14 @@ public class GameManager {
 
     /**
      * Fuehrt die sLogin(GameManager) beim Server auf, um eine Verbindung aufzubauen.
+     
      */
+    /*
     public void cLogin() { //�bergabe der ServerID!!!
         id = UUID.randomUUID();
         server.sLogin(this);
     }
-
+    */
     /**
      * F�hrt die Methode sLogout(GameManager) beim Server aus, um seine Verbindung mit diesem zu trennen.
      */
@@ -443,7 +445,7 @@ public class GameManager {
      */
 
     public void logout(String s) {
-        //zum Hauptbildschirm zurückkehren
+        RenderManager.changeState(State.HAUPTMENUE);
         zeigen(s);
     }
 
