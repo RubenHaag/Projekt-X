@@ -1,4 +1,3 @@
-package IOServer;
 /**
  * 
  * @author Lukas Hofmann
@@ -19,9 +18,7 @@ public class Rectangle {
 		return pos.getXPos() + width;
 	}
 	
-	public double getLeft() {
-		return pos.getXPos();
-	}
+	public double getLeft() { return pos.getXPos(); }
 	
 	public double getTop() {
 		return pos.getYPos();

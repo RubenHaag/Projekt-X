@@ -1,4 +1,3 @@
-package IOServer;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

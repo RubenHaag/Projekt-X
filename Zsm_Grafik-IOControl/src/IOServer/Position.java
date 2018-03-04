@@ -1,4 +1,3 @@
-package IOServer;
 /**
  * 
  * @author Lukas Hofmann, Patrick Waltermann

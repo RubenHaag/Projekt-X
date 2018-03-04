@@ -1,7 +1,6 @@
-package IOServer;
 import java.util.UUID;
 
-public class CUpdate extends Update {
+public class CUpdate {
 
     private UUID id;
     private  Attack amAllg;

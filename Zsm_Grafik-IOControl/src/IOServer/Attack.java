@@ -1,4 +1,3 @@
-package IOServer;
 
 public class Attack {
 	private Rectangle damageBox;

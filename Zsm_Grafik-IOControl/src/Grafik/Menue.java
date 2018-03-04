@@ -12,144 +12,163 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+/**
+ * 
+ * @author Fabian Scherer
+ *
+ */
 public class Menue {
-	private MenueButton play;
-	private MenueButton settings;
-	private MenueButton quit;
-	private BufferedImage bgi = null;
-	private MouseListener pl = new MouseListener(){
+  private MenueButton play;
+  private MenueButton settings;
+  private MenueButton quit;
+  private BufferedImage bgi = null;
+  private MouseListener pl = new MouseListener(){
 
-		@Override
-		public void mouseClicked(MouseEvent arg0) {
-			
-		}
+    @Override
+    public void mouseClicked(MouseEvent arg0) {
+      
+    }
 
-		@Override
-		public void mouseEntered(MouseEvent arg0) {
-			
-		}
+    @Override
+    public void mouseEntered(MouseEvent arg0) {
+      
+    }
 
-		@Override
-		public void mouseExited(MouseEvent arg0) {
-			
-		}
+    @Override
+    public void mouseExited(MouseEvent arg0) {
+      
+    }
 
-		@Override
-		public void mousePressed(MouseEvent arg0) {
-			play.changeClicked(true);
-		}
+    @Override
+    public void mousePressed(MouseEvent arg0) {
+      play.changeClicked(true);
+    }
 
-		@Override
-		public void mouseReleased(MouseEvent arg0) {
-			play.changeClicked(false);
-			//LoginToServer()
-			//ChangeState(Heldenauswahl oder Bossauswahl)
-			RenderManager.changeState(State.GAME);
-		}
-		
-	};
-	
-	private MouseListener sl = new MouseListener(){
+    @Override
+    public void mouseReleased(MouseEvent arg0) {
+      play.changeClicked(false);
+      RenderManager.changeState(State.LOGIN);
+    }
+    
+  };
+  
+  private MouseListener sl = new MouseListener(){
 
-		@Override
-		public void mouseClicked(MouseEvent arg0) {
-			
-		}
+    @Override
+    public void mouseClicked(MouseEvent arg0) {
+      
+    }
 
-		@Override
-		public void mouseEntered(MouseEvent arg0) {
-			
-		}
+    @Override
+    public void mouseEntered(MouseEvent arg0) {
+      
+    }
 
-		@Override
-		public void mouseExited(MouseEvent arg0) {
-			
-		}
+    @Override
+    public void mouseExited(MouseEvent arg0) {
+      
+    }
 
-		@Override
-		public void mousePressed(MouseEvent arg0) {
-			settings.changeClicked(true);
-		}
+    @Override
+    public void mousePressed(MouseEvent arg0) {
+      settings.changeClicked(true);
+    }
 
-		@Override
-		public void mouseReleased(MouseEvent arg0) {
-			settings.changeClicked(false);
-			RenderManager.changeState(State.SETTINGS);
-		}
-		
-	};
+    @Override
+    public void mouseReleased(MouseEvent arg0) {
+      settings.changeClicked(false);
+      RenderManager.changeState(State.SETTINGS);
+    }
+    
+  };
 
-	private MouseListener ql = new MouseListener(){
+  private MouseListener ql = new MouseListener(){
 
-		@Override
-		public void mouseClicked(MouseEvent arg0) {
-			
-		}
+    @Override
+    public void mouseClicked(MouseEvent arg0) {
+      
+    }
 
-		@Override
-		public void mouseEntered(MouseEvent arg0) {
-			
-		}
+    @Override
+    public void mouseEntered(MouseEvent arg0) {
+      
+    }
 
-		@Override
-		public void mouseExited(MouseEvent arg0) {
-			
-		}
+    @Override
+    public void mouseExited(MouseEvent arg0) {
+      
+    }
 
-		@Override
-		public void mousePressed(MouseEvent arg0) {
-			quit.changeClicked(true);
-		}
+    @Override
+    public void mousePressed(MouseEvent arg0) {
+      quit.changeClicked(true);
+    }
 
-		@Override
-		public void mouseReleased(MouseEvent arg0) {
-			quit.changeClicked(false);
-			RenderManager.setRunning(false);
-		}
-		
-	};
+    @Override
+    public void mouseReleased(MouseEvent arg0) {
+      quit.changeClicked(false);
+      RenderManager.setRunning(false);
+    }
+    
+  };
 
-	private MenuePanel p;
-	
-	public Menue(){
-		p = new MenuePanel();
-		play = new MenueButton("Play", pl, 600, 250, 300, 120);
-		quit = new MenueButton("Quit", ql, 650, 500, 200, 80);
-		settings = new MenueButton("Settings", sl, 650, 400, 200, 80);
-		p.add(play.getPanel());
-		p.add(quit.getPanel());
-		p.add(settings.getPanel());
-		
-		
-	}
-	
-	public JPanel getPanel(){
-		return p;
-	}
-	
-	public void render(){
-		p.repaint();
-	}
-	
-	
-	@SuppressWarnings("serial")
-	  class MenuePanel extends JPanel{
-	  	public MenuePanel() {
-	  		super();
-	  		
-	  	}
-	  	
-	  	@Override
-	  	public void paint(Graphics g) {
-	  		this.setBounds(0, 0, RenderManager.getFWidth(), RenderManager.getFHeight());
-	  		try {
-				bgi = ImageIO.read(new File("Assets/GUI/Main_Menue_v2.png"));  
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-  			g.drawImage(bgi, 0, 0, RenderManager.getFWidth(), RenderManager.getFHeight(), null);
-	  		this.paintComponents(g);
-	  	}
-	  }
+  private MenuePanel p;
+  
+  /**
+   * Konstruktor
+   */
+  public Menue(){
+    p = new MenuePanel();
+    play = new MenueButton("Play", pl, 600, 250, 300, 120);
+    quit = new MenueButton("Quit", ql, 650, 500, 200, 80);
+    settings = new MenueButton("Settings", sl, 650, 400, 200, 80);
+    p.add(play.getPanel());
+    p.add(quit.getPanel());
+    p.add(settings.getPanel());
+    
+    
+  }
+  
+  /**
+   * Gibt das Panel, auf welchem gezeichnet wird, zurück
+   * @return Panel, auf welchem gezeichnet wird
+   */
+  public JPanel getPanel(){
+    return p;
+  }
+  
+  /**
+   * Zeichnet das Panel neu
+   */
+  public void render(){
+    p.repaint();
+  }
+  
+  /**
+   * Hilfsklasse für das Menue
+   * @author Fabian Scherer
+   *
+   */
+  @SuppressWarnings("serial")
+    class MenuePanel extends JPanel{
+      public MenuePanel() {
+        super();
+        
+      }
+      
+      @Override
+      public void paint(Graphics g) {
+        this.setBounds(0, 0, RenderManager.getFWidth(), RenderManager.getFHeight());
+        if(bgi == null){
+          try {
+            bgi = ImageIO.read(new File("Assets/GUI/Main_Menue_v2.png"));  
+          } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+          }
+        }
+        g.drawImage(bgi, 0, 0, RenderManager.getFWidth(), RenderManager.getFHeight(), null);
+        this.paintComponents(g);
+      }
+    }
 }
