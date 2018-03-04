@@ -1,4 +1,5 @@
-import java.io.ByteArrayOutputStream;
+
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -7,37 +8,37 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketTimeoutException;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
-import java.io.ObjectOutputStream;
 
    /*
    * @author Moritz Oskar 
-   * @version 1.8 ZUsammenfÃ¼hrung von UDP + TCP Server
+   * @version 2.0 ZUsammenführung von UDP + TCP Server
    * 
    */
 public class Server extends Thread{
   
   private ServerSocket connect;
-  private ClientData[] clientDatas = new ClientData[3];
+  private ClientData[] clientDatas = new ClientData[3]; 
   //damit die while-schleife aus portsTauschen() nicht so kompliziert ist, erstelle ich ein Array zum speichern der CLientObjekte
   private ArrayList<Integer> port = new ArrayList<Integer>();
   private DatagramSocket sendSocket;
   private UDPserverListener listener1,listener2,listener3;
-  // Die Spieler Objekte, die versendet werden.
+  // Die cLoginUpdate Objekte, die versendet werden
   private cLoginUpdate spieler1, spieler2, spieler3;
   
   public Server() {
+    spieler1 = new cLoginUpdate();
+    spieler2 = new cLoginUpdate();
+    spieler3 = new cLoginUpdate();
     port.add(3556);
     port.add(3557);
     port.add(3558);
-    //ein Port fÃ¼r jeden CLient
+    //ein Port für jeden CLient
     try {
       connect = new ServerSocket(3555); //zu Anfang verbinden sich alle Clients mit diesem Socket
       portsTauschen();
       sendSocket = new DatagramSocket( );
-      this.run(); //sobald alle freien Ports an verschiedene CLients vergeben wurden, startet die UDP DatenÃ¼bertragung
+      this.run(); //sobald alle freien Ports an verschiedene CLients vergeben wurden, startet die UDP Datenübertragung
       
     } catch (IOException e) {
       e.printStackTrace();
@@ -45,14 +46,13 @@ public class Server extends Thread{
   }
   
   public void run() {
-    
     System.out.println("Mit allen Clients verbunden\nThread wird gestartet");
-    //fÃ¼r jeden Client wird ein UDPserverListener gestartet
-    listener1 = new UDPserverListener(clientDatas[0].getZugewiesenerPort());
+    //für jeden Client wird ein UDPserverListener gestartet
+    listener1 = new UDPserverListener(clientDatas[0].getZugewiesenerPort(), spieler1);
     listener1.start();
-    listener2 = new UDPserverListener(clientDatas[1].getZugewiesenerPort());
+    listener2 = new UDPserverListener(clientDatas[1].getZugewiesenerPort(), spieler2);
     listener2.start();
-    listener3 = new UDPserverListener(clientDatas[2].getZugewiesenerPort());
+    listener3 = new UDPserverListener(clientDatas[2].getZugewiesenerPort(), spieler3);
     listener3.start();
     
     while ( true ){
@@ -70,22 +70,27 @@ public class Server extends Thread{
     }
   }
   
+  /**
+   *  Die send()-Methode ist zum Senden, der Daten notwendig. 
+   *  Mit dieser Methode werden Daten an alle Clients gesendet. 
+   *  Dies passiert über den datagramSocketSend und das „DatagramPacket“.
+   *  Jeder Client bekommt alle drei objete. An jeden Client werden die Packetets mit Updates vom laufenden Spiel geschickt
+   */
   private void send() throws IOException {
-    //an jeden Client werden Packetet mit Updates vom laufenden Spiel geschickt
-    // person 1
+    
     for(ClientData i: clientDatas){
       
-      byte[] sandData = spieler1.getbyte();
-      DatagramPacket packet = new DatagramPacket( sandData, sandData.length, i.getIa(), 3555 );
-      sendSocket.send(packet);
-      
-      sandData = spieler2.getbyte();
-      packet = new DatagramPacket( sandData, sandData.length, i.getIa(), 4409 );
-      sendSocket.send(packet);
-      
-      sandData = spieler3.getbyte();
-      packet = new DatagramPacket( sandData, sandData.length, i.getIa(), 4519 );
-      sendSocket.send(packet);
+        byte[] sandData = spieler1.getbyte();
+        DatagramPacket packet = new DatagramPacket( sandData, sandData.length, i.getIa(), 3555 );
+        sendSocket.send(packet);
+        
+        sandData = spieler2.getbyte();
+        packet = new DatagramPacket( sandData, sandData.length, i.getIa(), 4409 );
+        sendSocket.send(packet);
+        
+        sandData = spieler3.getbyte();
+        packet = new DatagramPacket( sandData, sandData.length, i.getIa(), 4519 );
+        sendSocket.send(packet);
     }
   }
   
@@ -114,6 +119,42 @@ public class Server extends Thread{
     int p = port.get(port.size()-1);
     port.remove(port.size()-1);
     return p;
-    //gibt einen noch nicht genutzen port zurÃ¼ck
+    //gibt einen noch nicht genutzen port zurück
   }
+  
+//public Methoden für den zugriff von außen
+  /**
+   *  Die setSpielerData(cLoginUpdate s1, cLoginUpdate s2, cLoginUpdate s3)-Methode ist dafür da, das die Objekte, die versendet werden sollen, in dem Server gespeichert werden.
+   *  @param s1 das erste cLoginUpdate Objekte
+   *  @param s2 das zweite cLoginUpdate Objekte
+   *  @param s3 das dritte cLoginUpdate Objekte
+   *  @since 2.0
+   */
+  public void setSpielerData(cLoginUpdate s1, cLoginUpdate s2, cLoginUpdate s3) {
+    spieler1=s1;
+    spieler2=s2;
+    spieler3=s3;
+  }
+  /**
+   *  Die getcLoginUpdateObjOne()-Methode ist dafür da, das die Objekte, die versendet wurden, ausgegeben werden können. Für den Spieler eins.
+   *  @since 1.5
+   */
+  public cLoginUpdate getcLoginUpdateObjOne() {
+  return listener1.getSpielerData();
+  }
+  /**
+   *  Die getcLoginUpdateObjTwo()-Methode ist dafür da, das die Objekte, die versendet wurden, ausgegeben werden können. Für den Spieler eins.
+   *  @since 1.5
+   */
+  public cLoginUpdate getcLoginUpdateObjTwo() {
+    return listener2.getSpielerData();
+  }
+  /**
+   *  Die getcLoginUpdateObjThree()-Methode ist dafür da, das die Objekte, die versendet wurden, ausgegeben werden können. Für den Spieler eins.
+   *  @since 1.5
+   */
+  public cLoginUpdate getcLoginUpdateObjThree() {
+    return listener3.getSpielerData();
+  }
+  
 }
