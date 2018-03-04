@@ -1,5 +1,12 @@
+
+
 import java.net.InetAddress;
 
+/*
+   * @author Oskar Moritz
+   * @version 1.1 
+   * ClientData
+   */
 public class ClientData {
   private InetAddress ia;
   private int zugewiesenerPort;
