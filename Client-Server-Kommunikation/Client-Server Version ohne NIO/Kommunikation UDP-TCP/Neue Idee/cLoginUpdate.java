@@ -11,7 +11,7 @@ public class cLoginUpdate extends Update {
   private int mode;                                       //an elchem Schritt befindet sich der Client
   private boolean istBoss;                                //ist Spieler Boss oder nicht
   private int charakter;
-  private UUID uuid;
+  private UUID uuid = UUID.randomUUID();
   private boolean spielStart;
   /*
    * @author Oskar Moritz
@@ -25,6 +25,7 @@ public class cLoginUpdate extends Update {
       out.writeInt(mode);
       out.writeBoolean(istBoss);
       out.writeInt(charakter);
+      System.out.println(uuid.toString());
       out.writeChars(uuid.toString());
       out.writeBoolean(spielStart);
       byte[] data = baos.toByteArray();
@@ -42,6 +43,7 @@ public class cLoginUpdate extends Update {
       mode = in.readInt();
       istBoss = in.readBoolean();  
       charakter = in.readInt();
+      System.out.println(in.readUTF());
       uuid= UUID.fromString(in.readUTF());
     }
   public cLoginUpdate(){

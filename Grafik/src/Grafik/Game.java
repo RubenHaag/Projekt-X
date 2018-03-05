@@ -29,14 +29,8 @@ public class Game{
   Game(){
     gp = new GamePanel();
     lm = new PlayerAnzeige(50.0, 50.0);
-    try {
-		p1 = new Player("Boy", 400, 200, 100, 200, false);
-		p2 = new Player("Girl", 700, 300, 100, 200, false);
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-    
+	p1 = new Player("Boy", 400, 200, 100, 200, false);
+	p2 = new Player("Girl", 700, 300, 100, 200, false);
     gp.add(lm.getPanel());
     gp.add(p1);
     gp.add(p2);
@@ -120,21 +114,17 @@ public class Game{
       switch(player) {
       case 0:
         b1.updatePos(x, y);
-        
         b1.updateMovementType(mt, right);
-        
         b1.updateAttackType(at);
         break;
       case 1:
         p1.updatePos(x, y);
         p1.updateMovementType(mt, right);
-        
         p1.updateAttackType(at);  
         break;
       case 2:
         p2.updatePos(x, y);
         p2.updateMovementType(mt, right);
-        
         p2.updateAttackType(at);  
         break;
       default:
@@ -152,12 +142,25 @@ public class Game{
      * @throws IOException 
      */
   public static void initGame(String pn1, String pn2, String bn1) throws IOException{
-        p1 = new Player(pn1, 0, 0, 100, 200, true);
-        gp.add(p1);
-        p2 = new Player(pn2, 0, 0, 100, 200, true);
-        gp.add(p2);
-        b1 = new Player(bn1, 0, 0, 200, 400, true);
-        gp.add(b1);
+	  if(p1 != null) {
+		  gp.remove(p1);
+	  }
+      p1 = new Player(pn1, 0, 0, 100, 200, true);
+      gp.add(p1);
+      if(p2 != null) {
+    	  gp.remove(p2);
+      }
+      p2 = new Player(pn2, 0, 0, 100, 200, true);
+      gp.add(p2);
+      /* if(b1 != null) {
+       	gp.remove(b1);
+       }
+       */
+        //b1 = new Player(bn1, 0, 0, 200, 400, true);
+        //gp.add(b1);
+      gp.validate();
+        p1.initPlayerAnimations();
+        p2.initPlayerAnimations();
   }
   
   /**
@@ -184,6 +187,7 @@ public class Game{
     	p1.repaint();
     	p2.repaint();
     	b1.repaint();
+    	
     }
     
     /** 
@@ -202,7 +206,7 @@ public class Game{
         this.setBounds(0, 0, RenderManager.getFWidth(), RenderManager.getFHeight());
         if(map == null){
           try {
-            map = ImageIO.read(new File("Assets/GUI/Login_screen_v2.png"));
+            map = ImageIO.read(new File("Assets/Map/MapColor.png"));
           } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

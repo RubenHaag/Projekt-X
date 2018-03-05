@@ -5,7 +5,7 @@ import java.net.UnknownHostException;
 public class mainClient {
 
   public static void main(String[] args) throws UnknownHostException, IOException {
-    Thread e = new Client("80.142.161.203");
+    Thread e = new Client("192.168.1.8");
 
   }
 
