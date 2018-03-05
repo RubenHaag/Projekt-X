@@ -1,6 +1,7 @@
 package grafik;
 
 import java.awt.BorderLayout;
+
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -8,8 +9,8 @@ import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import IOServer.GameManager;
-import IOServer.InputListener;
+import ioserver.GameManager;
+import ioserver.InputListener;
 
 
 /**
