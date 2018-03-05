@@ -1,12 +1,12 @@
 
-package IOServer;
+package ioserver;
 
 import java.io.*;
 
 public class Player {
     private int numberID;
     private int attackMode = 1;
-    private int jumpheight = 100;
+    private int jumpheight = 200;
     private int movementspeed = 100;
     private Rectangle hb = new Rectangle(new Position(400,400), 10, 20);
     private double health = 100;

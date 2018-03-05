@@ -24,6 +24,7 @@ public class RenderManager {       // Hauptklasse in der grafik, managed wann wa
     private static Menue menue;
     private static Game game;
     private static SettingsMenue settings;
+    private static SoundManager music;
     private static LoginMenue login;
     private static boolean running;
     private static GameManager g = new GameManager();
@@ -57,7 +58,8 @@ public class RenderManager {       // Hauptklasse in der grafik, managed wann wa
         f.add(p);
         p.add(menue.getPanel());
         running = true;        
-        SoundManager.playSound("Assets/Sound/Menu Music.wav");
+        music = new SoundManager();
+        music.start();
         while(running) {
             render();
         }

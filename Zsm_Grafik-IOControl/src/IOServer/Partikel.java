@@ -1,4 +1,4 @@
-package IOServer;
+package ioserver;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -21,7 +21,7 @@ public class Partikel {
      */
 
     public Partikel() {
-        down = 200;
+        down = 400 ;
         friction1 = 80;
         friction2 = -friction1;
         gr = new Rectangle(new Position(0,0),1,1);
@@ -45,32 +45,67 @@ public class Partikel {
      */
     public void play() {
 
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
+        /*
         	public void run() {
-            long time = System.nanoTime();
-            double dt = (double)((time - last_time));
-            last_time = time;
-            if (xVel < 0) {
+        	System.out.println("XVel: "+xVel);
+        	System.out.println("YVel: "+yVel);
+            if (xVel < -1) {
                 friction = friction1;
-            } else if(xVel > 0) {
+            } else if(xVel > 1) {
                 friction = friction2;
-            }
             if(!isJumping) {
                 yVel = yVelw;
-                pos.setXPos((int) (pos.getXPos()+dt / 1000000000* xVel));
+                pos.setXPos((int) (pos.getXPos()+ xVel));
                 pos.setYPos((int) (gr.getTop()+ 1));
-                if (xVel > 0 || xVel < 0) {
-                    xVel = xVel + dt / 1000000000* friction;
+                if (xVel > 1 || xVel < -1) {
+                    xVel = xVel + friction;
+                }else {
+                	xVel = 0;
+                	}
                 }
             } else {
-                pos.setXPos((int) (pos.getXPos()+ dt / 1000000000* xVel));
-                pos.setYPos((int) (pos.getYPos()+ dt / 1000000000* yVel));
-                yVel = yVel + dt / 1000000000* down;
+                pos.setXPos((int) (pos.getXPos()+ xVel));
+                pos.setYPos((int) (pos.getYPos()+ yVel));
+                yVel = yVel + down;
             }
             RenderManager.getGameManager().getpSelf().getHb().setPos(pos);
-        }
-        }, 0, 100);
+        }*/
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+       
+    	public void run(){
+    		System.out.println("XVel: "+xVel);
+    			long time = System.nanoTime();
+    			double dt = (double)((time - last_time));
+    			last_time = time;
+    			if (xVel < -15){
+    				friction = friction1;
+    				
+    				
+    			}else if(xVel > 15){
+    				
+    					friction = friction2;
+    				
+    			}else {
+    				xVel =0;
+    			}
+
+    			if(!isJumping){
+    				yVel = yVelw;
+    				pos.setXPos((int)(pos.getXPos()+dt / 1000000000* xVel));
+    				pos.setYPos(gr.getTop() + 1);
+    				
+    				if (xVel > 0 || xVel < 0){
+    					xVel = xVel + dt / 1000000000* friction;
+    				}} else {
+    					pos.setXPos((int)(pos.getXPos()+ dt / 1000000000* xVel));
+    					pos.setYPos((int)(pos.getYPos()+ dt / 1000000000* yVel));
+    					yVel = yVel + dt / 1000000000* down;
+    				}
+    			RenderManager.getGameManager().getpSelf().getHb().setPos(pos);
+    		}
+        }, 0, 200);
+    	
     }
     /**
      * Gibt die Geschwindigkeit des Objektes zur�ck.

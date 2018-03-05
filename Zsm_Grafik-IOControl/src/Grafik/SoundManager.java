@@ -14,7 +14,7 @@ import javax.sound.sampled.DataLine;
  * @author Fabian Scherer
  *
  */
-class SoundManager{  // muss vllt ein eigener Thread sein
+class SoundManager extends Thread{  // muss vllt ein eigener Thread sein
     private static Clip clip = null;
 
     /**
@@ -29,13 +29,52 @@ class SoundManager{  // muss vllt ein eigener Thread sein
             byte[] audio = new byte[size];
             DataLine.Info info = new DataLine.Info(Clip.class, af, size);
             audioInputStream.read(audio, 0, size);
-            clip = (Clip) AudioSystem.getLine(info);
+            Clip clip = (Clip) AudioSystem.getLine(info);
             clip.open(af, audio, 0, size);
             clip.start();
         } catch(Exception e) {
             e.printStackTrace();
         }
 
+    }
+    
+    public void run(){
+    	try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("Assets/Sound/Menu Music.wav"));
+            AudioFormat af = audioInputStream.getFormat();
+            int size = (int) (af.getFrameSize() * audioInputStream.getFrameLength());
+            byte[] audio = new byte[size];
+            DataLine.Info info = new DataLine.Info(Clip.class, af, size);
+            audioInputStream.read(audio, 0, size);
+            clip = (Clip) AudioSystem.getLine(info);
+            clip.open(af, audio, 0, size);
+            clip.start();
+    		} catch(Exception e) {
+    			e.printStackTrace();
+    		}
+        while(!isInterrupted()) {
+        	if(!clip.isRunning()) {
+        		try {
+                    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("Assets/Sound/Menu Music.wav"));
+                    AudioFormat af = audioInputStream.getFormat();
+                    int size = (int) (af.getFrameSize() * audioInputStream.getFrameLength());
+                    byte[] audio = new byte[size];
+                    DataLine.Info info = new DataLine.Info(Clip.class, af, size);
+                    audioInputStream.read(audio, 0, size);
+                    clip = (Clip) AudioSystem.getLine(info);
+                    clip.open(af, audio, 0, size);
+                    clip.start();
+            		} catch(Exception e) {
+            			e.printStackTrace();
+            		}
+        	}
+        	try {
+				sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }
     }
 
 }
