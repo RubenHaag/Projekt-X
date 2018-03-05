@@ -1,4 +1,4 @@
-package Grafik;
+package grafik;
 
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
@@ -117,7 +117,7 @@ public class LoginMenue {
   }
   
   /**
-   * Gibt das Panel, auf welchem gezeichnet wird, zurück
+   * Gibt das Panel, auf welchem gezeichnet wird, zurï¿½ck
    * @return
    */
   public JPanel getPanel() {

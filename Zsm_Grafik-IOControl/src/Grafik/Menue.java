@@ -1,7 +1,5 @@
-package Grafik;
+package grafik;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -130,7 +128,7 @@ public class Menue {
   }
   
   /**
-   * Gibt das Panel, auf welchem gezeichnet wird, zurück
+   * Gibt das Panel, auf welchem gezeichnet wird, zurï¿½ck
    * @return Panel, auf welchem gezeichnet wird
    */
   public JPanel getPanel(){
@@ -145,7 +143,7 @@ public class Menue {
   }
   
   /**
-   * Hilfsklasse für das Menue
+   * Hilfsklasse fï¿½r das Menue
    * @author Fabian Scherer
    *
    */

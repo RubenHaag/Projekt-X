@@ -1,4 +1,4 @@
-package Grafik;
+package grafik;
 
 /**
  * Status in dem sich das Programm befindet

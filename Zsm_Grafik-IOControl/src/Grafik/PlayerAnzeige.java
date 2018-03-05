@@ -1,4 +1,4 @@
-package Grafik;
+package grafik;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -49,7 +49,7 @@ public class PlayerAnzeige{
   }
   
   /**
-   * Gibt das Panel, auf welchem gezeichnet wird, zurück
+   * Gibt das Panel, auf welchem gezeichnet wird, zurï¿½ck
    * @return  Panel, auf welchem gezeichnet wird
    */
   public JPanel getPanel() {
@@ -100,7 +100,6 @@ public class PlayerAnzeige{
         try {
           frame = ImageIO.read(new File("Assets/GUI/Lifebar_v2_empty.png"));
         } catch (IOException e) {
-          // TODO Auto-generated catch block
           e.printStackTrace();
         }
       }
@@ -108,7 +107,6 @@ public class PlayerAnzeige{
         try {
           hpbar = ImageIO.read(new File("Assets/GUI/Healthbar.png"));
         } catch (IOException e) {
-          // TODO Auto-generated catch block
           e.printStackTrace();
         }
       }
@@ -116,7 +114,6 @@ public class PlayerAnzeige{
         try {
           mpbar = ImageIO.read(new File("Assets/GUI/Manabar.png"));
         } catch (IOException e) {
-          // TODO Auto-generated catch block
           e.printStackTrace();
         }
       }

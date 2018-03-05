@@ -1,4 +1,4 @@
-package Grafik;
+package grafik;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -42,14 +42,14 @@ public class Projectile extends JComponent{
   }
   
   /**
-   * Gibt die X-Position der oberen linken Ecke zurück
+   * Gibt die X-Position der oberen linken Ecke zurï¿½ck
    */
   public int getX() {
      return x;
   }
    
   /**
-   * Gibt die Y-Position der oberen linken Ecke zurück
+   * Gibt die Y-Position der oberen linken Ecke zurï¿½ck
    */
   public int getY() {
      return y;
@@ -64,7 +64,6 @@ public class Projectile extends JComponent{
         try {
           pi = ImageIO.read(new File("Assets/GUI/" + dateiname + ".png"));  
         } catch (IOException e) {
-          // TODO Auto-generated catch block
           e.printStackTrace();
         }
       }

@@ -1,4 +1,4 @@
-package IOServer;
+package ioserver;
 import java.util.UUID;
 
 public class cLoginUpdate extends Update {

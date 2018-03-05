@@ -1,4 +1,4 @@
-package Grafik;
+package grafik;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -7,7 +7,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 /**
- * Thread für die Spieleranimationen
+ * Thread fï¿½r die Spieleranimationen
  * @author Fabian Scherer
  *
  */
@@ -21,7 +21,7 @@ public class PlayerAnimation extends Thread{
 	
 	/**
 	 * Konstruktor
-	 * @param playerName Name des Spielers für welchen die Animationen sind
+	 * @param playerName Name des Spielers fï¿½r welchen die Animationen sind
 	 */
 	PlayerAnimation(String playerName){
 		name = playerName;
@@ -32,7 +32,7 @@ public class PlayerAnimation extends Thread{
 	
 	/**
 	 * Initialisiert die Animationen.
-	 * Lädt alle Bilder in den Speicher
+	 * Lï¿½dt alle Bilder in den Speicher
 	 * @throws IOException
 	 */
 	public void initPlayerAnimations() throws IOException {
@@ -77,7 +77,7 @@ public class PlayerAnimation extends Thread{
 	}
 	
 	/**
-	 * Getter für das aktuelle Bild der Animation
+	 * Getter fï¿½r das aktuelle Bild der Animation
 	 * @return aktuelles Bild der Animation
 	 */
 	public BufferedImage getImage() {

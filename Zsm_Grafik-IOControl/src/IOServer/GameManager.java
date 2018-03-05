@@ -1,15 +1,20 @@
+package ioserver;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.UUID;
+import java.io.IOException;
+import java.util.*;
+
+import grafik.Game;
+import grafik.MovementType;
+import grafik.RenderManager;
+import grafik.State;
+import ioserver.mapbuilder.MapBuilder;
 
 
 /**
  * @author Lukas Hofmann, Patrick Waltermann, Max Schulte
  */
 public class GameManager {
-
     /**
      * Anmerkung BrutForce soll jetzt benutzt werden (1/20 Sekunde)
      */
@@ -17,17 +22,16 @@ public class GameManager {
     private int endHilfe = 0;
     private boolean endGame, bosswin;
     private UUID id;
-    private int hbAnzahl;
-    private Player pSelf;
+    private Player pSelf = new Player();
+    private Player pOther1 = new Player();
+    private Player pOther2 = new Player();
     private Attack amAllg = pSelf.getAmNormal();
-    private Player pOther1;
-    private Player pOther2;
-    private Rectangle[] hbListe = new Rectangle[hbAnzahl];
+    private List<Rectangle> hbListe;
     private ServerVerwaltung server;
-    private Partikel pa;
-    private cLoginUpdate CLU0=new cLoginUpdate;								//CLU0;CLU1;CLU2 : fuer Werteuebergabe von Server zu CLient
-    private cLoginUpdate CLU1=new cLoginUpdate;
-    private cLoginUpdate CLU2=new cLoginUpdate;
+    private Partikel pa = new Partikel(pSelf.getHb().getPos(), pSelf.getHb().getWidth(), pSelf.getGr());
+    private cLoginUpdate CLU0=new cLoginUpdate();								//CLU0;CLU1;CLU2 : fuer Werteuebergabe von Server zu CLient
+    private cLoginUpdate CLU1=new cLoginUpdate();
+    private cLoginUpdate CLU2=new cLoginUpdate();
     private cLoginUpdate ownCLU=new cLoginUpdate(0,null);
     private int charakter;
 
@@ -38,30 +42,18 @@ public class GameManager {
     public GameManager(ServerVerwaltung s) {
         this();
         server = s;
-
     }
 
     /**
      * Konstruktor ohne Serverobjekt
      */
     public GameManager() {
-        pSelf = new Player();
-        pSelf.setAttackMode(1);
-        pSelf.setMana(0);
-        pSelf.setHealth(0);
-        pSelf.setJumpheight(100);
-        pSelf.setMovementspeed(100);
-        pSelf.setLookingRight(false);
-        pSelf.setSprinting(false);
-        pSelf.setBoss(false);
-        pSelf.setHb(new Rectangle(new Position(0, 0), 10, 10));
-        pSelf.setGr(new Rectangle(new Position(0, 0), 10, 10));
-        pa = new Partikel(pSelf.getHb().getPos(), pSelf.getHb().getWidth(), pSelf.getGr());
-        pa.setJumping(false);
-        pOther1 = new Player();
-        pOther2 = new Player();
-
-
+//        hbListe = new ArrayList<>();
+        try {
+            hbListe = MapBuilder.BildZuRechteck("src/ioserver/mapbuilder/MapComputer.jpg");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -103,11 +95,11 @@ public class GameManager {
      * Diese Methode wird vom InputListener aufgerufen und fuehrt die Methode cMoveSelf() aus.
      * Ausserdem werden die Attribute isLookingRight und isSprinting veraendert
      * Sie dient zur Verarbeitung der auf der Tastatur gedruekten Tasten
-     * Ausserdem gibt es eine If-Schleife die eine weitere Eingabe nach dem Tod des Spielers verhindert
+     * Ausserdem gibt es eine If-Abfrage die eine weitere Eingabe nach dem Tod des Spielers verhindert
      * @param e Die aktivierte Taste
      */
     public void inputKey(KeyEvent e) {
-        if (!pSelf.isDead()) { //If-Schleife: verhindert weitere Eingabe nach dem Tod des Spielers
+        if (!pSelf.isDead()) { //If-Abfrage: verhindert weitere Eingabe nach dem Tod des Spielers
             switch (e.getKeyChar()) {
                 case 'a': //Bewegung nach Links bei dem Tastendruck von 'A'
                     pSelf.setLookingRight(false);
@@ -127,8 +119,7 @@ public class GameManager {
                 case '3':
                     try {
                         pSelf.setAttackMode(Integer.parseInt(Character.toString(e.getKeyChar())));
-                    } catch (Exception ignored) {
-                    }
+                    } catch (Exception ignored) {}
                     break;
             }
         }
@@ -137,10 +128,10 @@ public class GameManager {
     /**
      * Diese Methode wird vom InputListener aufgerufen, wenn ein Mausklick registriert wurde.
      * Sie loest die Methode attack() aus, wenn die linke Maustaste gedrueckt wurde, wertet also den Mausinput aus
-     * Ausserdem gibt es eine If-Schleife die eine weitere Eingabe nach dem Tod des Spielers verhindert
+     * Ausserdem gibt es eine If-Abfrage die eine weitere Eingabe nach dem Tod des Spielers verhindert
      */
     public void inputMouse(MouseEvent m) {
-        if (m.getButton() == 1 && !pSelf.isDead()) { //If-Schleife: verhindert weitere Eingabe nach dem Tod des Spielers
+        if (m.getButton() == 1 && !pSelf.isDead()) { //If-Abfrage: verhindert weitere Eingabe nach dem Tod des Spielers
             switch (pSelf.getAttackMode()) { //Attacke wird in Abhaengigkeit zum eingegebenen Attackmodus ausgefuehrt
                 case 1:
                     cAttack(pSelf.getAmNormal());
@@ -162,7 +153,7 @@ public class GameManager {
     private void cMoveSelf() {
         if (pSelf.isLookingRight()) {
             pa.addxVel(pSelf.getMovementspeed());
-        } else if (!pSelf.isLookingRight()) {
+        } else {
             pa.addxVel(-pSelf.getMovementspeed());
         }
     }
@@ -211,7 +202,7 @@ public class GameManager {
     }
 
     /**
-     * Uebergibt der Grafik, dass Schaden an einen Spieler ausgef�hrt wurde
+     * Uebergibt der grafik, dass Schaden an einen Spieler ausgef�hrt wurde
      */
     private void cHit(Player p) {
         //TODO an grafik senden
@@ -219,7 +210,7 @@ public class GameManager {
 
     /**
      * Fuehrt die sLogin(GameManager) beim Server auf, um eine Verbindung aufzubauen.
-     
+
      */
     /*
     public void cLogin() { //�bergabe der ServerID!!!
@@ -243,14 +234,6 @@ public class GameManager {
         pSelf.setBoss(b);
         pSelf.setNumberID(k);
 
-    }
-
-    public Rectangle[] getHbListe() {
-        return hbListe;
-    }
-
-    public void setHbListe(Rectangle[] hbListe) {
-        this.hbListe = hbListe;
     }
 
     /**
@@ -284,7 +267,7 @@ public class GameManager {
                 } catch (InterruptedException e) {
                 }
             }
-            //TODO an Grafik TOD
+            //TODO an grafik TOD
         }
     }
 
@@ -299,24 +282,58 @@ public class GameManager {
     }
 
     /**
-     * Methode um die Grafik ueber erschaffene Projectiles zu informieren
+     * Methode um die grafik ueber erschaffene Projectiles zu informieren
      */
     public void cSpawnprojectile() {
-        //an Grafik
+        //an grafik
     }
 
     /**
-     * Methode um die Grafik �ber zerst�rte Projectiles zu informieren
+     * Methode um die grafik �ber zerst�rte Projectiles zu informieren
      */
     public void cDestroyprojectile() {
-        //an Grafik
+        //an grafik
+    }
+
+    private MovementType bestimmenMovementType(Player p) {
+        if(p.isJumping()) {
+            return MovementType.JUMPING;
+        }
+        if(Game.getPlayerXPos(p.getNumberID()) ==p.getHb().getPos().getXPos()&& Game.getPlayerYPos(p.getNumberID()) ==p.getHb().getPos().getYPos()) {
+            return MovementType.IDLE;
+        }
+        else {
+            return MovementType.MOVE;
+        }
+    }
+
+    private int bestimmenAttackType(Player p) {
+        if(!p.isAttacking()) {
+            return 0;
+        }
+
+        else if(amAllg==p.getAmNormal()) {
+            return 1;
+        }
+
+        else if(amAllg==p.getAmSpec1()) {
+            return 2;
+        }
+
+        else {
+            return 3;
+        }
     }
 
     /**
-     * Alle Daten werden an die Grafik �bertragen
+     * Alle Daten werden an die grafik �bertragen
      */
     private void cUpdateG() {
-        //alle daten �bergeben
+        //alle daten Uebergeben
+
+       //System.out.println(pSelf.getHb().getPos().getXPos());
+//        Game.updatePlayer(pSelf.getNumberID(), pSelf.getHb().getPos().getXPos(), 5, bestimmenMovementType(pSelf), bestimmenAttackType(pSelf), pSelf.isLookingRight(), pSelf.getHealth(), pSelf.getMana());
+        Game.updatePlayer(pSelf.getNumberID(), pSelf.getHb().getPos().getXPos(), pSelf.getHb().getPos().getYPos(), bestimmenMovementType(pSelf), bestimmenAttackType(pSelf), pSelf.isLookingRight(), pSelf.getHealth(), pSelf.getMana());
     }
 
     /**
@@ -390,7 +407,7 @@ public class GameManager {
   }*/
 
     /**
-     * Uebergibt den laufenden Countdown an die Grafik
+     * Uebergibt den laufenden Countdown an die grafik
      *
      * @param countdown Countdown bis Spielbeginn
      */
@@ -409,35 +426,34 @@ public class GameManager {
     /**
      * Setzt den/die Character der Spieler
      */
-    public void cSetCharakter() {
-        this.charakter=charakter;
-        //TODO fehlt!!!
-
-
+    public void cSetCharakter(int charakter) {
+        this.charakter = charakter;
+        //TODO fehlt was?
     }
 
-    private boolean intersect(Rectangle[] player, Rectangle damage) {
-        for (Rectangle r : player) {
-            if (!((damage.getRight() <= r.getLeft() || damage.getLeft() >= r.getRight()) && (damage.getBottom() >= r.getTop()))) {
+    private void intersect(List<Rectangle> hbListe, Rectangle player) {
+        for (Rectangle r : hbListe) {
+            if (!((player.getRight() <= r.getLeft() || player.getLeft() >= r.getRight()) && (player.getBottom() <= r.getTop()))) {
                 pa.setJumping(false);
                 pa.updateGround(r);
-                pSelf.setJumping(true);
-                return true;
+                pSelf.setJumping(false);
+                System.out.println("intersect");
+                return;
             }
         }
-        pSelf.setJumping(false);
+        pSelf.setJumping(true);
         pa.setJumping(true);
-        return false;
     }
-    
-    
-     /**
+
+
+    /**
      * Fuehrt die sLogin(GameManager) beim Server auf, um eine Verbindung aufzubauen.
      */
-    public void cLogin() { //�bergabe der ServerID!!!
+    
+    /*public void cLogin() { //�bergabe der ServerID!!!
         id = UUID.randomUUID();
         server.sLogin(this);
-    }
+    }*/
 
     /**
      * Einer der Spieler hat sich ausgeloggt oder das Spiel ist zu Ende
@@ -454,7 +470,7 @@ public class GameManager {
      *          zum Beispiel welcher Spieler sich ausgeloggt hat oder wer gewonnen hat
      */
     public void zeigen(String s) {
-        //string an Grafik, vermutlich zu aufwendig
+        //string an grafik, vermutlich zu aufwendig
     }
 
     /**
@@ -489,66 +505,66 @@ public class GameManager {
                 }
                 if (endGame && endHilfe == 0) {
                     endHilfe++;
-                    //TODO Grafik Ende senden
+                    //TODO grafik Ende senden
                 }
             }
         }, 0, 100);
         server = null;
     }
-    
+
     /**
      * Fuehrt die sLogin(GameManager) beim Server auf, um eine Verbindung aufzubauen.
      */
     public void cLogin() { //�bergabe der ServerID!!!
         if (id==null){
-    		this.id = UUID.randomUUID();
-    		ownCLU.setUUID(id);
-    	}
-    	else if(id==CLU0.getUUID()){
-    		ownCLU=CLU0;
-    	}
-    	else if(id==CLU1.getUUID()){
-    		ownCLU=CLU1;
-    	}
-    	else if(id==CLU2.getUUID()){
-    		ownCLU=CLU2;
-    	}
-    	if (ownCLU.getMode()==1){
-    		if (ownCLU.getSpielStart()){
-    			this.spielstart();
-    		}
-    		else{
-    		 
-    			if(ownCLU.getIstBoss()){
-    				this.auswahlBoss(ownCLU);
-    			}
-    			else{
-    				this.auswahlSpieler(ownCLU);
-    			}
-    		}
-    	}
-    	else{
-    	}
+            this.id = UUID.randomUUID();
+            ownCLU.setUUID(id);
+        }
+        else if(id==CLU0.getUUID()){
+            ownCLU=CLU0;
+        }
+        else if(id==CLU1.getUUID()){
+            ownCLU=CLU1;
+        }
+        else if(id==CLU2.getUUID()){
+            ownCLU=CLU2;
+        }
+        if (ownCLU.getMode()==1){
+            if (ownCLU.getSpielStart()){
+                this.spielstart();
+            }
+            else{
+
+                if(ownCLU.getIstBoss()){
+                    this.auswahlBoss(ownCLU);
+                }
+                else{
+                    this.auswahlSpieler(ownCLU);
+                }
+            }
+        }
+        else{
+        }
     }
-    
-    	
-    
+
+
+
     /**
      * Der Spieler ist ein normaler Spieler,
      * es wird die Charakterauswahl für Spielercharaktere geöffnet
      */
     public void auswahlSpieler(cLoginUpdate ownCLU){
-      //ownCLU.setCharakter=(Spielerauswahl fÃ¼r Spieler oeffnen)/rückgabewert von grafik, sonst standardauswahl;
-  	  ownCLU.setMode(2);
+        //ownCLU.setCharakter=(Spielerauswahl fÃ¼r Spieler oeffnen)/rückgabewert von grafik, sonst standardauswahl;
+        ownCLU.setMode(2);
     }
 
     /**
      * Der Spieler ist der Boss Player
      * es wird die Charakterauswahl für den Bosscharakter geöffnen
      */
-    public void auswahlBoss(cLoginUpdate ownCLU){           
-      //ownCLU.setCharakter=(Spielerauswahl fÃ¼r Boss oeffnen)/rückgabewert von Grafik sonst standartauswahl
-  	  ownCLU.setMode(2);
+    public void auswahlBoss(cLoginUpdate ownCLU){
+        //ownCLU.setCharakter=(Spielerauswahl fÃ¼r Boss oeffnen)/rückgabewert von grafik sonst standartauswahl
+        ownCLU.setMode(2);
     }
 
     public Partikel getPartikel() {

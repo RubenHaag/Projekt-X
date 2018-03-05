@@ -1,4 +1,4 @@
-package Grafik;
+package grafik;
 
 import java.awt.Graphics;
 import java.awt.event.MouseListener;
@@ -33,7 +33,7 @@ class MenueButton{
    * @param x X-Position der linken oberen Ecke
    * @param y Y-Position der linken oberen Ecke
    * @param width Breite des Buttons
-   * @param height Höhe des Buttons
+   * @param height Hï¿½he des Buttons
    */
   public MenueButton(String name, MouseListener l, int x, int y, int width, int height) {
     panel = new ButtonPanel();
@@ -49,7 +49,7 @@ class MenueButton{
   }
   
   /**
-   * Gibt das Panel, auf welchem gezeichnet wird, zurück
+   * Gibt das Panel, auf welchem gezeichnet wird, zurï¿½ck
    * @return Panel, auf welchem gezeichnet wird
    */
   public JPanel getPanel() {
@@ -73,7 +73,7 @@ class MenueButton{
   }
   
   /**
-   * Gibt die Buttonaufschrift zurück
+   * Gibt die Buttonaufschrift zurï¿½ck
    * @return Buttonaufschrift
    */
   public String getText() {

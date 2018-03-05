@@ -1,3 +1,4 @@
+package ioserver;
 import java.util.UUID;
 
 public class CUpdate {

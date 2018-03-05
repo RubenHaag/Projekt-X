@@ -1,3 +1,5 @@
+package ioserver;
+
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
@@ -28,15 +30,14 @@ public class ServerVerwaltung {
 
     public ServerVerwaltung() {
 
-
     }
-    
+
     //muss waehrend der login phase durchgängig ausgefürt werden:
     public void login(){
-	    this.loginStart();
-	    this.login2();
+        this.loginStart();
+        this.login2();
     }
-    
+
     /**
      * Methode, die vom Boolean isAttacking in der run()-Methode ausgelöst wird.
      * Hier werden bei einer Attacke erst die Mana-Werte des Spielers gesenkt und der Cooldown
@@ -128,161 +129,141 @@ public class ServerVerwaltung {
 
     /**
      *
-     * 
+     *
      */
-      public void loginStart(){
-	  if (naechsteCLU!=null){
-		  if (allCLU[0]==null){
-			  this.allCLU[0]=naechsteCLU;
-		  }
-		  else if (allCLU[0].getUUID()!=naechsteCLU.getUUID()&&allCLU[1]==null){
-			  this.allCLU[1]=naechsteCLU;
-		  }
-		  else if (allCLU[0].getUUID()!=naechsteCLU.getUUID()&&allCLU[1].getUUID()!=naechsteCLU.getUUID()&&allCLU[2]==null){
-			  this.allCLU[2]=naechsteCLU;
-			  this.alleVorhanden=true;
-		  }
-		  else if (allCLU[0].getUUID()==naechsteCLU.getUUID()){
-			  allCLU[0]=naechsteCLU
-		  }
-		  else if (allCLU[1].getUUID()==naechsteCLU.getUUID()){
-			  allCLU[1]=naechsteCLU
-		  }
-		  else if (allCLU[2].getUUID()==naechsteCLU.getUUID()){
-			  allCLU[2]=naechsteCLU
-		  }
-		  else {
-			  this.alleVorhanden=true;
-		  }
-		  for (int m=0; m<allCLU.length; m++){
-			  if (allCLU[m]!=null){
-				  allCLU[m]=sLogin(allCLU[m]);
-			  }
-		  }
-	  }
-	  allCLU[0]=CLU0;
-	  allCLU[1]=CLU1;
-	  allCLU[2]=CLU2;
-  	}
-  
-  /**
-  * 
-  * @param clu Das cLoginUpdate Ojekt, bei dem die Login Parameter aktualisiert werden 
-  * @return
-  */
-  public cLoginUpdate sLogin(cLoginUpdate clu){
-    double z=Math.random();
-    if (clu.getMode()==0){
-    	if (n==0&&z<=0.333333) {
-    		spielerIstBoss(clu);
-    	} // end of if
-    	else if (n==0&&z>0.333333&&z<=0.666666) {
-    		spielerIst1(clu);
-    	} // end of if
-    	else if (n==0&&z>0.666666) {
-    		spielerIst2(clu);
-    	} // end of if
-    	else if (n==1&&b&&z<=0.5) {
-    		spielerIst1(clu);
-    	} // end of if
-    	else if (n==1&&s1&&z<=0.5) {
-    		spielerIstBoss(clu);
-    	} // end of if
-    	else if (n==1&&s2&&z<=0.5) {
-    		spielerIstBoss(clu);
-    	} // end of if
-    	else if (n==1&&b&&z>0.5) {
-    		spielerIst2(clu);
-    	} // end of if
-    	else if (n==1&&s1&&z>0.5) {
-    		spielerIst2(clu);
-    	} // end of if
-    	else if (n==1&&s2&&z>0.5) {
-    		spielerIst1(clu);
-    	} // end of if
-    	
-    	else if (n==2&&s1&&s2) {
-    		spielerIstBoss(clu);
-    	} // end of if
-    	else if (n==2&&b&&s1) {
-    		spielerIst2(clu);
-    	} // end of if
-    	else if (n==2&&b&&s2) {
-    		spielerIst1(clu);
-    	} // end of if
+    public void loginStart(){
+        if (naechsteCLU!=null) {
+            if (allCLU[0]==null) {
+                allCLU[0]=naechsteCLU;
+            } else if (allCLU[0].getUUID()!=naechsteCLU.getUUID()&&allCLU[1]==null){
+                allCLU[1]=naechsteCLU;
+            } else if (allCLU[0].getUUID()!=naechsteCLU.getUUID()&&allCLU[1].getUUID()!=naechsteCLU.getUUID()&&allCLU[2]==null){
+                allCLU[2]=naechsteCLU;
+                alleVorhanden=true;
+            } else if (allCLU[0].getUUID()==naechsteCLU.getUUID()){
+                allCLU[0]=naechsteCLU;
+            } else if (allCLU[1].getUUID()==naechsteCLU.getUUID()){
+                allCLU[1]=naechsteCLU;
+            } else if (allCLU[2].getUUID()==naechsteCLU.getUUID()){
+                allCLU[2]=naechsteCLU;
+            } else {
+                alleVorhanden=true;
+            }
+            for (int m=0; m<allCLU.length; m++) {
+                if (allCLU[m]!=null){
+                    allCLU[m]=sLogin(allCLU[m]);
+                }
+            }
+        }
+        allCLU[0]=CLU0;
+        allCLU[1]=CLU1;
+        allCLU[2]=CLU2;
     }
-    else if (clu.getMode()==1){
-    	for (int l=0; l<spielerListe.length;l++){
-    		if (spielerListe[l].cGetUUID()==clu.getUUID()){
-    			spielerListe[l].cSetCharakter(clu.getCharakter());                //Charakter in GM nicht enthalten. vergessen oder Absicht?
-    		}
-    	return clu;
-    	}
+
+    /**
+     *
+     * @param clu Das cLoginUpdate Ojekt, bei dem die Login Parameter aktualisiert werden
+     * @return
+     */
+    public cLoginUpdate sLogin(cLoginUpdate clu){
+        double z=Math.random();
+        if (clu.getMode()==0){
+            if (n==0&&z<=0.333333) {
+                spielerIstBoss(clu);
+            } else if (n==0&&z>0.333333&&z<=0.666666) {
+                spielerIst1(clu);
+            } else if (n==0&&z>0.666666) {
+                spielerIst2(clu);
+            } else if (n==1&&b&&z<=0.5) {
+                spielerIst1(clu);
+            } else if (n==1&&s1&&z<=0.5) {
+                spielerIstBoss(clu);
+            } else if (n==1&&s2&&z<=0.5) {
+                spielerIstBoss(clu);
+            } else if (n==1&&b&&z>0.5) {
+                spielerIst2(clu);
+            } else if (n==1&&s1&&z>0.5) {
+                spielerIst2(clu);
+            } else if (n==1&&s2&&z>0.5) {
+                spielerIst1(clu);
+            } else if (n==2&&s1&&s2) {
+                spielerIstBoss(clu);
+            } else if (n==2&&b&&s1) {
+                spielerIst2(clu);
+            } else if (n==2&&b&&s2) {
+                spielerIst1(clu);
+            }
+        }
+        else if (clu.getMode()==1){
+            for (int l=0; l<spielerListe.length;l++){
+                if (spielerListe[l].cGetUUID()==clu.getUUID()){
+                    spielerListe[l].cSetCharakter(clu.getCharakter());                //Charakter in GM nicht enthalten. vergessen oder Absicht?
+                }
+                return clu;
+            }
+        }
+        return clu;
     }
-    //else{    
-    	return clu;
-    //}
-  }
-  
-  
-  /**
-  *  spielerIstBoss,spielerIst1,spielerIst2 werden beim Login aufgerufen,
-  *  getrennt fÃ¼r bessere Ãœbersichtlichkeit
-  * @param g Gamemanager, der die Login funktion aufgerufen hat und sich gerade einloggt
-  */
-  private void spielerIstBoss(cLoginUpdate clu){
-    spielerListe[0]=new GameManager();
-    //spielerListe[0].UUID=clu.getUUID();
-    n++;
-    b=true;
-    clu.setIstBoss(true);
-    spielerListe[0].cSetCharakter(0);					//Standard Charakter für Boss: 0
-    clu.setCharakter(0);
-    clu.modeErhoehen();
-  }
-  private void spielerIst1(cLoginUpdate clu){
-    spielerListe[1]=new GameManager();
-    //spielerListe[1].UUID=clu.getUUID();
-    n++;
-    s1=true;
-    clu.setIstBoss(false);
-    spielerListe[1].cSetCharakter(1);					//Standard Charakter für Spieler1: 1
-    clu.setCharakter(1);
-    clu.modeErhoehen();
-  }
-  private void spielerIst2(cLoginUpdate clu){
-    spielerListe[2]=new GameManager();
-    //spielerListe[2].UUID=clu.getUUID();
-    n++;
-    s2=true;
-    clu.setIstBoss(false);           
-    spielerListe[2].cSetCharakter(2);					//Standard Charakter für Spieler2: 2
-    clu.setCharakter(2);
-    clu.modeErhoehen();
-  }
-  
-  public void login2(){
-	  if (this.alleVorhanden) {
-	      //double aktZeit=System.currentTimeMillis();
-	      String s="Alle Spieler eingeloggt! Start in 15s!";
+
+
+    /**
+     *  spielerIstBoss,spielerIst1,spielerIst2 werden beim Login aufgerufen,
+     *  getrennt fÃ¼r bessere Ãœbersichtlichkeit
+     * @param clu Gamemanager, der die Login funktion aufgerufen hat und sich gerade einloggt
+     */
+    private void spielerIstBoss(cLoginUpdate clu){
+        spielerListe[0]=new GameManager();
+        //spielerListe[0].UUID=clu.getUUID();
+        n++;
+        b=true;
+        clu.setIstBoss(true);
+        spielerListe[0].cSetCharakter(0);					//Standard Charakter für Boss: 0
+        clu.setCharakter(0);
+        clu.modeErhoehen();
+    }
+    private void spielerIst1(cLoginUpdate clu){
+        spielerListe[1]=new GameManager();
+        //spielerListe[1].UUID=clu.getUUID();
+        n++;
+        s1=true;
+        clu.setIstBoss(false);
+        spielerListe[1].cSetCharakter(1);					//Standard Charakter für Spieler1: 1
+        clu.setCharakter(1);
+        clu.modeErhoehen();
+    }
+    private void spielerIst2(cLoginUpdate clu){
+        spielerListe[2]=new GameManager();
+        //spielerListe[2].UUID=clu.getUUID();
+        n++;
+        s2=true;
+        clu.setIstBoss(false);
+        spielerListe[2].cSetCharakter(2);					//Standard Charakter für Spieler2: 2
+        clu.setCharakter(2);
+        clu.modeErhoehen();
+    }
+
+    public void login2(){
+        if (this.alleVorhanden) {
+            //double aktZeit=System.currentTimeMillis();
+            String s="Alle Spieler eingeloggt! Start in 15s!";
 	      /*for (int l=0; l<spielerListe.length; l++ ){
 	      spielerListe[l].zeigen(s);
 	      }*/
-	      try{
-	        Thread.sleep(15000);
-	      }catch (InterruptedException e){}
-	      //Spielstart
-	      
-	      CLU0.setSpielStart(true);
-	      CLU1.setSpielStart(true);
-	      CLU2.setSpielStart(true);
-		  
-	      for (int j=0; j<spielerListe.length; j++){
-	        spielerListe[j].spielstart();
-	      }
-	  } // end of if
-	    
-  }
+            try{
+                Thread.sleep(15000);
+            }catch (InterruptedException e){}
+            //Spielstart
+
+            CLU0.setSpielStart(true);
+            CLU1.setSpielStart(true);
+            CLU2.setSpielStart(true);
+
+            for (int j=0; j<spielerListe.length; j++){
+                spielerListe[j].spielstart();
+            }
+        }
+
+    }
 
 
     //private void setSkin (int Skin, Gamemanager g){   //skin entweder int oder enum
@@ -300,13 +281,13 @@ public class ServerVerwaltung {
         String s = "";
         if (gameManager.cGetUUID() == spielerListe[1].cGetUUID()) {
             s = "Spieler 1";
-        } // end of if
+        }
         if (gameManager.cGetUUID() == spielerListe[2].cGetUUID()) {
             s = "Spieler 2";
-        } // end of if
+        }
         if (gameManager.cGetUUID() == spielerListe[0].cGetUUID()) {
             s = "Boss";
-        } // end of if
+        }
         spielerListe[0].logout(s);
         spielerListe[1].logout(s);
         spielerListe[2].logout(s);

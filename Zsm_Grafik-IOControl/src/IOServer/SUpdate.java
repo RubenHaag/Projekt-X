@@ -1,3 +1,4 @@
+package ioserver;
 public class SUpdate {
     private Player p1,p2,p3;
     private boolean bosswin, endGame;

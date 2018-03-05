@@ -1,4 +1,4 @@
-package Grafik;
+package grafik;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -55,7 +55,7 @@ public class LoginTextfield {
    * @param x Die X-Position der oberen linken Ecke
    * @param y Die Y-Position der oberen linken Ecke
    * @param width Die Breite des Textfields
-   * @param height Die Höhe des Textfields
+   * @param height Die Hï¿½he des Textfields
    */
   LoginTextfield(int x, int y, int width, int height){
     p = new JPanel() {
@@ -83,7 +83,7 @@ public class LoginTextfield {
   }
   
   /**
-   * Gibt den bisher geschrieben Text zurück
+   * Gibt den bisher geschrieben Text zurï¿½ck
    * @return Text der bisher im Textfield geschrieben wurde
    */
   public String getText(){
@@ -91,7 +91,7 @@ public class LoginTextfield {
   }
   
   /**
-   * Gibt das Panel, auf welchem gezeichnet wird, zurück
+   * Gibt das Panel, auf welchem gezeichnet wird, zurï¿½ck
    * @return Panel, auf welchem gezeichnet wird
    */
   public JPanel getPanel() {

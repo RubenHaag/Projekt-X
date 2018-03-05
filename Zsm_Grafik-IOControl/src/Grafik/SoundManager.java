@@ -1,4 +1,4 @@
-package Grafik;
+package grafik;
 
 import java.io.File;
 
@@ -15,30 +15,28 @@ import javax.sound.sampled.DataLine;
  *
  */
 class SoundManager{  // muss vllt ein eigener Thread sein
-  private static Clip clip = null;
-  
-  /**
-   * Spielt die übergebene Sound-Datei ab
-   * @param dateiname Datei-Pfad der Sound-Datei
-   */
-  public static void playSound(String dateiname){
-    try{
+    private static Clip clip = null;
+
+    /**
+     * Spielt die ï¿½bergebene Sound-Datei ab
+     * @param dateiname Datei-Pfad der Sound-Datei
+     */
+    public static void playSound(String dateiname){
+        try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(dateiname));
-            AudioFormat af     = audioInputStream.getFormat();
-            int size      = (int) (af.getFrameSize() * audioInputStream.getFrameLength());
-            byte[] audio       = new byte[size];
-            DataLine.Info info      = new DataLine.Info(Clip.class, af, size);
+            AudioFormat af = audioInputStream.getFormat();
+            int size = (int) (af.getFrameSize() * audioInputStream.getFrameLength());
+            byte[] audio = new byte[size];
+            DataLine.Info info = new DataLine.Info(Clip.class, af, size);
             audioInputStream.read(audio, 0, size);
-           
             clip = (Clip) AudioSystem.getLine(info);
             clip.open(af, audio, 0, size);
             clip.start();
-            
-        }catch(Exception e){ 
-          e.printStackTrace(); 
+        } catch(Exception e) {
+            e.printStackTrace();
         }
-        
-  }
+
+    }
 
 }
 

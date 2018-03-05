@@ -1,9 +1,6 @@
-package Grafik;
+package grafik;
 
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -36,12 +33,12 @@ class Player extends JComponent{
   
   /**
    * Konstruktor des Player Objekts
-   * Initialisiert alle Attribute mit den übergebenen Werten und zusätzlichen Standardwerten
+   * Initialisiert alle Attribute mit den ï¿½bergebenen Werten und zusï¿½tzlichen Standardwerten
    * @param name Dateianfang bzw. Charaktername
    * @param x X-Position der oberen linken Ecke
    * @param y Y-Position der oberen linken Ecke
    * @param w Breite des Spielers
-   * @param h Höhe des Spielers
+   * @param h Hï¿½he des Spielers
    * @param r Blickrichtung des Spielers, true = rechts
  * @throws IOException 
    */
@@ -128,14 +125,14 @@ class Player extends JComponent{
   }
   
   /**
-   * Lässt den Spieler Schaden nehmen(grafisch)
+   * Lï¿½sst den Spieler Schaden nehmen(grafisch)
    */
   public void takeDmg() {
     takedmg =  true;
   }
   
   /**
-   * Lässt den Spieler sterben(grafisch)
+   * Lï¿½sst den Spieler sterben(grafisch)
    */
   public void die() {
     dead = true;
@@ -225,7 +222,7 @@ class Player extends JComponent{
   }
   
   /**
-   * Gibt die Bewegungsart zurück
+   * Gibt die Bewegungsart zurï¿½ck
    * @return Bewegungsart des Spielers
    */
   public MovementType getMT(){
@@ -233,11 +230,25 @@ class Player extends JComponent{
   }
   
   /**
-   * Gibt den Angriffstyp des Spielers zurück
+   * Gibt den Angriffstyp des Spielers zurï¿½ck
    * @return Angriffstyp des Spielers
    */
   public AttackType getAT(){
     return attack;
+  }
+  
+  /**
+   * TODO
+   */
+  public int getXPos() {
+	  return x;
+  }
+  
+  /**
+   * TODO
+   */
+  public int getYPos() {
+	  return y;
   }
 }
 
