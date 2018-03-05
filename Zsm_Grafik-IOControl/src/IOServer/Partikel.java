@@ -1,5 +1,8 @@
 package IOServer;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import grafik.RenderManager;
 
 /**
@@ -7,8 +10,8 @@ import grafik.RenderManager;
  * @author Patrick Waltermann mit geringer Unterst�tzung von Lukas Hofmann
  *
  */
-public class Partikel extends Thread {
-    private double xVel, yVel, down, yVelw, fr1, fr2, fr, width;
+public class Partikel {
+    private double xVel, yVel, down, yVelw, friction1, friction2, friction, width;
     private Rectangle gr;
     private Position pos;
     private boolean isJumping;
@@ -18,13 +21,11 @@ public class Partikel extends Thread {
      */
 
     public Partikel() {
-        xVel = 200;
-        down = 600;
-        fr1 = 80;
-        fr2 = -fr1;
+        down = 200;
+        friction1 = 80;
+        friction2 = -friction1;
         gr = new Rectangle(new Position(0,0),1,1);
         pos = new Position(0, 0);
-        width = 20;
     }
     /**
      *
@@ -32,10 +33,9 @@ public class Partikel extends Thread {
      * @param w Breite
      * @param gr Rechteck f�r das ein Partikelobjekt erstellt werden soll.
      */
-    public Partikel(Position pos, double w, Rectangle gr){
+    public Partikel(Position pos, double w){
         this();
         this.pos = pos;
-        this.gr = gr;
         this.width = w;
         //this.f1 = f1;
 
@@ -43,27 +43,25 @@ public class Partikel extends Thread {
     /**
      * Thread der laufend den Standpunkt, Geschwindigkeit des OBjektes berechnet
      */
-    public void run() {
-        while(!isInterrupted()) {
+    public void play() {
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+        	public void run() {
             long time = System.nanoTime();
             double dt = (double)((time - last_time));
             last_time = time;
             if (xVel < 0) {
-                fr = fr1;
+                friction = friction1;
             } else if(xVel > 0) {
-                fr = fr2;
+                friction = friction2;
             }
             if(!isJumping) {
                 yVel = yVelw;
                 pos.setXPos((int) (pos.getXPos()+dt / 1000000000* xVel));
-                pos.setXPos((int) (gr.getBottom()-width + 1));
+                pos.setYPos((int) (gr.getTop()+ 1));
                 if (xVel > 0 || xVel < 0) {
-                    try {
-                        sleep(1);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    xVel = xVel + dt / 1000000000* fr;
+                    xVel = xVel + dt / 1000000000* friction;
                 }
             } else {
                 pos.setXPos((int) (pos.getXPos()+ dt / 1000000000* xVel));
@@ -72,6 +70,7 @@ public class Partikel extends Thread {
             }
             RenderManager.getGameManager().getpSelf().getHb().setPos(pos);
         }
+        }, 0, 100);
     }
     /**
      * Gibt die Geschwindigkeit des Objektes zur�ck.

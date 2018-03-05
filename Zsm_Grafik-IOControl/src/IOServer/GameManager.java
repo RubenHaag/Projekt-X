@@ -27,7 +27,7 @@ public class GameManager {
     private Attack amAllg = pSelf.getAmNormal();
     private List<Rectangle> hbListe;
     private ServerVerwaltung server;
-    private Partikel pa = new Partikel(pSelf.getHb().getPos(), pSelf.getHb().getWidth(), pSelf.getGr());
+    private Partikel pa = new Partikel(pSelf.getHb().getPos(), pSelf.getHb().getWidth());
     private cLoginUpdate CLU0=new cLoginUpdate();								//CLU0;CLU1;CLU2 : fuer Werteuebergabe von Server zu CLient
     private cLoginUpdate CLU1=new cLoginUpdate();
     private cLoginUpdate CLU2=new cLoginUpdate();
@@ -47,9 +47,9 @@ public class GameManager {
      * Konstruktor ohne Serverobjekt
      */
     public GameManager() {
-//        hbListe = new ArrayList<>();
+    	//hbListe = new ArrayList<>();
         try {
-            hbListe = MapBuilder.BildZuRechteck("src/ioserver/mapbuilder/MapComputer.jpg");
+            hbListe = MapBuilder.BildZuRechteck("Assets/Map/MapSW.png");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -329,10 +329,13 @@ public class GameManager {
      */
     private void cUpdateG() {
         //alle daten Uebergeben
-
-       //System.out.println(pSelf.getHb().getPos().getXPos());
+    
+       System.out.println("X: "+ pSelf.getHb().getPos().getXPos()+" Y: "+ pSelf.getHb().getPos().getYPos());
+       
 //        Game.updatePlayer(pSelf.getNumberID(), pSelf.getHb().getPos().getXPos(), 5, bestimmenMovementType(pSelf), bestimmenAttackType(pSelf), pSelf.isLookingRight(), pSelf.getHealth(), pSelf.getMana());
         Game.updatePlayer(pSelf.getNumberID(), pSelf.getHb().getPos().getXPos(), pSelf.getHb().getPos().getYPos(), bestimmenMovementType(pSelf), bestimmenAttackType(pSelf), pSelf.isLookingRight(), pSelf.getHealth(), pSelf.getMana());
+        Game.updatePlayer(pOther1.getNumberID(), pOther1.getHb().getPos().getXPos(), pOther1.getHb().getPos().getYPos(), bestimmenMovementType(pOther1), bestimmenAttackType(pOther1), pOther1.isLookingRight(), pOther1.getHealth(), pOther1.getMana());
+        Game.updatePlayer(pOther2.getNumberID(), pOther2.getHb().getPos().getXPos(), pOther2.getHb().getPos().getYPos(), bestimmenMovementType(pOther2), bestimmenAttackType(pOther2), pOther2.isLookingRight(), pOther2.getHealth(), pOther2.getMana());
     }
 
     /**
@@ -429,10 +432,9 @@ public class GameManager {
         this.charakter = charakter;
         //TODO fehlt was?
     }
-
     private void intersect(List<Rectangle> hbListe, Rectangle player) {
         for (Rectangle r : hbListe) {
-            if (!((player.getRight() <= r.getLeft() || player.getLeft() >= r.getRight()) && (player.getBottom() <= r.getTop()))) {
+            if ((player.getRight() > r.getLeft() && player.getLeft() < r.getRight()) && (player.getBottom() > r.getTop()) && (player.getTop() < r.getBottom())) {
                 pa.setJumping(false);
                 pa.updateGround(r);
                 pSelf.setJumping(false);
@@ -478,7 +480,7 @@ public class GameManager {
      */
     public void spielstart() {
         //Map und andere Spieler zeigen / Spielgrafik starten /
-
+    	pa.play();
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             public void run() {

@@ -8,7 +8,7 @@ public class Player {
     private int attackMode = 1;
     private int jumpheight = 100;
     private int movementspeed = 100;
-    private Rectangle hb = new Rectangle(new Position(0,0), 10, 20);
+    private Rectangle hb = new Rectangle(new Position(400,400), 10, 20);
     private double health = 100;
     private double damage;
     //todo regspeed

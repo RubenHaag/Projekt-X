@@ -37,7 +37,7 @@ public class RenderManager {       // Hauptklasse in der grafik, managed wann wa
      * Main-Methode der grafik
      * Initialisiert das Fenster und s�mtliche anderen Attribute
      * @param args
-     */
+  ad   */
     public static void main(String[] args) {
         f = new JFrame("Project-X");
         f.setSize(1024, 760);
@@ -98,7 +98,6 @@ public class RenderManager {       // Hauptklasse in der grafik, managed wann wa
                 }
                 p.validate();
                 g.spielstart();
-                g.getPartikel().start();
                 f.addKeyListener(listener);
                 f.addMouseListener(listener);
                 break;
