@@ -1,4 +1,4 @@
-package ioserver.mapbuilder;
+package IOServer.mapbuilder;
 
 import java.io.IOException;
 

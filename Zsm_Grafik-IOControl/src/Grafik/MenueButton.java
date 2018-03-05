@@ -70,6 +70,8 @@ class MenueButton{
    */
   public void changeText(String t) {
     text = t;
+    image_ncl = null;
+    image_cl = null;
   }
   
   /**

@@ -30,6 +30,7 @@ class Player extends JComponent{
   private BufferedImage idle;
   private BufferedImage dmg;
   private AttackType attack;
+  private int i;
   
   /**
    * Konstruktor des Player Objekts
@@ -55,6 +56,7 @@ class Player extends JComponent{
       zaehler2 = 0;
       attackZaehler = 0;
       anim = new PlayerAnimation(name);
+      i = 0;
     }
   
   public void initPlayerAnimations() throws IOException {

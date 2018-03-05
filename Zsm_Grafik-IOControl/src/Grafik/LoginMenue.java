@@ -93,9 +93,9 @@ public class LoginMenue {
    * Konstruktor, dient zur Initialisierung
    */
   LoginMenue(){
-    login = new MenueButton("Login_button", ll, 200, 400, 600, 180);
-    back = new MenueButton("Button_Back", bl, 0, 650, 200, 80);
-    ltxtf = new LoginTextfield(100, 120, 800, 280);
+    login = new MenueButton("Login_button", ll, (int)(200*1.875), (int)(400*1.422), (int)(600*1.875), (int)(180*1.422));
+    back = new MenueButton("Button_Back", bl, 10, (int)(650*1.422), 200, 80);
+    ltxtf = new LoginTextfield((int)(100*1.875), (int)(120*1.422), (int)(800*1.875), (int)(280*1.422));
     mp = new JPanel() {
       public void paint(Graphics g) {
         this.setBounds(0, 0, RenderManager.getFWidth(), RenderManager.getFHeight());
