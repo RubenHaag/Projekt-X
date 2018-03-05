@@ -19,6 +19,7 @@ public class Client extends Thread{
   private cLoginUpdate login1, login2, login3;
   private SUpdate supdate;
   private CUpdate cupdate;
+  private UDPclientListenerLogin listenerLogin1, listenerLogin2, listenerLogin3;
   
   /**
    * Dies ist der Konstruktor für die Klasse "Client". Hier wird die TCP Verbindung zum Server aufgebaut und die UDP Verbindung vorbereitet.
@@ -56,13 +57,15 @@ public class Client extends Thread{
       e1.printStackTrace();
     }
     System.out.println(datagramSocketSend);
+    listenerLogin1 = new UDPclientListenerLogin(3555, login1);
+    listenerLogin2 = new UDPclientListenerLogin(4409, login1);
+    listenerLogin3 = new UDPclientListenerLogin(4519, login1);
+    listenerLogin1.start();
+    listenerLogin2.start();
+    listenerLogin3.start();
     //ein neuer Thread wird gestartet um alle eingehenden Packete zu empfangen
-    listener1 = new UDPclientListener(3555, login1, supdate );
-    listener2 = new UDPclientListener(4409, login2, supdate);
-    listener3 = new UDPclientListener(4519, login3, supdate);
+    listener1 = new UDPclientListener(3555, supdate );
     listener1.start();
-    listener2.start();
-    listener3.start();
     try {
         sendLogin();
       } catch (IOException e) {
