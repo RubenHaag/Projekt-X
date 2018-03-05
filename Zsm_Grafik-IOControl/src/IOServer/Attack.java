@@ -1,4 +1,7 @@
-package ioserver;
+package IOServer;
+
+import java.io.*;
+
 public class Attack {
     private Rectangle damageBox;
     private double damage;
@@ -11,6 +14,33 @@ public class Attack {
         this.damage = damage;
         this.cost = cost;
         this.cooldownZeit = cooldownZeit;
+    }
+
+    public byte[] toByteArray()throws IOException{
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        DataOutputStream out = new DataOutputStream(baos);
+        out.write(damageBox.getPos().getXPos());
+        out.write(damageBox.getPos().getYPos());
+        out.write(damageBox.getWidth());
+        out.write(damageBox.getHeigth());
+        out.writeDouble(damage);
+        out.writeDouble(cost);
+        out.writeDouble(cooldownZeit);
+        out.writeDouble(cooldown);
+        byte[] data = baos.toByteArray();
+        return data;
+    }
+    public void fromByteArray(byte[] data) throws IOException{
+        ByteArrayInputStream bais = new ByteArrayInputStream(data);
+        DataInputStream in = new DataInputStream(bais);
+        damageBox.getPos().setXPos(in.readInt());
+        damageBox.getPos().setYPos(in.readInt());
+        damageBox.setWidth(in.readInt());
+        damageBox.setHeigth(in.readInt());
+        damage = in.readDouble();
+        cost = in.readDouble();
+        cooldownZeit = in.readDouble();
+        cooldown = in.readDouble();
     }
 
     public void setDamageBox(Rectangle damageBox) {

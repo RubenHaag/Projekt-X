@@ -1,5 +1,8 @@
 
-package ioserver;
+package IOServer;
+
+import java.io.*;
+
 public class Player {
     private int numberID;
     private int attackMode = 1;
@@ -38,6 +41,27 @@ public class Player {
         isLookingRight = p.isLookingRight();
         hb.setPos(p.getHb().getPos());
     }
+    public byte[] toByteArray() throws IOException{
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        DataOutputStream out = new DataOutputStream(baos);
+        out.write(hb.getPos().getXPos());
+        out.write(hb.getPos().getYPos());
+        out.writeBoolean(isJumping);
+        out.writeBoolean(isLookingRight);
+        out.writeBoolean(isAttacking);
+        byte[] data = baos.toByteArray();
+        return data;
+    }
+    public void fromByteArray(byte[] data) throws IOException{
+        ByteArrayInputStream bais = new ByteArrayInputStream(data);
+        DataInputStream in = new DataInputStream(bais);
+        hb.getPos().setXPos(in.readInt());
+        hb.getPos().setYPos(in.readInt());
+        isJumping = in.readBoolean();
+        isLookingRight = in.readBoolean();
+        isAttacking = in.readBoolean();
+    }
+
     public int getNumberID() {
         return numberID;
     }

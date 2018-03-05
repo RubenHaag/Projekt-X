@@ -1,15 +1,14 @@
-package ioserver;
+package IOServer;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.*;
 
+import IOServer.mapbuilder.MapBuilder;
 import grafik.Game;
 import grafik.MovementType;
 import grafik.RenderManager;
 import grafik.State;
-import ioserver.mapbuilder.MapBuilder;
-
 
 /**
  * @author Lukas Hofmann, Patrick Waltermann, Max Schulte
