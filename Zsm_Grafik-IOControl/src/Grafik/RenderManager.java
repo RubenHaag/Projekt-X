@@ -1,7 +1,6 @@
 package grafik;
 
 import java.awt.BorderLayout;
-
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -9,8 +8,8 @@ import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import ioserver.GameManager;
-import ioserver.InputListener;
+import IOServer.GameManager;
+import IOServer.InputListener;
 
 
 /**
@@ -25,6 +24,7 @@ public class RenderManager {       // Hauptklasse in der grafik, managed wann wa
     private static Menue menue;
     private static Game game;
     private static SettingsMenue settings;
+    private static SoundManager music;
     private static LoginMenue login;
     private static boolean running;
     private static GameManager g = new GameManager();
@@ -58,7 +58,8 @@ public class RenderManager {       // Hauptklasse in der grafik, managed wann wa
         f.add(p);
         p.add(menue.getPanel());
         running = true;        
-        SoundManager.playSound("Assets/Sound/Menu Music.wav");
+        music = new SoundManager();
+        music.start();
         while(running) {
             render();
         }

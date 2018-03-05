@@ -90,7 +90,6 @@ public class PlayerAnimation extends Thread{
 	 */
 	public void run() {
 		while(!isInterrupted()) {
-			System.out.println(animZaehler);
 			aktImage = animations[animZaehler][imageZaehler];
 			if(jumping) {
 				if(imageZaehler < 3) {
