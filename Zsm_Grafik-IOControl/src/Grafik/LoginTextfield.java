@@ -73,8 +73,8 @@ public class LoginTextfield {
         g.setColor(Color.DARK_GRAY);
         Font font = new Font("TimesRoman", Font.BOLD, 50);
         g.setFont(font);
-        g.drawString(text, 30, 175);
-        g.fillRect(30+25*text.length(), 125, 10, 50);
+        g.drawString(text, 50, height/2 + 50);
+        g.fillRect(50+25*text.length(), height/2, 10, 50);
       }
     };
     text = "";

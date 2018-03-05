@@ -3,9 +3,9 @@ package IOServer.mapbuilder;
 import IOServer.Portal;
 import IOServer.Position;
 import IOServer.Rectangle;
-import ioserver.Portal;
-import ioserver.Position;
-import ioserver.Rectangle;
+import IOServer.Portal;
+import IOServer.Position;
+import IOServer.Rectangle;
 
 import java.awt.image.*;
 import java.io.*;

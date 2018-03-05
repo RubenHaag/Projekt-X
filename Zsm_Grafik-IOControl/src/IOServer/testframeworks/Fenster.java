@@ -1,4 +1,4 @@
-package ioserver.testframeworks;
+package IOServer.testframeworks;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -22,7 +22,7 @@ public class Fenster extends JFrame implements KeyListener, ActionListener {
 	private Rectangle r1, r2, r3, gr, pl, h1,db,r;
 	private boolean coll, coll1, ground, isLookingRight;
 	private int i= 0;
-	private testframeworks.PartikelAlt pa = new testframeworks.PartikelAlt(b, c, w, gr);
+	private IOServer.testframeworks.PartikelAlt pa = new IOServer.testframeworks.PartikelAlt(b, c, w, gr);
 
 
 	private static final long serialVersionUID = -3853732973302441381L;

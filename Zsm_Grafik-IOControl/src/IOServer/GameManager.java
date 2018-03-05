@@ -334,8 +334,8 @@ public class GameManager {
        
 //        Game.updatePlayer(pSelf.getNumberID(), pSelf.getHb().getPos().getXPos(), 5, bestimmenMovementType(pSelf), bestimmenAttackType(pSelf), pSelf.isLookingRight(), pSelf.getHealth(), pSelf.getMana());
         Game.updatePlayer(pSelf.getNumberID(), pSelf.getHb().getPos().getXPos(), pSelf.getHb().getPos().getYPos(), bestimmenMovementType(pSelf), bestimmenAttackType(pSelf), pSelf.isLookingRight(), pSelf.getHealth(), pSelf.getMana());
-        Game.updatePlayer(pOther1.getNumberID(), pOther1.getHb().getPos().getXPos(), pOther1.getHb().getPos().getYPos(), bestimmenMovementType(pOther1), bestimmenAttackType(pOther1), pOther1.isLookingRight(), pOther1.getHealth(), pOther1.getMana());
-        Game.updatePlayer(pOther2.getNumberID(), pOther2.getHb().getPos().getXPos(), pOther2.getHb().getPos().getYPos(), bestimmenMovementType(pOther2), bestimmenAttackType(pOther2), pOther2.isLookingRight(), pOther2.getHealth(), pOther2.getMana());
+        Game.updatePlayer(1, pOther1.getHb().getPos().getXPos(), pOther1.getHb().getPos().getYPos(), bestimmenMovementType(pOther1), bestimmenAttackType(pOther1), pOther1.isLookingRight(), pOther1.getHealth(), pOther1.getMana());
+        Game.updatePlayer(2, pOther2.getHb().getPos().getXPos(), pOther2.getHb().getPos().getYPos(), bestimmenMovementType(pOther2), bestimmenAttackType(pOther2), pOther2.isLookingRight(), pOther2.getHealth(), pOther2.getMana());
     }
 
     /**

@@ -8,8 +8,8 @@ import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import ioserver.GameManager;
-import ioserver.InputListener;
+import IOServer.GameManager;
+import IOServer.InputListener;
 
 
 /**
@@ -37,10 +37,10 @@ public class RenderManager {       // Hauptklasse in der grafik, managed wann wa
      * Main-Methode der grafik
      * Initialisiert das Fenster und s�mtliche anderen Attribute
      * @param args
-  ad   */
+     */
     public static void main(String[] args) {
         f = new JFrame("Project-X");
-        f.setSize(1024, 760);
+        f.setSize(1920, 1080);
         f.setVisible(true);
         f.setResizable(false);
         f.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -56,9 +56,8 @@ public class RenderManager {       // Hauptklasse in der grafik, managed wann wa
 
         f.add(p);
         p.add(menue.getPanel());
-        running = true;
-        //TODO Sound anmachen
-//        SoundManager.playSound("Assets/Sound/Menu Music.wav");
+        running = true;        
+        SoundManager.playSound("Assets/Sound/Menu Music.wav");
         while(running) {
             render();
         }
