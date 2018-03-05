@@ -1,5 +1,11 @@
-package Grafik;
+package grafik;
 
+/**
+ * Bewegungsart eines Charakters
+ * Types: IDLE, MOVE, JUMPING
+ * @author Fabian Scherer
+ *
+ */
 public enum MovementType {
-	IDLE, MOVE_RIGHT, MOVE_LEFT, JUMPING
+  IDLE, MOVE, JUMPING
 }

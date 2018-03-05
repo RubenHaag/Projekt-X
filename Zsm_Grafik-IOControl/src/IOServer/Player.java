@@ -1,32 +1,67 @@
-package IOServer;
-public class Player {
 
-    private int numberID,attackMode,jumpheight, movementspeed;
-    private Rectangle hb;
-    private double health, damage, regSpeed, mana;
-    private boolean isJumping,isHitted, isAttacking, isLookingRight, isSprinting, isBoss, isDead;
-    private Attack amNormal,amSpec1,amSpec2;
-    private Rectangle gr;
-    
+package IOServer;
+
+import java.io.*;
+
+public class Player {
+    private int numberID;
+    private int attackMode = 1;
+    private int jumpheight = 100;
+    private int movementspeed = 100;
+    private Rectangle hb = new Rectangle(new Position(400,400), 10, 20);
+    private double health = 100;
+    private double damage;
+    //todo regspeed
+    private double regSpeed;
+    private double mana = 100;
+    private boolean isJumping, isHitted, isAttacking, isLookingRight, isSprinting, isBoss, isDead;
+    private Attack amNormal = new Attack(new Rectangle(new Position(0,0), 10, 10), 0, 0, 0);
+    private Attack amSpec1 = new Attack(new Rectangle(new Position(0,0), 10, 10), 1, 0, 0);
+    private Attack amSpec2 = new Attack(new Rectangle(new Position(0,0), 10, 10), 2, 0, 0);
+    private Rectangle gr =  new Rectangle(new Position(0,0), 10, 10);
+
     public void setUpdateSSelf(Player p) {
-    	health = p.getHealth();
-    	damage = p.getDamage();
-    	mana = p.getMana();
-    	isDead = p.isDead();
-    	isHitted = p.isHitted();
+        health = p.getHealth();
+        damage = p.getDamage();
+        mana = p.getMana();
+        isDead = p.isDead();
+        isHitted = p.isHitted();
+        amSpec1.setCooldown(p.getAmSpec1().getCooldown());
+        amSpec2.setCooldown(p.getAmSpec2().getCooldown());
     }
-    
+
     public void setUpdateSOther(Player p) {
-    	health = p.getHealth();
-    	damage = p.getDamage();
-    	mana = p.getMana();
-    	isDead = p.isDead();
-    	isHitted = p.isHitted();
-    	isJumping = p.isJumping();
-    	isAttacking = p.isAttacking();
-    	isLookingRight = p.isLookingRight();
-    	hb.setPos(p.getHb().getPos());
+        health = p.getHealth();
+        damage = p.getDamage();
+        mana = p.getMana();
+        isDead = p.isDead();
+        isHitted = p.isHitted();
+        isJumping = p.isJumping();
+        isAttacking = p.isAttacking();
+        isLookingRight = p.isLookingRight();
+        hb.setPos(p.getHb().getPos());
     }
+    public byte[] toByteArray() throws IOException{
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        DataOutputStream out = new DataOutputStream(baos);
+        out.write(hb.getPos().getXPos());
+        out.write(hb.getPos().getYPos());
+        out.writeBoolean(isJumping);
+        out.writeBoolean(isLookingRight);
+        out.writeBoolean(isAttacking);
+        byte[] data = baos.toByteArray();
+        return data;
+    }
+    public void fromByteArray(byte[] data) throws IOException{
+        ByteArrayInputStream bais = new ByteArrayInputStream(data);
+        DataInputStream in = new DataInputStream(bais);
+        hb.getPos().setXPos(in.readInt());
+        hb.getPos().setYPos(in.readInt());
+        isJumping = in.readBoolean();
+        isLookingRight = in.readBoolean();
+        isAttacking = in.readBoolean();
+    }
+
     public int getNumberID() {
         return numberID;
     }

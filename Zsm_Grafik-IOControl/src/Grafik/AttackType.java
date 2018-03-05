@@ -1,5 +1,11 @@
-package Grafik;
+package grafik;
 
+/**
+ * Angriffstyp eines Charakters
+ * Typen: SPECIAL1, SPECIAL2, NORMAL, NON
+ * @author Fabian Scherer
+ *
+ */
 public enum AttackType {
-	SPECIAL1_L, SPECIAL1_R, SPECIAL2_L, SPECIAL2_R, NORMAL_L, NORMAL_R, NON
+  SPECIAL1, SPECIAL2, NORMAL, NON
 }

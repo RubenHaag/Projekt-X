@@ -1,4 +1,4 @@
-package Grafik;
+package grafik;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 public class Manabar{
@@ -51,7 +50,6 @@ public class Manabar{
 			try {
 					bar = ImageIO.read(new File("Assets/GUI/Manabar.png"));
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				g.drawImage(bar, 0, 0, 3*percent, 100, null);
