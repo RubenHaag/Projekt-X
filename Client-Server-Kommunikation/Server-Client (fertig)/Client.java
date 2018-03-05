@@ -6,8 +6,8 @@ import java.net.*;
 /**
  * @author Oskar Moritz
  * @version 2.0 
- * Die Klasse "Client" regelt client-seitig die Art der Verbindung. Für eine Verbindung werden sowohl das UDP als auch das TCP portocol benötigt.
- * Hier werden dasw UDP und das TCP protcol zusammengeführt.
+ * Die Klasse "Client" regelt client-seitig die Art der Verbindung. FÃ¼r eine Verbindung werden sowohl das UDP als auch das TCP portocol benÃ¶tigt.
+ * Hier werden dasw UDP und das TCP protcol zusammengefÃ¼hrt.
  */
 public class Client extends Thread{
   
@@ -16,12 +16,13 @@ public class Client extends Thread{
   private Socket server;
   private DatagramSocket datagramSocketSend;
   private UDPclientListener listener1,listener2,listener3;
-  private cLoginUpdate login1, login2, login3;
+  private cLoginUpdate login;
   private SUpdate supdate;
   private CUpdate cupdate;
+  private UDPclientListenerLogin listenerLogin;
   
   /**
-   * Dies ist der Konstruktor für die Klasse "Client". Hier wird die TCP Verbindung zum Server aufgebaut und die UDP Verbindung vorbereitet.
+   * Dies ist der Konstruktor fÃ¼r die Klasse "Client". Hier wird die TCP Verbindung zum Server aufgebaut und die UDP Verbindung vorbereitet.
    * @param addresse IP-Addresse des Servers
    * @param login1 Das erste Login Objete was dann gesendet werden soll
    * @param login2 Das zweite Login Objete was dann gesendet werden soll
@@ -30,10 +31,8 @@ public class Client extends Thread{
    * @param c Das CUpdate Objete
    */ 
   public Client(String addresse, cLoginUpdate login1, cLoginUpdate login2, cLoginUpdate login3, SUpdate s, CUpdate c) { //die IP des servers
-	  this.login1 = login1;
-		this.login2 = login2;
-		this.login3 = login3;
-		this.supdate= s;
+	this.login = login;
+	this.supdate= s;
     this.port = 3555; //Anfangsport, um den Server zu erreichen
     try {
       //hier wird TCP verwendet um dem Client den Port zu geben, an den er senden soll
@@ -56,13 +55,12 @@ public class Client extends Thread{
       e1.printStackTrace();
     }
     System.out.println(datagramSocketSend);
+    listenerLogin = new UDPclientListenerLogin(3555, login1);
+    listenerLogin.start();
+
     //ein neuer Thread wird gestartet um alle eingehenden Packete zu empfangen
-    listener1 = new UDPclientListener(3555, login1, supdate );
-    listener2 = new UDPclientListener(4409, login2, supdate);
-    listener3 = new UDPclientListener(4519, login3, supdate);
+    listener1 = new UDPclientListener(3555, supdate );
     listener1.start();
-    listener2.start();
-    listener3.start();
     try {
         sendLogin();
       } catch (IOException e) {
@@ -75,7 +73,7 @@ public class Client extends Thread{
         e.printStackTrace();
       }
     while ( true ){
-      //zusätzlich sendet der CLient durch diese "while(true)" schleife alle 100ms eigene Packete
+      //zusÃ¤tzlich sendet der CLient durch diese "while(true)" schleife alle 100ms eigene Packete
       try {
         send();
       } catch (IOException e) {
@@ -92,17 +90,17 @@ public class Client extends Thread{
  /**
    *  Die send()-Methode ist zum Senden der Daten notwendig. 
    *  Mit dieser Methode werden Daten an den Server gesendet. 
-   *  Das passiert über den datagramSocketSend und das „DatagramPacket“.
+   *  Das passiert Ã¼ber den datagramSocketSend und das â€žDatagramPacketâ€œ.
    */
   private void sendLogin() throws IOException {
-    byte[] sandData = login1.getbyte();
+    byte[] sandData = login.getbyte();
     DatagramPacket packet = new DatagramPacket( sandData, sandData.length, ip, port );
     datagramSocketSend.send(packet);      
   }
   /**
    *  Die send()-Methode ist zum Senden der Spiel-Daten notwendig. 
    *  Mit dieser Methode werden die Spiel-Daten an den Server gesendet. 
-   *  Das passiert über den datagramSocketSend und das „DatagramPacket“.
+   *  Das passiert Ã¼ber den datagramSocketSend und das â€žDatagramPacketâ€œ.
    */
   private void send() throws IOException {
           byte[] sandData = cupdate.toByteArray();

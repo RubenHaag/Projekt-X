@@ -23,6 +23,7 @@ public class Server extends Thread{
   private ArrayList<Integer> port = new ArrayList<Integer>();
   private DatagramSocket sendSocket;
   private UDPserverListener listener1,listener2,listener3;
+  private UDPserverListenerLogin listenerLogin1,listenerLogin2,listenerLogin3;
   // Die cLoginUpdate Objekte, die versendet werden
   private cLoginUpdate login1, login2, login3;
   private SUpdate supdate;
@@ -57,18 +58,24 @@ public class Server extends Thread{
   public void run() {
     System.out.println("Mit allen Clients verbunden\nThread wird gestartet");
     //für jeden Client wird ein UDPserverListener gestartet
-    listener1 = new UDPserverListener(clientDatas[0].getZugewiesenerPort(), login1, cupdate);
-    listener1.start();
-    listener2 = new UDPserverListener(clientDatas[1].getZugewiesenerPort(),login2,  cupdate);
-    listener2.start();
-    listener3 = new UDPserverListener(clientDatas[2].getZugewiesenerPort(),login3, cupdate);
-    listener3.start();
+    listenerLogin1 = new UDPserverListenerLogin(clientDatas[0].getZugewiesenerPort(), login1);
+    listenerLogin1.start();
+    listenerLogin2 = new UDPserverListenerLogin(clientDatas[1].getZugewiesenerPort(),login2);
+    listenerLogin2.start();
+    listenerLogin3 = new UDPserverListenerLogin(clientDatas[2].getZugewiesenerPort(),login3);
+    listenerLogin3.start();
     try {
         sendLogin();
       } catch (IOException e) {
         e.printStackTrace();
       }
-    //Problem
+    //Problem?
+    listener1 = new UDPserverListener(clientDatas[0].getZugewiesenerPort(), cupdate);
+    listener1.start();
+    listener2 = new UDPserverListener(clientDatas[1].getZugewiesenerPort(), cupdate);
+    listener2.start();
+    listener3 = new UDPserverListener(clientDatas[2].getZugewiesenerPort(), cupdate);
+    listener3.start();
     while ( true ){
       try {
         send();
