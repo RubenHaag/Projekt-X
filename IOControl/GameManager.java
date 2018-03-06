@@ -25,9 +25,6 @@ public class GameManager {
     private Rectangle[] hbListe = new Rectangle[hbAnzahl];
     private ServerVerwaltung server;
     private Partikel pa;
-    private cLoginUpdate CLU0=new cLoginUpdate;								//CLU0;CLU1;CLU2 : fuer Werteuebergabe von Server zu CLient
-    private cLoginUpdate CLU1=new cLoginUpdate;
-    private cLoginUpdate CLU2=new cLoginUpdate;
     private cLoginUpdate ownCLU=new cLoginUpdate(0,null);
     private int charakter;
     private boolean loginPhase;
@@ -496,32 +493,13 @@ public class GameManager {
     		this.id = UUID.randomUUID();
     		ownCLU.setUUID(id);
     	}
-    	else if(id==CLU0.getUUID()){
-    		ownCLU=CLU0;
-    	}
-    	else if(id==CLU1.getUUID()){
-    		ownCLU=CLU1;
-    	}
-    	else if(id==CLU2.getUUID()){
-    		ownCLU=CLU2;
-    	}
-    	if (ownCLU.getMode()==1){
-    		if (ownCLU.getSpielStart()){
-                loginPhase=false;
-    			this.spielstart();
-    		}
-    		else{
-    		 
-    			if(ownCLU.getIstBoss()){
-    				this.auswahlBoss(ownCLU);
-    			}
-    			else{
-    				this.auswahlSpieler(ownCLU);
-    			}
+        else{
+    		if(ownCLU.getSpielstart()){
+    			loginPhase=false;
+                this.spielstart();
     		}
     	}
-    	else{
-    	}
+
     }
     
     	
