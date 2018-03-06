@@ -1,10 +1,10 @@
-import java.awt.Color;
+package IOServer;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class InputListener implements KeyListener, MouseListener{
+public class InputListener implements KeyListener, MouseListener {
 	private GameManager game;
 	/**
 	 * @param g Client/GameManager
@@ -16,7 +16,7 @@ public class InputListener implements KeyListener, MouseListener{
 	
 	@Override
 	/**
-	 * Gibrt an ob ein Key gedrückt wurde
+	 * Gibrt an ob ein Key gedrï¿½ckt wurde
 	 */
 	public void keyPressed(KeyEvent e) {
 		
@@ -36,16 +36,18 @@ public class InputListener implements KeyListener, MouseListener{
 	 * Gibt an ob ein Key eingegeben wurde
 	 */
 	public void keyTyped(KeyEvent e) {
-		
 		game.inputKey(e);
 	}
+
 	@Override
 	/**
 	 * Gibt an ob die Mouse geclicked wurden
 	 */
 	public void mouseClicked(MouseEvent m) {
 		game.inputMouse(m);
+        System.out.println("MOUSE");
 	}
+
 	@Override
 	/**
 	 * 
@@ -53,17 +55,20 @@ public class InputListener implements KeyListener, MouseListener{
 	public void mouseEntered(MouseEvent m) {
 		
 	}
+
 	@Override
 	public void mouseExited(MouseEvent m) {
 		
 	}
+
 	@Override
 	/**
-	 * Gibt an ob die mouse gedrückt wurde
+	 * Gibt an ob die mouse gedrï¿½ckt wurde
 	 */
 	public void mousePressed(MouseEvent m) {
 		
 	}
+
 	@Override
 	/** 
 	 * Gibt an ob die Mouse geclicked wurde
@@ -71,6 +76,4 @@ public class InputListener implements KeyListener, MouseListener{
 	public void mouseReleased(MouseEvent m) {
 		
 	}
-	
-	
 }

@@ -1,4 +1,4 @@
-package Grafik;
+package grafik;
 
 /**
  * Bewegungsart eines Charakters

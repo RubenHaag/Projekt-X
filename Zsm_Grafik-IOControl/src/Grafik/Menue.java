@@ -1,7 +1,5 @@
-package Grafik;
+package grafik;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -119,9 +117,9 @@ public class Menue {
    */
   public Menue(){
     p = new MenuePanel();
-    play = new MenueButton("Play", pl, 600, 250, 300, 120);
-    quit = new MenueButton("Quit", ql, 650, 500, 200, 80);
-    settings = new MenueButton("Settings", sl, 650, 400, 200, 80);
+    play = new MenueButton("Play", pl, 850, 300, 400, 160);
+    quit = new MenueButton("Quit", ql, 900, 700, 300, 120);
+    settings = new MenueButton("Settings", sl, 900, 550, 300, 120);
     p.add(play.getPanel());
     p.add(quit.getPanel());
     p.add(settings.getPanel());
@@ -130,7 +128,7 @@ public class Menue {
   }
   
   /**
-   * Gibt das Panel, auf welchem gezeichnet wird, zurück
+   * Gibt das Panel, auf welchem gezeichnet wird, zurï¿½ck
    * @return Panel, auf welchem gezeichnet wird
    */
   public JPanel getPanel(){
@@ -145,7 +143,7 @@ public class Menue {
   }
   
   /**
-   * Hilfsklasse für das Menue
+   * Hilfsklasse fï¿½r das Menue
    * @author Fabian Scherer
    *
    */

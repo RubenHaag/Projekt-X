@@ -1,6 +1,6 @@
-package IOServer;
+package ioserver;
 import java.awt.event.KeyEvent;
-import Grafik.RenderManager;
+import grafik.RenderManager;
 import java.awt.event.MouseEvent;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -66,7 +66,7 @@ public class GameManager{
 
             @Override
             public void run() {
-              Grafik.RenderManager.render();
+              grafik.RenderManager.render();
                 cUpdateG();
                 intersect(hbListe, pSelf.getHb());
                 if(pSelf.isHitted()) {cHit(pSelf);}
@@ -77,7 +77,7 @@ public class GameManager{
                 if(pSelf.isDead()) {cSterben(pSelf.getNumberID());}
                 if(endGame&&endHilfe==0) {
                     endHilfe++;
-                    //TODO Grafik Ende senden
+                    //TODO grafik Ende senden
                 }
             }
         }, 0, 100);
@@ -191,7 +191,7 @@ public class GameManager{
         }
     }
     /**
-     * �bergibt der Grafik, dass Schaden an einen Spieler ausgef�hrt wurde
+     * �bergibt der grafik, dass Schaden an einen Spieler ausgef�hrt wurde
      */
     public void cHit(Player p) {
         //TODO an grafik senden
@@ -248,7 +248,7 @@ public class GameManager{
                 } catch (InterruptedException e) {
                 }
             }
-            //TODO an Grafik TOD
+            //TODO an grafik TOD
         }
     }
     /**
@@ -261,19 +261,19 @@ public class GameManager{
         pOther2.setNumberID(id2);
     }
     /**
-     * Methode um die Grafik �ber erschaffene Projectiles zu informieren
+     * Methode um die grafik �ber erschaffene Projectiles zu informieren
      */
     public void cSpawnprojectile(){
-        //an Grafik
+        //an grafik
     }
     /**
-     * Methode um die Grafik �ber zerst�rte Projectiles zu informieren
+     * Methode um die grafik �ber zerst�rte Projectiles zu informieren
      */
     public void cDestroyprojectile(){
-        //an Grafik
+        //an grafik
     }
     /**
-     * Alle Daten werden an die Grafik �bertragen
+     * Alle Daten werden an die grafik �bertragen
      */
     public static void cUpdateG(){
         //alle daten �bergeben
@@ -351,7 +351,7 @@ public class GameManager{
     this.isLookingRight = isLookingRight;
   }*/
     /**
-     * �bergibt den laufenden Countdown an die Grafik
+     * �bergibt den laufenden Countdown an die grafik
      * @param countdown Countdown bis Spielbeginn
      */
     public void startCountdown(int countdown) {
@@ -422,7 +422,7 @@ public class GameManager{
   * zum Beispiel welcher Spieler sich ausgeloggt hat oder wer gewonnen hat
   */  
   public void zeigen(String s){
-    //string an Grafik, vermutlich zu aufwendig
+    //string an grafik, vermutlich zu aufwendig
   }
   
   /**

@@ -1,20 +1,60 @@
 package IOServer;
-import java.util.UUID;
 
-public class cLoginUpdate extends Update {
+import java.util.UUID;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+
+public class cLoginUpdate {
   int k= 0;                                               //Spielernummer des clients, 0: Boss, 1:Spieler 1, 2:Spieler2,
   private int mode;                                       //an elchem Schritt befindet sich der Client
   private boolean istBoss;                                //ist Spieler Boss oder nicht
   private int charakter;
-  private UUID UUID;
+  private UUID uuid = UUID.randomUUID();
   private boolean spielStart;
-
+  /**
+   * @author Oskar Moritz
+   * Die Methode "getbyte" erstellt aus allen Attributen der Klasse "cLoginUpdate" einen Byte Array.
+   * Diese Methode wird f�r das Versenden eines "cLoginUpdate-Objekts" verwendet.
+   * @return data ist der erstellte Byte Array. Er enth�lt alle Attribute der Klasse.
+   */
+  public byte[] getbyte() throws IOException {
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+      DataOutputStream out = new DataOutputStream(baos);
+      out.writeInt(k);
+      out.writeInt(mode);
+      out.writeBoolean(istBoss);
+      out.writeInt(charakter);
+      System.out.println(uuid.toString());
+      out.writeChars(uuid.toString());
+      out.writeBoolean(spielStart);
+      byte[] data = baos.toByteArray();
+      return data;      
+    }
+  /**
+   * @author Oskar Moritz
+   * Die Methode "awaybyte" wandelt einen Byte Array in die Attribute der Klasse um.
+   * Diese Methode wird zum Umwandeln von empfangenen Daten verwendet.
+   * @param data ist ein Byte Array. 
+   */
+    public void awaybyte(byte[] data) throws IOException {
+      ByteArrayInputStream bais = new ByteArrayInputStream(data);
+      DataInputStream in = new DataInputStream(bais);
+      k = in.readInt();
+      mode = in.readInt();
+      istBoss = in.readBoolean();  
+      charakter = in.readInt();
+      System.out.println(in.readUTF());
+      uuid= UUID.fromString(in.readUTF());
+    }
   public cLoginUpdate(){
   }
   
-  public cLoginUpdate(int mode, UUID UUID){
+  public cLoginUpdate(int mode, UUID uuid){
     this.mode=mode;
-    this.UUID=UUID;
+    this.uuid=uuid;
   }
   
   public int getMode(){
@@ -26,15 +66,15 @@ public class cLoginUpdate extends Update {
   }
   
   public void modeErhoehen(){
-	  this.mode++;
+    this.mode++;
   }
   
   public UUID getUUID(){
-    return UUID;
+    return uuid;
   }
   
-  public void setUUID(UUID UUID){
-    this.UUID=UUID;
+  public void setUUID(UUID uuid){
+    this.uuid=uuid;
   }
   
   public boolean getIstBoss(){
@@ -55,10 +95,11 @@ public class cLoginUpdate extends Update {
   }
   
   public boolean getSpielStart(){
-	  return spielStart;
+    return spielStart;
   }
   
   public void setSpielStart(boolean spielStart){
-	  this.spielStart=spielStart;
+    this.spielStart=spielStart;
   }
+  
 }

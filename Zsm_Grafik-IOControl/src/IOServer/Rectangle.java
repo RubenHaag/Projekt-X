@@ -1,3 +1,4 @@
+package IOServer;
 /**
  * 
  * @author Lukas Hofmann
@@ -5,34 +6,34 @@
  */
 public class Rectangle {
 	private Position pos;
-	private double width;
-	private double heigth;
+	private int width;
+	private int heigth;
 	
-	public Rectangle(Position pos, double width, double heigth) {
+	public Rectangle(Position pos, int width, int heigth) {
 		this.pos = pos;
 		this.width = width;
 		this.heigth = heigth;
 	}
 	
-	public double getRight() {
+	public int getRight() {
 		return pos.getXPos() + width;
 	}
 	
-	public double getLeft() { return pos.getXPos(); }
+	public int getLeft() { return pos.getXPos(); }
 	
-	public double getTop() {
+	public int getTop() {
 		return pos.getYPos();
 	}
 	
-	public double getBottom() {
-		return pos.getYPos() - heigth;
+	public int getBottom() {
+		return pos.getYPos() + heigth;
 	}
 
-	public double getWidth() {
+	public int getWidth() {
 		return width;
 	}
 
-	public double getHeigth() {
+	public int getHeigth() {
 		return heigth;
 	}
 	
@@ -44,11 +45,11 @@ public class Rectangle {
 		return pos;
 	}
 	
-	public void setHeigth(double h){
+	public void setHeigth(int h){
 		heigth = h;
 	}
 	
-	public void setWidth(double w){
+	public void setWidth(int w){
 		width =w;
 	}
 	/**

@@ -1,3 +1,8 @@
+package IOServer;
+
+import java.io.*;
+import java.util.UUID;
+
 public class SUpdate {
     private Player p1,p2,p3;
     private boolean bosswin, endGame;
@@ -10,7 +15,54 @@ public class SUpdate {
         this.bosswin = bosswin;
         this.endGame = endGame;
     }
+    public byte[] toByteArray() throws IOException {
+        byte[] buffer;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        DataOutputStream out = new DataOutputStream(baos);
+        buffer = p1.toByteArray();
+        out.write(buffer.length);
+        out.write(buffer);
 
+        buffer = p2.toByteArray();
+        out.write(buffer.length);
+        out.write(buffer);
+
+        buffer = p3.toByteArray();
+        out.write(buffer.length);
+        out.write(buffer);
+
+        out.writeBoolean(bosswin);
+        out.writeBoolean(endGame);
+        out.writeDouble(cooldown);
+
+        byte[] data = baos.toByteArray();
+        return data;
+    }
+    public void fromByteArray(byte[] data) throws IOException {
+        int length;
+        byte[] buffer;
+        ByteArrayInputStream bais = new ByteArrayInputStream(data);
+        DataInputStream in = new DataInputStream(bais);
+
+        length = in.readInt();
+        buffer = new byte[length];
+        in.readNBytes(buffer, 0, length);
+        p1.fromByteArray(buffer);
+
+        length = in.readInt();
+        buffer = new byte[length];
+        in.readNBytes(buffer, 0, length);
+        p2.fromByteArray(buffer);
+
+        length = in.readInt();
+        buffer = new byte[length];
+        in.readNBytes(buffer, 0, length);
+        p3.fromByteArray(buffer);
+
+        bosswin = in.readBoolean();
+        endGame = in.readBoolean();
+        cooldown = in.readDouble();
+    }
     public Player getP1() {
         return p1;
     }

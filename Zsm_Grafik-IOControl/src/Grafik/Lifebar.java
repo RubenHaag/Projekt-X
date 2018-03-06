@@ -1,4 +1,4 @@
-package Grafik;
+package grafik;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -37,7 +37,6 @@ public class Lifebar extends JComponent{
 		try {
 			bar = ImageIO.read(new File("Assets/GUI/Healthbar.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 			g.drawImage(bar, 0, 0, 3*percent, 100, null);

@@ -21,6 +21,7 @@ public class ServerVerwaltung {
     private cLoginUpdate CLU2;
     private cLoginUpdate naechsteCLU;
     private long last_time = System.nanoTime();
+    private boolean loginPhase;
     /**
      * dt ist die Deltatime
      */
@@ -32,9 +33,11 @@ public class ServerVerwaltung {
     }
     
     //muss waehrend der login phase durchgängig ausgefürt werden:
-    public void login(){
-	    this.loginStart();
-	    this.login2();
+    public void loginStart(){
+	    while(loginPhase){
+		    this.loginStart();
+	    	    this.login2();
+	    }
     }
     
     /**
@@ -279,6 +282,7 @@ public class ServerVerwaltung {
 		  
 	      for (int j=0; j<spielerListe.length; j++){
 	        spielerListe[j].spielstart();
+	      loginPhase=false;
 	      }
 	  } // end of if
 	    

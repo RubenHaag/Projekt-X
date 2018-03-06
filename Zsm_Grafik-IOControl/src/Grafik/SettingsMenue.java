@@ -1,4 +1,4 @@
-package Grafik;
+package grafik;
 
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
@@ -46,15 +46,17 @@ public class SettingsMenue {
 
     @Override
     public void mouseReleased(MouseEvent arg0) {
-      music.changeClicked(false);
-      if(music.getText().matches("Music_On")) {
-        music.changeText("Music_Off");
-        // Aendere Einstellung zu Music Off
-      }
-      else {
-        music.changeText("Music_On");
-        // Aendere Einstellung zu Music On
-      }
+    	if(music.getText().matches("Music_On")) {
+            music.changeText("Music_Off");
+            // Aendere Einstellung zu Music Off
+          }
+          else {
+            music.changeText("Music_On");
+            // Aendere Einstellung zu Music On
+          }
+    	System.out.println(music.getText());
+    	music.changeClicked(false);
+      
     }
     
   };
@@ -133,9 +135,9 @@ public class SettingsMenue {
    * Konstruktor
    */
   SettingsMenue(){
-    music = new MenueButton("Music_On", musicl, 300, 200, 400, 160);
-    sound = new MenueButton("Sound_On", soundl, 300, 380, 400, 160);
-    back = new MenueButton("Button_Back", backl, 10, 620, 200, 80);
+    music = new MenueButton("Music_On", musicl, (int)(300*1.875), (int)(200*1.422), (int)(400*1.875), (int)(160*1.422));
+    sound = new MenueButton("Sound_On", soundl, (int)(300*1.875), (int)(380*1.422), (int)(400*1.875), (int)(160*1.422));
+    back = new MenueButton("Button_Back", backl, 10, 920, 200, 80);
     p = new SettingsPanel();
     p.add(music.getPanel());
     p.add(sound.getPanel());
@@ -144,7 +146,7 @@ public class SettingsMenue {
   }
   
   /**
-   * Gibt das Panel, auf welchem gezeichnet wird, zurück
+   * Gibt das Panel, auf welchem gezeichnet wird, zurï¿½ck
    * @return Panel, auf welchem gezeichnet wird
    */
   public JPanel getPanel() {

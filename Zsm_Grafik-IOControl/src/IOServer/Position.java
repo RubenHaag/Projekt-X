@@ -1,29 +1,30 @@
+package IOServer;
 /**
  * 
  * @author Lukas Hofmann, Patrick Waltermann
  *
  */
 public class Position {
-	private double x, y;
+	private int x, y;
 	
-	Position(double x, double y){
+	public Position(int x, int y){
 		this.x = x;
 		this.y = y;
 	}
 	
-	public void setXPos(double x) {
+	public void setXPos(int x) {
 		this.x = x;
 	}
 
-	public double getXPos() {
+	public int getXPos() {
 		return x;
 	}
 
-	public void setYPos(double y) {
+	public void setYPos(int y) {
 		this.y = y;
 	}
 
-	public double getYPos() {
+	public int getYPos() {
 		return y;
 	}
 }

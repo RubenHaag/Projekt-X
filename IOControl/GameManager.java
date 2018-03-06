@@ -30,6 +30,7 @@ public class GameManager {
     private cLoginUpdate CLU2=new cLoginUpdate;
     private cLoginUpdate ownCLU=new cLoginUpdate(0,null);
     private int charakter;
+    private boolean loginPhase;
 
     /**
      * @param s Server, der angebunden werden soll.
@@ -39,6 +40,12 @@ public class GameManager {
         this();
         server = s;
 
+    }
+    
+    public void loginstart(){
+        while (loginPhase){
+            this.cLogin();
+        }
     }
 
     /**
@@ -217,16 +224,8 @@ public class GameManager {
         //TODO an grafik senden
     }
 
-    /**
-     * Fuehrt die sLogin(GameManager) beim Server auf, um eine Verbindung aufzubauen.
-     
-     */
-    /*
-    public void cLogin() { //�bergabe der ServerID!!!
-        id = UUID.randomUUID();
-        server.sLogin(this);
-    }
-    */
+    
+   
     /**
      * F�hrt die Methode sLogout(GameManager) beim Server aus, um seine Verbindung mit diesem zu trennen.
      */
@@ -430,14 +429,7 @@ public class GameManager {
         return false;
     }
     
-    
-     /**
-     * Fuehrt die sLogin(GameManager) beim Server auf, um eine Verbindung aufzubauen.
-     */
-    public void cLogin() { //�bergabe der ServerID!!!
-        id = UUID.randomUUID();
-        server.sLogin(this);
-    }
+
 
     /**
      * Einer der Spieler hat sich ausgeloggt oder das Spiel ist zu Ende
@@ -515,6 +507,7 @@ public class GameManager {
     	}
     	if (ownCLU.getMode()==1){
     		if (ownCLU.getSpielStart()){
+                loginPhase=false;
     			this.spielstart();
     		}
     		else{

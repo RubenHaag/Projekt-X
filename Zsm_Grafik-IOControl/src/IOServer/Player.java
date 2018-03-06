@@ -1,62 +1,24 @@
+
+package ioserver;
+
+import java.io.*;
+
 public class Player {
-
-    private int numberID,attackMode,jumpheight, movementspeed;
-    private Rectangle hb;
-    private double health, damage, regSpeed, mana;
-    private boolean isJumping,isHitted, isAttacking, isLookingRight, isSprinting, isBoss, isDead;
-    private Attack amNormal,amSpec1,amSpec2;
-    private Rectangle gr;
-
-    public Player(int numberID, int attackMode, int jumpheight, int movementspeed, Rectangle hb, double health,
-			double damage, double regSpeed, double mana, boolean isJumping, boolean isHitted, boolean isAttacking,
-			boolean isLookingRight, boolean isSprinting, boolean isBoss, boolean isDead, Attack amNormal,
-			Attack amSpec1, Attack amSpec2, Rectangle gr) {
-		super();
-		this.numberID = numberID;
-		this.attackMode = attackMode;
-		this.jumpheight = jumpheight;
-		this.movementspeed = movementspeed;
-		this.hb = hb;
-		this.health = health;
-		this.damage = damage;
-		this.regSpeed = regSpeed;
-		this.mana = mana;
-		this.isJumping = isJumping;
-		this.isHitted = isHitted;
-		this.isAttacking = isAttacking;
-		this.isLookingRight = isLookingRight;
-		this.isSprinting = isSprinting;
-		this.isBoss = isBoss;
-		this.isDead = isDead;
-		this.amNormal = amNormal;
-		this.amSpec1 = amSpec1;
-		this.amSpec2 = amSpec2;
-		this.gr = gr;
-	}
-    
-    public Player() {
-		super();
-		this.numberID = 0;
-		this.attackMode = 0;
-		this.jumpheight = 0;
-		this.movementspeed = 0;
-		this.hb = new Rectangle(new Position(0,0), 10, 10);
-		this.health = 0;
-		this.damage = 0;
-		this.regSpeed = 0;
-		this.mana = 0;
-		this.isJumping = false;
-		this.isHitted = false;
-		this.isAttacking = false;
-		this.isLookingRight = false;
-		this.isSprinting = false;
-		this.isBoss = false;
-		this.isDead = false;
-		this.amNormal = new Attack(new Rectangle(new Position(0,0), 10, 10), 0, 0, 0);
-		this.amSpec1 = new Attack(new Rectangle(new Position(0,0), 10, 10), 1, 0, 0);
-		this.amSpec2 = new Attack(new Rectangle(new Position(0,0), 10, 10), 2, 0, 0);
-		this.gr = new Rectangle(new Position(0,0), 10, 10);
-	}
+    private int numberID;
+    private int attackMode = 1;
+    private int jumpheight = 100;
+    private int movementspeed = 100;
+    private Rectangle hb = new Rectangle(new Position(400,400), 10, 20);
+    private double health = 100;
+    private double damage;
+    //todo regspeed
+    private double regSpeed;
+    private double mana = 100;
+    private boolean isJumping, isHitted, isAttacking, isLookingRight, isSprinting, isBoss, isDead;
+    private Attack amNormal = new Attack(new Rectangle(new Position(0,0), 10, 10), 0, 0, 0);
+    private Attack amSpec1 = new Attack(new Rectangle(new Position(0,0), 10, 10), 1, 0, 0);
+    private Attack amSpec2 = new Attack(new Rectangle(new Position(0,0), 10, 10), 2, 0, 0);
+    private Rectangle gr =  new Rectangle(new Position(0,0), 10, 10);
 
     public void setUpdateSSelf(Player p) {
         health = p.getHealth();
@@ -79,7 +41,28 @@ public class Player {
         isLookingRight = p.isLookingRight();
         hb.setPos(p.getHb().getPos());
     }
-	public int getNumberID() {
+    public byte[] toByteArray() throws IOException{
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        DataOutputStream out = new DataOutputStream(baos);
+        out.write(hb.getPos().getXPos());
+        out.write(hb.getPos().getYPos());
+        out.writeBoolean(isJumping);
+        out.writeBoolean(isLookingRight);
+        out.writeBoolean(isAttacking);
+        byte[] data = baos.toByteArray();
+        return data;
+    }
+    public void fromByteArray(byte[] data) throws IOException{
+        ByteArrayInputStream bais = new ByteArrayInputStream(data);
+        DataInputStream in = new DataInputStream(bais);
+        hb.getPos().setXPos(in.readInt());
+        hb.getPos().setYPos(in.readInt());
+        isJumping = in.readBoolean();
+        isLookingRight = in.readBoolean();
+        isAttacking = in.readBoolean();
+    }
+
+    public int getNumberID() {
         return numberID;
     }
 
