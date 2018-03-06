@@ -28,7 +28,7 @@ public class Game{
      */
     Game(){
         gp = new GamePanel();
-        lm = new PlayerAnzeige(50.0, 50.0);
+        lm = new PlayerAnzeige(100.0, 100.0);
         p1 = new Player("Boy", 400, 200, 100, 200, false);
         p2 = new Player("Girl", 700, 300, 100, 200, false);
         b1 = new Player("Boy", 0, 0, 200, 400, false);
@@ -113,10 +113,6 @@ public class Game{
      * @param mp Manapunkte des Spielers als Prozent
      */
     public static void updatePlayer(int player, int x, int y, MovementType mt, int at, boolean right, double hp, double mp){
-       /* System.out.println(player);
-        System.out.println(x + "    " + y);
-        System.out.println(mt);
-        System.out.println(right);*/
     	switch(player) {
             case 0:
                 b1.updatePos(x, y-400);
