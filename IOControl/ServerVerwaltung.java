@@ -15,11 +15,10 @@ public class ServerVerwaltung {
     private boolean b = false;
     private int n = 0;             					// n: Anzahl der beim Login abgearbeiteten Spieler
     private cLoginUpdate CLU0=new cLoginUpdate();		//CLU0;CLU1;CLU2: Die Daten zum Login der einzelnen Spieler, entält Daten zum eigenen Spieler und den anderen Spielern
-    private cLoginUpdate CLU1;
-    private cLoginUpdate CLU2;
+    private cLoginUpdate CLU1=new cLoginUpdate();
+    private cLoginUpdate CLU2=new cLoginUpdate();
+    private boolean uebertragen=false; 				//true wenn alle Spieler generiert sind und die Daten zu den Clients Übertragen werden können
     private long last_time = System.nanoTime();
-    private boolean loginPhase;
-    private boolean uebertagen=false; 				//true wenn alle Spieler generiert sind und die Daten zu den Clients Übertragen werden können
     /**
      * dt ist die Deltatime
      */
@@ -136,7 +135,7 @@ public class ServerVerwaltung {
     }
 
   public boolean getUebertragen(){
-	  return(this.uebertagen);
+	  return(this.uebertragen);
   }
   
   /**
@@ -262,7 +261,7 @@ public class ServerVerwaltung {
       CLU1.setSpielStart(true);
       CLU2.setSpielStart(true);
       
-      this.uebertagen=true;
+      this.uebertragen=true;
       
       for (int j=0; j<spielerListe.length; j++){
         spielerListe[j].spielstart();
