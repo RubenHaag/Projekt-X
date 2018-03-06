@@ -11,7 +11,7 @@ public class cLoginUpdate extends Update {
   private UUID s1UUID;										//UUID 1.anderer Spieler
   private int s2Charakter;									//Charakter 2. anderer Spieler
   private UUID s2UUID;										//UUID 2. anderer Spieler
-  private boolean spielStart;								//ob das Spiel schon startet
+  private boolean spielStart;									//ob das Spiel schon startet
 
   public cLoginUpdate(){
   }
