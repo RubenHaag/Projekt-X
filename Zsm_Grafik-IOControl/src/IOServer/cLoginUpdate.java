@@ -1,4 +1,4 @@
-package ioserver;
+package IOServer;
 
 import java.util.UUID;
 import java.io.ByteArrayInputStream;

@@ -31,7 +31,7 @@ public class Game{
         lm = new PlayerAnzeige(50.0, 50.0);
         p1 = new Player("Boy", 400, 200, 100, 200, false);
         p2 = new Player("Girl", 700, 300, 100, 200, false);
-        b1 = new Player("Boy", 0, 0, 150, 300, false);
+        b1 = new Player("Boy", 0, 0, 200, 400, false);
         gp.add(lm.getPanel());
         gp.add(p1);
         gp.add(p2);
@@ -113,9 +113,13 @@ public class Game{
      * @param mp Manapunkte des Spielers als Prozent
      */
     public static void updatePlayer(int player, int x, int y, MovementType mt, int at, boolean right, double hp, double mp){
+       /* System.out.println(player);
+        System.out.println(x + "    " + y);
+        System.out.println(mt);
+        System.out.println(right);*/
     	switch(player) {
             case 0:
-                b1.updatePos(x, y-300);
+                b1.updatePos(x, y-400);
                 b1.updateMovementType(mt, right);
                 b1.updateAttackType(at);
                 break;
@@ -158,7 +162,7 @@ public class Game{
             gp.remove(b1);
         }
 
-        b1 = new Player(bn1, 0, 0, 150, 300, true);
+        b1 = new Player(bn1, 0, 0, 200, 400, true);
         gp.add(b1);
         gp.validate();
         p1.initPlayerAnimations();

@@ -1,6 +1,5 @@
 package ioserver;
 import java.awt.event.KeyEvent;
-
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.*;
@@ -18,7 +17,6 @@ public class GameManager {
     /**
      * Anmerkung BrutForce soll jetzt benutzt werden (1/20 Sekunde)
      */
-	private boolean jumpHilfe =false;
     private int sterbeHilfe = 0;
     private int endHilfe = 0;
     private boolean endGame, bosswin;
@@ -35,7 +33,6 @@ public class GameManager {
     private cLoginUpdate CLU2=new cLoginUpdate();
     private cLoginUpdate ownCLU=new cLoginUpdate(0,null);
     private int charakter;
-    
 
     /**
      * @param s Server, der angebunden werden soll.
@@ -165,10 +162,7 @@ public class GameManager {
      * Hierfuer wird das Partikel bewegt bzw. mit einer Y-Velocity ausgestattet
      */
     private void cJumpSelf() {
-    	if(jumpHilfe) {
-    	pa.setJumping(true);
         pa.addyVel(pSelf.getJumpheight());
-    	}
     }
 
     /**
@@ -336,7 +330,7 @@ public class GameManager {
     private void cUpdateG() {
         //alle daten Uebergeben
     
-//       System.out.println("X: "+ pSelf.getHb().getPos().getXPos()+" Y: "+ pSelf.getHb().getPos().getYPos());
+       System.out.println("X: "+ pSelf.getHb().getPos().getXPos()+" Y: "+ pSelf.getHb().getPos().getYPos());
        
 //        Game.updatePlayer(pSelf.getNumberID(), pSelf.getHb().getPos().getXPos(), 5, bestimmenMovementType(pSelf), bestimmenAttackType(pSelf), pSelf.isLookingRight(), pSelf.getHealth(), pSelf.getMana());
         Game.updatePlayer(pSelf.getNumberID(), pSelf.getHb().getPos().getXPos(), pSelf.getHb().getPos().getYPos(), bestimmenMovementType(pSelf), bestimmenAttackType(pSelf), pSelf.isLookingRight(), pSelf.getHealth(), pSelf.getMana());
@@ -438,18 +432,18 @@ public class GameManager {
         this.charakter = charakter;
         //TODO fehlt was?
     }
-    private boolean intersect(List<Rectangle> hbListe, Rectangle player) {
+    private void intersect(List<Rectangle> hbListe, Rectangle player) {
         for (Rectangle r : hbListe) {
             if ((player.getRight() > r.getLeft() && player.getLeft() < r.getRight()) && (player.getBottom() > r.getTop()) && (player.getTop() < r.getBottom())) {
                 pa.setJumping(false);
                 pa.updateGround(r);
                 pSelf.setJumping(false);
-                return true;
+                System.out.println("intersect");
+                return;
             }
         }
         pSelf.setJumping(true);
         pa.setJumping(true);
-        return false;
     }
 
 
@@ -487,21 +481,11 @@ public class GameManager {
     public void spielstart() {
         //Map und andere Spieler zeigen / Spielgrafik starten /
     	pa.play();
-    	Timer timer2 = new Timer();
-    	 timer2.schedule(new TimerTask() {
-    		 public void run() {
-    			 jumpHilfe = false;
-    			 System.out.println("Keine");
-    		 }
-    	 }, 0, 500);
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             public void run() {
                 cUpdateG();
-                if(intersect(hbListe, pSelf.getHb())) {
-                		jumpHilfe = true;
-                		System.out.println("Hilfe");
-                }
+                intersect(hbListe, pSelf.getHb());
                 if (pSelf.isHitted()) {
                     cHit(pSelf);
                 }
