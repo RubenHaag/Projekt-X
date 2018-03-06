@@ -19,8 +19,6 @@ public class PlayerAnzeige{
   private BufferedImage frame = null;
   private BufferedImage hpbar = null;
   private BufferedImage mpbar = null;
-  //private BufferedImage hpwhite = null;
-  //private BufferedImage mpwhite = null;
   private AnzeigePanel p;
   
   /**
@@ -98,50 +96,29 @@ public class PlayerAnzeige{
       this.setBounds(10, 10, 300, 100);
       if(frame == null){
         try {
-          frame = ImageIO.read(new File("Assets/GUI/Lifebar_v2_empty.png"));
+          frame = ImageIO.read(new File("Assets/GUI/Lifebar_v3_empty.png"));
         } catch (IOException e) {
           e.printStackTrace();
         }
       }
       if(hpbar == null) {
         try {
-          hpbar = ImageIO.read(new File("Assets/GUI/Healthbar.png"));
+          hpbar = ImageIO.read(new File("Assets/GUI/Health_full.png"));
         } catch (IOException e) {
           e.printStackTrace();
         }
       }
       if(mpbar == null) {
         try {
-          mpbar = ImageIO.read(new File("Assets/GUI/Manabar.png"));
+          mpbar = ImageIO.read(new File("Assets/GUI/mana_full.png"));
         } catch (IOException e) {
           e.printStackTrace();
         }
       }
-      /*if(hpwhite == null) {
-    	  try {
-              hpwhite = ImageIO.read(new File("Assets/GUI/Healthbar_white.png"));
-            } catch (IOException e) {
-              // TODO Auto-generated catch block
-              e.printStackTrace();
-            }
-      }
-      if(mpwhite == null) {
-    	  try {
-              mpwhite = ImageIO.read(new File("Assets/GUI/Manabar_white.png"));
-            } catch (IOException e) {
-              // TODO Auto-generated catch block
-              e.printStackTrace();
-            }
-      }*/
       g.drawImage(frame, 0, 0, 300, 100, null);
-      g.drawImage(hpbar, 0, 0, 300, 100, null);
-      g.drawImage(mpbar, 27, 0, 300, 100, null);
-      /*if(hpp < 100.0) {
-    	  g.drawImage(hpwhite, (int) (3*hpp), 0, (int) (300 - 3*hpp), 100, null);
-      }
-      if(mpp < 100.0) {
-    	  g.drawImage(mpwhite, (int) (3*mpp + 27- 2*27*mpp/100 ), 0, (int) (300 - 3*mpp), 100, null);
-      }*/
+      g.drawImage(hpbar, (int) (1 * 100/hpp), 0, (int) (3*hpp), 100, null);
+      g.drawImage(mpbar, (int) (1 * 100/mpp), 0, (int) (3*mpp), 100, null);
+      
       this.paintComponents(g);
       
     }
