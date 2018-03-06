@@ -6,7 +6,7 @@ import java.util.*;
 
 import ioserver.mapbuilder.MapBuilder;
 import grafik.Game;
-import grafik.MovementType;
+import bessereGrafik.MovementType;
 import grafik.RenderManager;
 import grafik.State;
 

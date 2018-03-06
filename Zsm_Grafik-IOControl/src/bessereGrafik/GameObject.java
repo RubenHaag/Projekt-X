@@ -1,18 +1,29 @@
 package bessereGrafik;
 
+import java.awt.*;
+
 public abstract class GameObject {
     private Position pos;
     private int width;
     private int height;
     private boolean isJumping;
     private boolean isLookingRight;
+    private MovementType moveType;
 
-    public GameObject(Position pos, int width, int height) {
+    public GameObject(Position pos, int width, int height, boolean isLookingRight) {
         this.pos = pos;
         this.width = width;
         this.height = height;
         this.isJumping = false;
-        this.isLookingRight = false;
+        this.isLookingRight = isLookingRight;
+        moveType = MovementType.IDLE;
+    }
+
+    public abstract void selfPaint(Graphics g);
+
+    public void updateMovementType (MovementType moveType, boolean isLookingRight) {
+        this.isLookingRight = isLookingRight;
+        this.moveType = moveType;
     }
 
     public Position getPos() {

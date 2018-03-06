@@ -1,4 +1,4 @@
-package grafik;
+package bessereGrafik;
 
 /**
  * Bewegungsart eines Charakters
