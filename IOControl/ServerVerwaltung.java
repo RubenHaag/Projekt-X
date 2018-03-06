@@ -15,13 +15,13 @@ public class ServerVerwaltung {
     private boolean b = false;
     private int n = 0;             					// n: Anzahl der eingeloggten Spieler
     private boolean alleVorhanden=false;  			// wenn alle Spieler versucht haben sich einzuloggen true 
-    private cLoginUpdate[] allCLU=new cLoginUpdate[3];		//alle clientLoginUpdate Objekte
+   // private cLoginUpdate[] allCLU=new cLoginUpdate[3];		//alle clientLoginUpdate Objekte
     private cLoginUpdate CLU0;					//CLU0;CLU1;CLU2 : Wie allCLU, aber als eigene Objekte, da einfacher fuer Übertragung auszulesen
     private cLoginUpdate CLU1;
     private cLoginUpdate CLU2;
-    private cLoginUpdate naechsteCLU;
     private long last_time = System.nanoTime();
     private boolean loginPhase;
+    private boolean zurueck=false;
     /**
      * dt ist die Deltatime
      */
@@ -134,38 +134,16 @@ public class ServerVerwaltung {
      * 
      */
       public void loginStart(){
-	  if (naechsteCLU!=null){
-		  if (allCLU[0]==null){
-			  this.allCLU[0]=naechsteCLU;
-		  }
-		  else if (allCLU[0].getUUID()!=naechsteCLU.getUUID()&&allCLU[1]==null){
-			  this.allCLU[1]=naechsteCLU;
-		  }
-		  else if (allCLU[0].getUUID()!=naechsteCLU.getUUID()&&allCLU[1].getUUID()!=naechsteCLU.getUUID()&&allCLU[2]==null){
-			  this.allCLU[2]=naechsteCLU;
-			  this.alleVorhanden=true;
-		  }
-		  else if (allCLU[0].getUUID()==naechsteCLU.getUUID()){
-			  allCLU[0]=naechsteCLU
-		  }
-		  else if (allCLU[1].getUUID()==naechsteCLU.getUUID()){
-			  allCLU[1]=naechsteCLU
-		  }
-		  else if (allCLU[2].getUUID()==naechsteCLU.getUUID()){
-			  allCLU[2]=naechsteCLU
-		  }
-		  else {
-			  this.alleVorhanden=true;
-		  }
-		  for (int m=0; m<allCLU.length; m++){
-			  if (allCLU[m]!=null){
-				  allCLU[m]=sLogin(allCLU[m]);
-			  }
-		  }
-	  }
-	  allCLU[0]=CLU0;
-	  allCLU[1]=CLU1;
-	  allCLU[2]=CLU2;
+	    while(!alleVorhanden){
+		    if(CLU0.getUUID()!=null&&CLU1.getUUID()!=null&&CLU2.getUUID()!=null){
+			    alleVorhanden=true;
+		    }
+	    }
+	    CLU0=sLogin(CLU0);
+	    CLU1=sLogin(CLU1);
+	    CLU2=sLogin(CLU2);
+	    login2();
+	    zurueck=true;
   	}
   
   /**
@@ -380,6 +358,10 @@ public class ServerVerwaltung {
                 local.getpSelf().setMana(local.getpSelf().getMana() + dt / 1000000000 * 0.01 * local.getpSelf().getRegSpeed());
             }
         }
+    }
+
+    public boolean getZurueck(){
+	    return zurueck;
     }
 
 }
