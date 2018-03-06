@@ -39,10 +39,10 @@ public class GameManager {
 
     }
     
-    public void loginstart(){
-        while (loginPhase){
-            this.cLogin();
-        }
+    public void login(){
+    	while(loginPhase){
+    		this.cLogin();							//Z. 491
+    	}
     }
 
     /**
@@ -486,21 +486,26 @@ public class GameManager {
     }
     
     /**
-     * Fuehrt die sLogin(GameManager) beim Server auf, um eine Verbindung aufzubauen.
+     * Daten werden aus dem CLU Objekt gelesen und gespeichert
      */
-    public void cLogin() { //�bergabe der ServerID!!!
-        if (id==null){
-    		this.id = UUID.randomUUID();
-    		ownCLU.setUUID(id);
+     public void cLogin(){
+    	if (CLU.getOwnUUID()!=null){
+    		this.id=CLU.getOwnUUID();
+    		this.charakter=CLU.getOwnCharakter();
+    		this.istBoss=CLU.getOwnIstBoss();
+    		//UUID 1.anderer spieler:CLU.getS1UUID();
+    		//Ist 1. anderer Spieler der Boss oder nicht: CLU.getS1IstBoss();
+    		//Charakter 1. anderer Spieler: CLU.getS1Charakter();
+    		//UUID 2.anderer spieler:CLU.getS1UUID();
+    		//Ist 2. anderer Spieler der Boss oder nicht: CLU.getS1IstBoss();
+    		//Charakter 2. anderer Spieler: CLU.getS1Charakter();
     	}
-        else{
-    		if(ownCLU.getSpielstart()){
-    			loginPhase=false;
-                this.spielstart();
-    		}
-    	}
-
-    }
+   		if (CLU.getSpielStart()){
+   			loginPhase=false;
+   			this.spielstart();
+   		}
+    	
+   }
     
     	
     
@@ -509,8 +514,8 @@ public class GameManager {
      * es wird die Charakterauswahl für Spielercharaktere geöffnet
      */
     public void auswahlSpieler(cLoginUpdate ownCLU){
-      //ownCLU.setCharakter=(Spielerauswahl fÃ¼r Spieler oeffnen)/rückgabewert von grafik, sonst standardauswahl;
-  	  ownCLU.setMode(2);
+      //ownCLU.setCharakter=(Spielerauswahl fÃ¼r Spieler oeffnen)/rückgabewert von grafik, sonst standardauswahl
+        //nicht mehr verwendet, Charakter wird direkt durch den Server festgelegt
     }
 
     /**
@@ -519,7 +524,7 @@ public class GameManager {
      */
     public void auswahlBoss(cLoginUpdate ownCLU){           
       //ownCLU.setCharakter=(Spielerauswahl fÃ¼r Boss oeffnen)/rückgabewert von Grafik sonst standartauswahl
-  	  ownCLU.setMode(2);
+      //nicht mehr verwendet, Charakter wird direkt durch den Server festgelegt
     }
 
     public Partikel getPartikel() {
