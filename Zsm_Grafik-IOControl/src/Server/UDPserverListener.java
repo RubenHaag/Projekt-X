@@ -1,6 +1,6 @@
 package Server;
 
-import IOServer.cLoginUpdate;
+import ioserver.cLoginUpdate;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
