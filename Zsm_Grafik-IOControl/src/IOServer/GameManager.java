@@ -163,6 +163,7 @@ public class GameManager {
      */
     private void cJumpSelf() {
         pa.addyVel(pSelf.getJumpheight());
+        if (pSelf.jump()) pa.addyVel(pSelf.getJumpheight());
     }
 
     /**
@@ -484,6 +485,7 @@ public class GameManager {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             public void run() {
+                pSelf.updateJumpPower();
                 cUpdateG();
                 intersect(hbListe, pSelf.getHb());
                 if (pSelf.isHitted()) {

@@ -8,6 +8,7 @@ public class Player {
     private int attackMode = 1;
     private int jumpheight = 100;
     private int movementspeed = 100;
+    private int jumpPower = 50;
     private Rectangle hb = new Rectangle(new Position(400,400), 10, 20);
     private double health = 100;
     private double damage;
@@ -36,7 +37,8 @@ public class Player {
         mana = p.getMana();
         isDead = p.isDead();
         isHitted = p.isHitted();
-        isJumping = p.isJumping();
+        jumpPower = p.getJumpPower();
+        isJumping = p.isJumping;
         isAttacking = p.isAttacking();
         isLookingRight = p.isLookingRight();
         hb.setPos(p.getHb().getPos());
@@ -46,6 +48,7 @@ public class Player {
         DataOutputStream out = new DataOutputStream(baos);
         out.write(hb.getPos().getXPos());
         out.write(hb.getPos().getYPos());
+        out.writeInt(jumpPower);
         out.writeBoolean(isJumping);
         out.writeBoolean(isLookingRight);
         out.writeBoolean(isAttacking);
@@ -57,6 +60,7 @@ public class Player {
         DataInputStream in = new DataInputStream(bais);
         hb.getPos().setXPos(in.readInt());
         hb.getPos().setYPos(in.readInt());
+        jumpPower = in.readInt();
         isJumping = in.readBoolean();
         isLookingRight = in.readBoolean();
         isAttacking = in.readBoolean();
@@ -214,11 +218,29 @@ public class Player {
         isDead = dead;
     }
 
+    public int getJumpPower() {
+        return jumpPower;
+    }
+
     public boolean isJumping() {
         return isJumping;
     }
 
     public void setJumping(boolean jumping) {
         isJumping = jumping;
+    }
+
+    public boolean jump() {
+        if (jumpPower > 0) {
+            jumpPower -= 20;
+            isJumping = true;
+            return true;
+        }
+        return false;
+    }
+
+    public void updateJumpPower() {
+        jumpPower += 3;
+        if (jumpPower > 50) jumpPower = 50;
     }
 }
