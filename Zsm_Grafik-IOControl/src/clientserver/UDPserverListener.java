@@ -7,7 +7,7 @@ import ioserver.*;
 	/**
    * @author Oskar Moritz
    * @version 1.5 
-   * Die Klasse "UDPserverListener" ist ein Thread, der sowohl vom CLient als auch vom Server genutzt wird, um ankommende Pakete zu empfangen.
+   * Die Klasse "UDPserverListener" ist ein Thread, der sowohl vom CLient als auch vom server genutzt wird, um ankommende Pakete zu empfangen.
    */
 public class UDPserverListener extends Thread{
   private DatagramPacket packet;

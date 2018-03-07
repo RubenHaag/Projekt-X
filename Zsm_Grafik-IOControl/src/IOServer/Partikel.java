@@ -13,7 +13,7 @@ import grafik.RenderManager;
 public class Partikel {
     private double xVel, yVel, down, yVelw, friction1, friction2, friction, width;
     private Rectangle gr;
-    private Position pos;
+    private PositionIO pos;
     private boolean isJumping;
     long last_time = System.nanoTime();
     /**
@@ -24,16 +24,15 @@ public class Partikel {
         down = 200;
         friction1 = 80;
         friction2 = -friction1;
-        gr = new Rectangle(new Position(0,0),1,1);
-        pos = new Position(0, 0);
+        gr = new Rectangle(new PositionIO(0,0),1,1);
+        pos = new PositionIO(0, 0);
     }
     /**
      *
-     * @param pos Position des Rechtecks
+     * @param pos PositionIO des Rechtecks
      * @param w Breite
-     * @param gr Rechteck f�r das ein Partikelobjekt erstellt werden soll.
      */
-    public Partikel(Position pos, double w){
+    public Partikel(PositionIO pos, double w){
         this();
         this.pos = pos;
         this.width = w;
@@ -60,7 +59,7 @@ public class Partikel {
             if(!isJumping) {
                 yVel = yVelw;
                 pos.setXPos((int) (pos.getXPos()+ xVel));
-                pos.setYPos((int) (gr.getTop()+ 1));
+                pos.setYPos(gr.getTop()+ 1);
                 if (xVel > 1 || xVel < -1) {
                     xVel = xVel + friction;
                 }else {

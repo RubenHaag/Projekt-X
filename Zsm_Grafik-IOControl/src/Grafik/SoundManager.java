@@ -1,12 +1,7 @@
 package grafik;
 
+import javax.sound.sampled.*;
 import java.io.File;
-
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.DataLine;
 
 
 /**
@@ -14,7 +9,7 @@ import javax.sound.sampled.DataLine;
  * @author Fabian Scherer
  *
  */
-class SoundManager{  // muss vllt ein eigener Thread sein
+class SoundManager {  // muss vllt ein eigener Thread sein
     private static Clip clip = null;
 
     /**

@@ -1,13 +1,13 @@
-package bessereGrafik;
+package ioserver;
 /**
  * 
  * @author Lukas Hofmann, Patrick Waltermann
  *
  */
-public class Position {
+public class PositionIO {
 	private int x, y;
 	
-	public Position(int x, int y){
+	public PositionIO(int x, int y){
 		this.x = x;
 		this.y = y;
 	}

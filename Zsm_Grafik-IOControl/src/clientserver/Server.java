@@ -15,7 +15,7 @@ import ioserver.*;
    /**
    * @author Moritz Oskar 
    * @version 2.0 
-   * Die Klasse "Server" regelt server-seitig die Art der Verbindung. Für eine Verbindung werden sowohl das UDP als auch das TCP portocol benötigt.
+   * Die Klasse "server" regelt server-seitig die Art der Verbindung. Für eine Verbindung werden sowohl das UDP als auch das TCP portocol benötigt.
    * Hier werden das UDP und das TCP protcol zusammengeführt.
    * 
    */
@@ -28,13 +28,13 @@ public class Server extends Thread{
   private DatagramSocket sendSocket;
   private UDPserverListener listener1,listener2,listener3;
   private UDPserverListenerLogin listenerLogin1,listenerLogin2,listenerLogin3;
-  // Die cLoginUpdate Objekte, die versendet werden
+  // Die cLoginUpdateIO Objekte, die versendet werden
   private cLoginUpdate login1, login2, login3;
   private SUpdate supdate;
   private CUpdate cupdate;
   
   /**
-  * Dies ist der Konstruktor für die Klasse "Server". Hier wird die TCP Verbindung zu den drei clients aufgebaut und die UDP Verbindung vorbereitet.
+  * Dies ist der Konstruktor für die Klasse "server". Hier wird die TCP Verbindung zu den drei clients aufgebaut und die UDP Verbindung vorbereitet.
   * 
   */
   public Server(cLoginUpdate login1, cLoginUpdate login2, cLoginUpdate login3, SUpdate s, CUpdate c ) {
@@ -98,7 +98,7 @@ public class Server extends Thread{
    *  Die sendLogin()-Methode ist zum Senden der Login-Daten notwendig. 
    *  Mit dieser Methode werden die Login-Daten an alle Clients gesendet. 
    *  Das passiert über den datagramSocketSend und das „DatagramPacket“.
-   *  Jeder Client bekommt alle drei "cLoginUpdate-Objekte".
+   *  Jeder Client bekommt alle drei "cLoginUpdateIO-Objekte".
    *  An jeden Client werden die packets mit Updates vom laufenden Spiel gesendet.
    */
   private void sendLogin() throws IOException {
@@ -120,7 +120,7 @@ public class Server extends Thread{
    *  Die send()-Methode ist zum Senden der Spiel-Daten notwendig. 
    *  Mit dieser Methode werden die Spiel-Daten an alle Clients gesendet. 
    *  Das passiert über den datagramSocketSend und das „DatagramPacket“.
-   *  Jeder Client bekommt alle drei "cLoginUpdate-Objekte".
+   *  Jeder Client bekommt alle drei "cLoginUpdateIO-Objekte".
    *  An jeden Client werden die packets mit Updates vom laufenden Spiel gesendet.
    */
     private void send() throws IOException {

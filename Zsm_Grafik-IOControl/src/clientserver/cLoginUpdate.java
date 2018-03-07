@@ -2,15 +2,13 @@ package clientserver;
 
 import java.util.UUID;
 
-import ioserver.Update;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class cLoginUpdate extends Update {
+public class cLoginUpdate {
   int k= 0;                                               //Spielernummer des clients, 0: Boss, 1:Spieler 1, 2:Spieler2,
   private int mode;                                       //an elchem Schritt befindet sich der Client
   private boolean istBoss;                                //ist Spieler Boss oder nicht
@@ -19,8 +17,8 @@ public class cLoginUpdate extends Update {
   private boolean spielStart;
   /**
    * @author Oskar Moritz
-   * Die Methode "getbyte" erstellt aus allen Attributen der Klasse "cLoginUpdate" einen Byte Array.
-   * Diese Methode wird für das Versenden eines "cLoginUpdate-Objekts" verwendet.
+   * Die Methode "getbyte" erstellt aus allen Attributen der Klasse "cLoginUpdateIO" einen Byte Array.
+   * Diese Methode wird für das Versenden eines "cLoginUpdateIO-Objekts" verwendet.
    * @return data ist der erstellte Byte Array. Er enthält alle Attribute der Klasse.
    */
   public byte[] getbyte() throws IOException {

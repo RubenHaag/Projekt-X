@@ -7,7 +7,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class cLoginUpdate {
+public class cLoginUpdateIO {
   int k= 0;                                               //Spielernummer des clients, 0: Boss, 1:Spieler 1, 2:Spieler2,
   private int mode;                                       //an elchem Schritt befindet sich der Client
   private boolean istBoss;                                //ist Spieler Boss oder nicht
@@ -16,8 +16,8 @@ public class cLoginUpdate {
   private boolean spielStart;
   /**
    * @author Oskar Moritz
-   * Die Methode "getbyte" erstellt aus allen Attributen der Klasse "cLoginUpdate" einen Byte Array.
-   * Diese Methode wird f�r das Versenden eines "cLoginUpdate-Objekts" verwendet.
+   * Die Methode "getbyte" erstellt aus allen Attributen der Klasse "cLoginUpdateIO" einen Byte Array.
+   * Diese Methode wird f�r das Versenden eines "cLoginUpdateIO-Objekts" verwendet.
    * @return data ist der erstellte Byte Array. Er enth�lt alle Attribute der Klasse.
    */
   public byte[] getbyte() throws IOException {
@@ -49,10 +49,10 @@ public class cLoginUpdate {
       System.out.println(in.readUTF());
       uuid= UUID.fromString(in.readUTF());
     }
-  public cLoginUpdate(){
+  public cLoginUpdateIO(){
   }
   
-  public cLoginUpdate(int mode, UUID uuid){
+  public cLoginUpdateIO(int mode, UUID uuid){
     this.mode=mode;
     this.uuid=uuid;
   }
