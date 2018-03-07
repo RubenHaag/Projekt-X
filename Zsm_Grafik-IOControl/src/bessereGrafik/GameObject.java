@@ -3,7 +3,8 @@ package bessereGrafik;
 import java.awt.*;
 
 public abstract class GameObject {
-    private Position pos;
+    protected Position pos;
+    protected Position posTrans;
     private int width;
     private int height;
     private boolean isJumping;
@@ -12,6 +13,7 @@ public abstract class GameObject {
 
     public GameObject(Position pos, int width, int height, boolean isLookingRight) {
         this.pos = pos;
+        this.posTrans = new Position(0, 0);
         this.width = width;
         this.height = height;
         this.isJumping = false;
@@ -31,6 +33,10 @@ public abstract class GameObject {
     }
 
     public void setPos(Position pos) {
+        int x = pos.getXPos() - this.pos.getXPos(); //posTrans gibt an wieweit translatet werden soll
+        int y = pos.getYPos() - this.pos.getYPos();
+        posTrans.setXPos(x);
+        posTrans.setYPos(y);
         this.pos = pos;
     }
 

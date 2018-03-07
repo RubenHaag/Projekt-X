@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -16,7 +17,7 @@ import javax.swing.Timer;
 public class GamePanel extends JPanel{
     public static final String IMAGE_DIR = "Assets/";
 
-    private final Dimension prefSize = new Dimension(1910, 1070);
+    private final Dimension prefSize = new Dimension(1920, 1080);
 
     private ImageIcon backgroundImage;
     private final String backgroundImagePath = "Map/MapColor.png";
@@ -25,12 +26,22 @@ public class GamePanel extends JPanel{
     
     private Timer t;
 
+    Projectile p;
+
+
     public GamePanel(){
         this.setFocusable(true);
         setPreferredSize(prefSize);
         
         initGame();
         startGame();
+
+        try {
+            p = new Projectile(new Position(300,300), 30, 100, false, IMAGE_DIR+ "/Charaktere/Pfeil.png");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public boolean isGameOver() {
@@ -88,12 +99,19 @@ public class GamePanel extends JPanel{
     private void doOnTick() {
         //TODO jetzt wird Tankdestroyed gentutztum zuerfahren wann das spiel endet sollte bei uns eine meldung der IOKontrole sein?
         //endGame()
-
+        if(p!= null) {
+            int x = p.pos.getXPos();
+            int y = p.pos.getYPos();
+            x++;
+            y++;
+            p.pos.setXPos(x);
+            p.pos.setYPos(y);
+        }
         repaint();
+
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -106,8 +124,10 @@ public class GamePanel extends JPanel{
         if(isGameOver()) {
             g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 50));
             g.setColor(Color.RED);
-            g.drawString("GAME OVER!", prefSize.width/2 - 130, prefSize.height/5);
+            g.drawString("GAME OVER!", prefSize.width / 2 - 130, prefSize.height / 5);
         }
+        p.selfPaint(g);
+
     }
 
 }
