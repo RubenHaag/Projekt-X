@@ -1,7 +1,6 @@
-package IOServer;
+package ioserver;
 
 import java.io.*;
-import java.util.UUID;
 
 public class SUpdate {
     private Player p1,p2,p3;

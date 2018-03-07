@@ -1,4 +1,4 @@
-package IOServer;
+package ioserver;
 /**
  * 
  * @author Lukas Hofmann
