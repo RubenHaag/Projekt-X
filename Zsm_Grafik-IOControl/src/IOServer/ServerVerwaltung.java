@@ -23,6 +23,7 @@ public class ServerVerwaltung {
     private cLoginUpdate CLU2;
     private cLoginUpdate naechsteCLU;
     private long last_time = System.nanoTime();
+    private SUpdate = s;
     /**
      * dt ist die Deltatime
      */
@@ -306,7 +307,7 @@ public class ServerVerwaltung {
      * @param update CUpdate-Objekt das vom GameManager in der cUpdateS() Methode erzeugt und
      *              von der Serveruebertragung an die ServerVerwaltung weitergeleitet wird.
      **/
-    public void sSetUpdateC(CUpdate update) {
+    public static void sSetUpdateC(CUpdate update) {
         int y = sGetNumberID(update.getId());
         spielerListe[y].getpSelf().getHb().setPos(update.getPlayer().getHb().getPos());
         spielerListe[y].setAmAllg(update.getAmAllg());
