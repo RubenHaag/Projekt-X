@@ -1,15 +1,15 @@
-package IOServer;
+package ioserver;
 /**
  * 
  * @author Lukas Hofmann
  *
  */
 public class Rectangle {
-	private Position pos;
+	private PositionIO pos;
 	private int width;
 	private int heigth;
 	
-	public Rectangle(Position pos, int width, int heigth) {
+	public Rectangle(PositionIO pos, int width, int heigth) {
 		this.pos = pos;
 		this.width = width;
 		this.heigth = heigth;
@@ -37,11 +37,11 @@ public class Rectangle {
 		return heigth;
 	}
 	
-	public void setPos(Position pos){
+	public void setPos(PositionIO pos){
 		this.pos = pos;
 	}
 	
-	public Position getPos(){
+	public PositionIO getPos(){
 		return pos;
 	}
 	
@@ -58,9 +58,6 @@ public class Rectangle {
 	 * @return �berlappt die Hitbox des eigenen Rechtecks mit einer Hitbox-> true oder false
 	 */
 	public boolean intersect(Rectangle rectangle) {
-			if (!((this.getRight() <= rectangle.getLeft() || this.getLeft() >= rectangle.getRight()) && (this.getBottom() >= rectangle.getTop()))) {
-				return true;
-			}
-		return false;
-	}
+        return !((this.getRight() <= rectangle.getLeft() || this.getLeft() >= rectangle.getRight()) && (this.getBottom() >= rectangle.getTop()));
+    }
 }

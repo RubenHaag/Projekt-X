@@ -1,4 +1,4 @@
-package IOServer.testframeworks;
+package ioserver.testframeworks;
 
 import java.awt.Rectangle;
 

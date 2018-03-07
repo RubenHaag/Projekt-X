@@ -27,7 +27,7 @@ public class Client extends Thread{
 	private UDPclientListenerLogin listenerLogin1, listenerLogin2, listenerLogin3;
 
 	/**
-	 * Dies ist der Konstruktor für die Klasse "Client". Hier wird die TCP Verbindung zum Server aufgebaut und die UDP Verbindung vorbereitet.
+	 * Dies ist der Konstruktor für die Klasse "Client". Hier wird die TCP Verbindung zum server aufgebaut und die UDP Verbindung vorbereitet.
 	 * @param addresse IP-Addresse des Servers
 	 * @param login1 Das erste Login Objete was dann gesendet werden soll
 	 * @param login2 Das zweite Login Objete was dann gesendet werden soll
@@ -40,7 +40,7 @@ public class Client extends Thread{
 		this.login2 = login2;
 		this.login3 = login3;
 		this.supdate= s;
-		this.port = 3555; //Anfangsport, um den Server zu erreichen
+		this.port = 3555; //Anfangsport, um den server zu erreichen
 		try {
 			//hier wird TCP verwendet um dem Client den Port zu geben, an den er senden soll
 			ip = InetAddress.getByName(addresse);     
@@ -104,7 +104,7 @@ public class Client extends Thread{
 	}
 	/**
 	 *  Die send()-Methode ist zum Senden der Daten notwendig. 
-	 *  Mit dieser Methode werden Daten an den Server gesendet. 
+	 *  Mit dieser Methode werden Daten an den server gesendet.
 	 *  Das passiert über den datagramSocketSend und das „DatagramPacket“.
 	 */
 	private void sendLogin() throws IOException {
@@ -114,7 +114,7 @@ public class Client extends Thread{
 	}
 	/**
 	 *  Die send()-Methode ist zum Senden der Spiel-Daten notwendig. 
-	 *  Mit dieser Methode werden die Spiel-Daten an den Server gesendet. 
+	 *  Mit dieser Methode werden die Spiel-Daten an den server gesendet.
 	 *  Das passiert über den datagramSocketSend und das „DatagramPacket“.
 	 */
 	private void send() throws IOException {

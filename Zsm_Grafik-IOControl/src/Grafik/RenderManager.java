@@ -8,8 +8,8 @@ import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import IOServer.GameManager;
-import IOServer.InputListener;
+import ioserver.GameManager;
+import ioserver.InputListenerIO;
 
 
 /**
@@ -19,7 +19,7 @@ import IOServer.InputListener;
  */
 public class RenderManager {       // Hauptklasse in der grafik, managed wann was gezeichnet wird
     private static State state;         // In welchem State befindet sich das Programm? z.B Hauptmenü, Charakterauswahl, etc.
-    private static JFrame f;            // Fenster auf dem alles dargestellt wird
+    private static GameWindow frame;            // Fenster auf dem alles dargestellt wird
     private static JPanel p;
     private static Menue menue;
     private static Game game;
@@ -39,25 +39,30 @@ public class RenderManager {       // Hauptklasse in der grafik, managed wann wa
      * @param args
      */
     public static void main(String[] args) {
-        f = new JFrame("Project-X");
-        f.setSize(1920, 1080);
-        f.setVisible(true);
-        f.setResizable(false);
-        f.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        f.addWindowListener(wa);
+        frame = new GameWindow();
+        frame.setSize(1920, 1080);
+        frame.setVisible(true);
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.addWindowListener(wa);
 
         state = State.HAUPTMENUE;
         p = new JPanel();
         p.setLayout(new BorderLayout());
         menue = new Menue();
-        game = new Game();
+
         settings = new SettingsMenue();
         login = new LoginMenue();
 
-        f.add(p);
+        frame.add(p);
         p.add(menue.getPanel());
         running = true;        
         SoundManager.playSound("Assets/Sound/Menu Music.wav");
+        try {
+            game = new Game("Boy", "Girl", "Boss");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         while(running) {
             render();
         }
@@ -87,18 +92,13 @@ public class RenderManager {       // Hauptklasse in der grafik, managed wann wa
         }
         switch(s) {
             case GAME:
-                InputListener listener = new InputListener(g);
+                InputListenerIO listener = new InputListenerIO(g);
 
                 p.add(game.getPanel());
-                try {
-                    Game.initGame("Boy", "Girl", "Boy");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
                 p.validate();
                 g.spielstart();
-                f.addKeyListener(listener);
-                f.addMouseListener(listener);
+                frame.addKeyListener(listener);
+                frame.addMouseListener(listener);
                 break;
             case SETTINGS:
                 p.add(settings.getPanel());
@@ -123,7 +123,6 @@ public class RenderManager {       // Hauptklasse in der grafik, managed wann wa
      */
     public static void render() {
         p.repaint();
-
     }
 
     /**
@@ -131,7 +130,7 @@ public class RenderManager {       // Hauptklasse in der grafik, managed wann wa
      * @return Fensterbreite
      */
     public static int getFWidth(){
-        return f.getWidth();
+        return frame.getWidth();
     }
 
     /**
@@ -139,7 +138,7 @@ public class RenderManager {       // Hauptklasse in der grafik, managed wann wa
      * @return Fensterh�he
      */
     public static int getFHeight(){
-        return f.getHeight();
+        return frame.getHeight();
     }
 
     /**
@@ -155,7 +154,7 @@ public class RenderManager {       // Hauptklasse in der grafik, managed wann wa
      * @return Fenster
      */
     public static JFrame getFrame() {
-        return f;
+        return frame;
     }
 
     public static GameManager getGameManager() {

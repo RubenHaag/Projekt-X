@@ -1,4 +1,4 @@
-package IOServer;
+package ioserver;
 
 import java.io.*;
 
@@ -84,7 +84,7 @@ public class Attack {
         this.cooldown = cooldown;
     }
 
-    public void setPosition(Position pos) {
+    public void setPosition(PositionIO pos) {
         damageBox.setPos(pos);
     }
 

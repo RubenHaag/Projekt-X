@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 package IOServer;
+=======
+>>>>>>> master
 package ioserver;
 import java.io.*;
 import java.util.UUID;
@@ -7,12 +10,12 @@ public class CUpdate {
 
     private UUID id;
     private  Attack amAllg;
-    private Player player;
+    private PlayerIO playerIO;
 
-    public CUpdate(UUID id, Attack amAllg, Player player) {
+    public CUpdate(UUID id, Attack amAllg, PlayerIO playerIO) {
         this.id = id;
         this.amAllg = amAllg;
-        this.player = player;
+        this.playerIO = playerIO;
     }
 
     public UUID getId() {
@@ -31,12 +34,12 @@ public class CUpdate {
         this.amAllg = amAllg;
     }
 
-    public Player getPlayer() {
-        return player;
+    public PlayerIO getPlayerIO() {
+        return playerIO;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public void setPlayerIO(PlayerIO playerIO) {
+        this.playerIO = playerIO;
     }
 
 
@@ -44,12 +47,12 @@ public class CUpdate {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream out = new DataOutputStream(baos);
         byte[] att = amAllg.toByteArray();
-        byte[] pl = player.toByteArray();
+        byte[] pl = playerIO.toByteArray();
 
         out.writeUTF(id.toString());
         out.write(att.length);
         out.write(att);
-        out.write(player.toByteArray());
+        out.write(playerIO.toByteArray());
 
         byte[] data = baos.toByteArray();
         return data;
@@ -70,6 +73,6 @@ public class CUpdate {
         length = in.readInt();
         buffer = new  byte[length];
         in.readNBytes(buffer, 0, length);
-        player.fromByteArray(buffer);
+        playerIO.fromByteArray(buffer);
     }
 }
