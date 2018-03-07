@@ -1,11 +1,10 @@
-package Server;
-
+package netzwerk;
 import java.net.InetAddress;
 
-/*
+/**
    * @author Oskar Moritz
-   * @version 1.1 
-   * ClientData
+   * @version 1.2 
+   * Der Server besitzt 3 ClientData um spezielle CLientinformationen zu speichern
    */
 public class ClientData {
   private InetAddress ia;
