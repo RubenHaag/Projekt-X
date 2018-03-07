@@ -1,3 +1,4 @@
+
 package netzwerk;
 import java.net.InetAddress;
 
@@ -32,3 +33,4 @@ public class ClientData {
     this.ia = ia;
   }
 }
+

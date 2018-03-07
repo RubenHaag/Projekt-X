@@ -1,4 +1,10 @@
+
 package netzwerk;
+import clientserver.UDPclientListener;
+import clientserver.cLoginUpdate;
+import ioserver.CUpdate;
+import ioserver.SUpdate;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
@@ -98,5 +104,3 @@ public class Client extends Thread{
 	}
 
 }
-
-

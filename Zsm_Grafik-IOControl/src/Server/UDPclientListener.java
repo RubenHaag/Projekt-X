@@ -1,4 +1,7 @@
+
 package netzwerk;
+import ioserver.SUpdate;
+
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
@@ -29,3 +32,4 @@ public class UDPclientListener extends Thread {
 	    }
 	  }
 	}
+
