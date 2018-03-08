@@ -14,11 +14,13 @@ import src.ioserver.SettingsManager;
 
 /**
  * @author Lukas Hofmann, Patrick Waltermann, Max Schulte
+ *
+ * Die Klasse GameManager ist die Hauptklasse des Clients. Hier werden Informationen über die Position des Spielers
+ * und die Tasteneingaben an den Server und an die Grafik geleitet. Vom Server erhaltene Informationen werden in Player-
+ * Objekten gespeichert und an die Grafik weitergeleitet. Der Gamemanager ist also der Verteiler von Informationen
+ * auf der Clientseite.
  */
 public class GameManager {
-    /**
-     * Anmerkung BrutForce soll jetzt benutzt werden (1/20 Sekunde)
-     */
     private int sterbeHilfe = 0;
     private int endHilfe = 0;
     private boolean endGame, bosswin;
