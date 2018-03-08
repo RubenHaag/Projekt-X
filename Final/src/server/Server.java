@@ -72,6 +72,7 @@ public class Server extends Thread {
 		listener3.start();
 
 		while (true) {
+		    System.out.println("I am in the while true");
 			try {
 				send();
 			} catch (IOException e) {

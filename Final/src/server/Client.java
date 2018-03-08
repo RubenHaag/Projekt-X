@@ -68,8 +68,6 @@ public class Client extends Thread{
 		} catch (SocketException e1) {
 			e1.printStackTrace();
 		}
-		System.out.println(datagramSocketSend);
-
 		//ein neuer Thread wird gestartet um alle eingehenden Packete zu empfangen
 		//das ist zum Ablauf w�hrend des Spiels (Realtime)
 		listener1 = new UDPclientListener(port, gameManager);
@@ -99,9 +97,8 @@ public class Client extends Thread{
 	private void send() throws IOException {
 		System.out.println(12345);
 		byte[] sandData = gameManager.cGetUpdateS().toByteArray();
-		System.out.println(sandData);
+		System.out.println(sandData.length);
 		DatagramPacket packet = new DatagramPacket(sandData, sandData.length, ip, port);
-		System.out.println("Bei punkt 2");
 		datagramSocketSend.send(packet);
 
 	}
