@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 /**
- * 
+ * Klasse für das Hauptmenü des Spiels
  * @author Fabian Scherer
  *
  */
