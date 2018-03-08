@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-package IOServer;
-=======
->>>>>>> master
-package ioserver;
+package  ioserver;
 import java.io.*;
 import java.util.UUID;
 
@@ -16,6 +12,8 @@ public class CUpdate {
         this.id = id;
         this.amAllg = amAllg;
         this.playerIO = playerIO;
+    }
+    public CUpdate() {
     }
 
     public UUID getId() {

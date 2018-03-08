@@ -1,9 +1,8 @@
 
-package netzwerk;
+package Server;
 import clientserver.UDPclientListener;
 import clientserver.cLoginUpdate;
-import ioserver.CUpdate;
-import ioserver.SUpdate;
+import ioserver.*;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -34,7 +33,7 @@ public class Client extends Thread{
 	/**
 	 * Dies ist der Konstruktor f�r die Klasse "Client". Hier wird die TCP Verbindung zum Server aufgebaut und die UDP Verbindung vorbereitet.
 	 * @param addresse IP-Addresse des Servers
-	 * @param login1 Das erste Login-Objekt dann gesendet werden soll
+	 * @param loginSelf Das erste Login-Objekt dann gesendet werden soll
 	 * @param s Das SUpdate Objete
 	 * @param c Das CUpdate Objete
 	 */ 

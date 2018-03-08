@@ -1,5 +1,4 @@
 package ioserver;
-
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
@@ -301,7 +300,7 @@ public class ServerVerwaltung {
     /**
      * @return Update-Objekt, mit dem die GameManager der Clients aktualisiert werden
      */
-    public SUpdate sGetUpdateC() {
+    public static SUpdate sGetUpdateC() {
         return new SUpdate(spielerListe[0].getpSelf(), spielerListe[1].getpSelf(), spielerListe[2].getpSelf(), bosswin, endGame);
     }
     /**
@@ -311,7 +310,7 @@ public class ServerVerwaltung {
      * @param update CUpdate-Objekt das vom GameManager in der cUpdateS() Methode erzeugt und
      *              von der Serveruebertragung an die ServerVerwaltung weitergeleitet wird.
      **/
-    public void sSetUpdateC(CUpdate update) {
+    public static void sSetUpdateC(CUpdate update) {
         int y = sGetNumberID(update.getId());
         spielerListe[y].getpSelf().getHb().setPos(update.getPlayer().getHb().getPos());
         spielerListe[y].setAmAllg(update.getAmAllg());

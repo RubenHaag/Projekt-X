@@ -1,6 +1,6 @@
 
 package ioserver;
-
+import Server.*;
 public class MainServer {
     public static void main(String[] args) {
         ServerVerwaltung sv = new ServerVerwaltung();

@@ -1,5 +1,5 @@
 
-package netzwerk;
+package Server;
 import ioserver.SUpdate;
 
 import java.net.DatagramPacket;
@@ -9,7 +9,7 @@ public class UDPclientListener extends Thread {
 	private DatagramPacket packet;
 	  private DatagramSocket client;
 	  private int port; //der port auf den der UDPserverListener horcht (den ein CLient anschreibt)
-	  private SUpdate supdate; //Dieses Objekt wird vom Server geschickt und enthält INfors über alle drei Clients
+	  private SUpdate supdate; //Dieses Objekt wird vom Server geschickt und enthï¿½lt INfors ï¿½ber alle drei Clients
 	  
 	  
 	  public UDPclientListener(int port, SUpdate supdate ) {
@@ -23,7 +23,7 @@ public class UDPclientListener extends Thread {
 	      while(true) {
 	    	client = new DatagramSocket(port);
 	        packet = new DatagramPacket( new byte[1024], 1024 );
-	        client.receive( packet ); //<-- der Grund für den Thread: falls kein Packet ankommt, wartet .recieve() unendlich lange auf Packete
+	        client.receive( packet ); //<-- der Grund fï¿½r den Thread: falls kein Packet ankommt, wartet .recieve() unendlich lange auf Packete
 	        supdate.fromByteArray(packet.getData());       
 	      }
 	    }

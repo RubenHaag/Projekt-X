@@ -1,4 +1,4 @@
-package netzwerk;
+package Server;
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -10,6 +10,7 @@ import java.net.DatagramSocket;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import ioserver.*;
 
 /**
  * @author Moritz Oskar 
@@ -27,13 +28,13 @@ public class Server extends Thread {
 	private DatagramSocket sendSocket;
 	private UDPserverListener listener1, listener2, listener3;
 	// Die cLoginUpdate Objekte, die versendet werden
-	private ArrayList<cLoginUpdate> CLUs = new ArrayList<cLoginUpdate>();
+	private ArrayList<cLoginUpdateIO> CLUs = new ArrayList<cLoginUpdateIO>();
 	private SUpdate supdate;
 
 	/**
 	 * Dies ist der Konstruktor f�r die Klasse "Server". Hier wird die TCP Verbindung zu den drei clients aufgebaut und die UDP Verbindung vorbereitet.
 	 */
-	public Server(cLoginUpdate login1, cLoginUpdate login2, cLoginUpdate login3) {
+	public Server(cLoginUpdateIO login1, cLoginUpdateIO login2, cLoginUpdateIO login3) {
 		CLUs.add(login1);
 		CLUs.add(login2);
 		CLUs.add(login3);
@@ -58,7 +59,7 @@ public class Server extends Thread {
 	public void run() {
 		System.out.println("Mit allen Clients verbunden\nThread wird gestartet");
 		//f�r jeden Client wird ein UDPserverListener gestartet
-		listener1 = new netzwerk.UDPserverListener(clientDatas[0].getZugewiesenerPort());
+		listener1 = new Server.UDPserverListener(clientDatas[0].getZugewiesenerPort());
 		listener1.start();
 		listener2 = new UDPserverListener(clientDatas[1].getZugewiesenerPort());
 		listener2.start();
@@ -79,16 +80,16 @@ public class Server extends Thread {
 		}
 	}
 
-	private void shareClientLogin() {
+	private void shareClientLogin() throws IOException {
 		//in dieser Methode wird auf die cLoginUpdate objekte der drei CLients gewartet (TCP)
-		while (!getuebertragenBool()) {
+		while (CLUs.get(0).getSpielStart()) {
 
 		}
 		for (int i = 0; i < 3; i++) {
 			Socket client = connect.accept();
 			DataOutputStream dout = new DataOutputStream(client.getOutputStream());
 			byte[] data = CLUs.get(i).getbyte();
-			dout.write(data); //sendet sein CloginUpdate Objekt an den Server
+			dout.write(data); //sendet sein CloginUpdate Objekt an den Serve
 			dout.close();
 			client.close();
 		}

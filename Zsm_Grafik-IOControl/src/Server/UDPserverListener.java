@@ -1,5 +1,5 @@
 
-package netzwerk;
+package Server;
 import ioserver.CUpdate;
 import ioserver.ServerVerwaltung;
 
