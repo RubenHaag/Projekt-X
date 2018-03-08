@@ -1,4 +1,4 @@
-package src.ioserver;
+package ioserver;
 
 public enum SettingMovement {
     LEFT, JUMP, RIGHT

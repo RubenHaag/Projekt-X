@@ -9,8 +9,7 @@ import grafik.Game;
 import grafik.MovementType;
 import grafik.RenderManager;
 import grafik.State;
-import src.ioserver.Settings;
-import src.ioserver.SettingsManager;
+
 
 /**
  * @author Lukas Hofmann, Patrick Waltermann, Max Schulte

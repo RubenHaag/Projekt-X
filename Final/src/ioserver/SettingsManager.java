@@ -1,4 +1,4 @@
-package src.ioserver;
+package ioserver;
 
 import java.io.*;
 
