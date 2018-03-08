@@ -85,8 +85,9 @@ public class RenderManager {       // Hauptklasse in der grafik, managed wann wa
         String ip = login.getLtxtf().getText();
         server = new ServerVerwaltung();
         gameManager = new GameManager(server);
-        cLoginUpdate = new cLoginUpdate();
+
         client = new Client(ip, gameManager);
+        gameManager.spielstart();
     }
     /**
      * Aktualisiert den Programmstatus
@@ -115,7 +116,6 @@ public class RenderManager {       // Hauptklasse in der grafik, managed wann wa
                 initGame();
                 p.add(game.getPanel());
                 p.validate();
-                //g.spielstart();
                 //frame.addKeyListener(listener);
                 //frame.addMouseListener(listener);
                 break;

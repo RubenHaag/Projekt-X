@@ -1,6 +1,7 @@
 
 package server;
 import ioserver.GameManager;
+import ioserver.Player;
 import ioserver.SUpdate;
 
 import java.net.DatagramPacket;
@@ -11,11 +12,12 @@ public class UDPclientListener extends Thread {
 	private DatagramSocket client;
 	private int port; //der port auf den der UDPserverListener horcht (den ein CLient anschreibt)
 	private GameManager gameManager;
-	  
+	private  SUpdate update;
 	  
 	  public UDPclientListener(int port, GameManager gameManager ) {
 	    this.port = port;
 	    this.gameManager= gameManager;
+	    update = new SUpdate(new Player(), new Player(), new Player(), false, false);
 	    
 	  }
 	  public void run() {
@@ -26,7 +28,8 @@ public class UDPclientListener extends Thread {
 	        packet = new DatagramPacket( new byte[1024], 1024 );
 	        client.receive( packet ); //<-- der Grund f�r den Thread: falls kein Packet ankommt, wartet .recieve() unendlich lange auf Packete
 			if(packet != null) {
-				gameManager.cGetUpdateS().fromByteArray(packet.getData());
+				update.fromByteArray(packet.getData());
+				gameManager.cSetUpdateS(update);
 			}
 	      }
 	    }

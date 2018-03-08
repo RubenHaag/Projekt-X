@@ -81,10 +81,11 @@ public class Server extends Thread {
 		}
 	}
 
-	private void shareClientLogin() throws IOException {
+	/*private void shareClientLogin() throws IOException {
 		//in dieser Methode wird auf die cLoginUpdate objekte der drei CLients gewartet (TCP)
         System.out.println("Test");
 		while (!CLUs.get(0).getSpielStart()) {
+
 		}
 		for (int i = 0; i < 3; i++) {
 			Socket client = connect.accept();
@@ -95,7 +96,7 @@ public class Server extends Thread {
 			client.close();
 		}
 
-	}
+	}*/
 
 	/**
 	 * Die send()-Methode ist zum Senden der Spiel-Daten notwendig.

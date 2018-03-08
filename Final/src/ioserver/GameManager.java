@@ -28,10 +28,7 @@ public class GameManager {
     private List<Rectangle> hbListe;
     private ServerVerwaltung server;
     private Partikel pa = new Partikel(pSelf.getHb().getPos(), pSelf.getHb().getWidth());
-    private cLoginUpdate CLU0=new cLoginUpdate();								//CLU0;CLU1;CLU2 : fuer Werteuebergabe von server zu CLient
-    private cLoginUpdate CLU1=new cLoginUpdate();
-    private cLoginUpdate CLU2=new cLoginUpdate();
-    private cLoginUpdate ownCLU;
+    //private cLoginUpdate ownCLU;
     private int charakter;
 
     /**
@@ -40,7 +37,9 @@ public class GameManager {
      */
     public GameManager(ServerVerwaltung server) {
         this();
+        pSelf.setNumberID(0);
         this.server = server;
+        cSetUpdateS(new SUpdate(pSelf, pOther1, pOther2, false,false ));
     }
 
     /**
@@ -579,11 +578,11 @@ public class GameManager {
         this.pa = pa;
     }
 
-    public cLoginUpdate getOwnCLU() {
+    /*public cLoginUpdate getOwnCLU() {
         return ownCLU;
     }
 
-    public void setOwnCLU(cLoginUpdate ownCLU) {
+    /*public void setOwnCLU(cLoginUpdate ownCLU) {
         this.ownCLU = ownCLU;
         if (ownCLU.getMode()==1){
             if (ownCLU.getSpielStart()){
@@ -599,5 +598,5 @@ public class GameManager {
                 }
             }
         }
-    }
+    }*/
 }
