@@ -5,11 +5,11 @@ package ioserver;
  *
  */
 public class Rectangle {
-	private PositionIO pos;
+	private Position pos;
 	private int width;
 	private int heigth;
 	
-	public Rectangle(PositionIO pos, int width, int heigth) {
+	public Rectangle(Position pos, int width, int heigth) {
 		this.pos = pos;
 		this.width = width;
 		this.heigth = heigth;
@@ -37,11 +37,11 @@ public class Rectangle {
 		return heigth;
 	}
 	
-	public void setPos(PositionIO pos){
+	public void setPos(Position pos){
 		this.pos = pos;
 	}
 	
-	public PositionIO getPos(){
+	public Position getPos(){
 		return pos;
 	}
 	

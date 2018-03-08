@@ -21,26 +21,26 @@ public class GameManager {
     private int endHilfe = 0;
     private boolean endGame, bosswin;
     private UUID id;
-    private PlayerIO pSelf = new PlayerIO();
-    private PlayerIO pOther1 = new PlayerIO();
-    private PlayerIO pOther2 = new PlayerIO();
+    private Player pSelf = new Player();
+    private Player pOther1 = new Player();
+    private Player pOther2 = new Player();
     private Attack amAllg = pSelf.getAmNormal();
     private List<Rectangle> hbListe;
     private ServerVerwaltung server;
     private Partikel pa = new Partikel(pSelf.getHb().getPos(), pSelf.getHb().getWidth());
-    private cLoginUpdateIO CLU0=new cLoginUpdateIO();								//CLU0;CLU1;CLU2 : fuer Werteuebergabe von server zu CLient
-    private cLoginUpdateIO CLU1=new cLoginUpdateIO();
-    private cLoginUpdateIO CLU2=new cLoginUpdateIO();
-    private cLoginUpdateIO ownCLU=new cLoginUpdateIO(0,null);
+    private cLoginUpdate CLU0=new cLoginUpdate();								//CLU0;CLU1;CLU2 : fuer Werteuebergabe von server zu CLient
+    private cLoginUpdate CLU1=new cLoginUpdate();
+    private cLoginUpdate CLU2=new cLoginUpdate();
+    private cLoginUpdate ownCLU;
     private int charakter;
 
     /**
-     * @param s server, der angebunden werden soll.
+     * @param server server, der angebunden werden soll.
      *          Konstruktor: der GameManager bekommt ein Serverobjekt zum Methodenaufrufen
      */
-    public GameManager(ServerVerwaltung s) {
+    public GameManager(ServerVerwaltung server) {
         this();
-        server = s;
+        this.server = server;
     }
 
     /**
@@ -48,6 +48,7 @@ public class GameManager {
      */
     public GameManager() {
     	//hbListe = new ArrayList<>();
+
         try {
             hbListe = MapBuilder.BildZuRechteck("Assets/Map/MapSW.png");
         } catch (IOException e) {
@@ -60,7 +61,7 @@ public class GameManager {
      *
      * @return Playerobjekt des Clients
      */
-    public PlayerIO getpSelf() {
+    public Player getpSelf() {
         return pSelf;
     }
 
@@ -170,12 +171,12 @@ public class GameManager {
      * TODO
      * @param p Playerobjekt
      */
-    private void cJumpOtherG(PlayerIO p) {
+    private void cJumpOtherG(Player p) {
         //TODO sage grafik das p springt
     }
 
     /**
-     * Methode, die durch InputMouse ausgeloest wird und die PositionIO des Spielers klont. Abhängig von der Richtung in die der Spieler schaut wird die PositionIO des Klons gesetzt.
+     * Methode, die durch InputMouse ausgeloest wird und die Position des Spielers klont. Abhängig von der Richtung in die der Spieler schaut wird die Position des Klons gesetzt.
      * Der Klon uebergibt seine Koordinate an die Attacke bzw die Hitbox der Attacke.
      * Zu erwaehnen ist, dass dies nur passiert, wenn die Mana ausreichend vorhanden ist und der Cooldown der Attacke abgelaufen ist.
      * Abschliessend wird das abgeaenderte Attackobjekt im Attackobjekt amAllg abgespeichert.
@@ -185,7 +186,7 @@ public class GameManager {
     private void cAttack(Attack am) {
         if (pSelf.getMana() >= am.getCost() && am.getCooldown() == 0) {
 
-            PositionIO clone = new PositionIO(pSelf.getHb().getLeft(), pSelf.getHb().getTop());
+            Position clone = new Position(pSelf.getHb().getLeft(), pSelf.getHb().getTop());
             if (pSelf.isLookingRight()) {
                 clone.setXPos(pSelf.getHb().getRight());
                 clone.setYPos(pSelf.getHb().getTop());
@@ -204,7 +205,7 @@ public class GameManager {
     /**
      * Uebergibt der grafik, dass Schaden an einen Spieler ausgef�hrt wurde
      */
-    private void cHit(PlayerIO p) {
+    private void cHit(Player p) {
         //TODO an grafik senden
     }
 
@@ -295,7 +296,7 @@ public class GameManager {
         //an grafik
     }
 
-    private MovementType bestimmenMovementType(PlayerIO p) {
+    private MovementType bestimmenMovementType(Player p) {
         if(p.isJumping()) {
             return MovementType.JUMPING;
         }
@@ -307,7 +308,7 @@ public class GameManager {
         }
     }
 
-    private int bestimmenAttackType(PlayerIO p) {
+    private int bestimmenAttackType(Player p) {
         if(!p.isAttacking()) {
             return 0;
         }
@@ -404,7 +405,7 @@ public class GameManager {
      * @param pos Spawnposition des Spielers
      * @param isLookingRight Die Richtung in die der Spieler schaut
      */
-  /*public void cSpawn(PositionIO pos, boolean isLookingRight){
+  /*public void cSpawn(Position pos, boolean isLookingRight){
     this.pos = pos;
     this.isLookingRight = isLookingRight;
   }*/
@@ -518,7 +519,7 @@ public class GameManager {
     /**
      * Fuehrt die sLogin(GameManager) beim server auf, um eine Verbindung aufzubauen.
      */
-    public void cLogin() { //�bergabe der ServerID!!!
+    /*public void cLogin() { //�bergabe der ServerID!!!
         if (id==null){
             this.id = UUID.randomUUID();
             ownCLU.setUUID(id);
@@ -548,7 +549,7 @@ public class GameManager {
         }
         else{
         }
-    }
+    }*/
 
 
 
@@ -556,16 +557,16 @@ public class GameManager {
      * Der Spieler ist ein normaler Spieler,
      * es wird die Charakterauswahl für Spielercharaktere geöffnet
      */
-    public void auswahlSpieler(cLoginUpdateIO ownCLU){
+    public void auswahlSpieler(cLoginUpdate ownCLU){
         //ownCLU.setCharakter=(Spielerauswahl fÃ¼r Spieler oeffnen)/rückgabewert von grafik, sonst standardauswahl;
         ownCLU.setMode(2);
     }
 
     /**
-     * Der Spieler ist der Boss PlayerIO
+     * Der Spieler ist der Boss Player
      * es wird die Charakterauswahl für den Bosscharakter geöffnen
      */
-    public void auswahlBoss(cLoginUpdateIO ownCLU){
+    public void auswahlBoss(cLoginUpdate ownCLU){
         //ownCLU.setCharakter=(Spielerauswahl fÃ¼r Boss oeffnen)/rückgabewert von grafik sonst standartauswahl
         ownCLU.setMode(2);
     }
@@ -576,5 +577,27 @@ public class GameManager {
 
     public void setPartikel(Partikel pa) {
         this.pa = pa;
+    }
+
+    public cLoginUpdate getOwnCLU() {
+        return ownCLU;
+    }
+
+    public void setOwnCLU(cLoginUpdate ownCLU) {
+        this.ownCLU = ownCLU;
+        if (ownCLU.getMode()==1){
+            if (ownCLU.getSpielStart()){
+                this.spielstart();
+            }
+            else{
+
+                if(ownCLU.getIstBoss()){
+                    this.auswahlBoss(ownCLU);
+                }
+                else{
+                    this.auswahlSpieler(ownCLU);
+                }
+            }
+        }
     }
 }

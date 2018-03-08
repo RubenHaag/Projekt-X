@@ -13,7 +13,7 @@ import grafik.RenderManager;
 public class Partikel {
     private double xVel, yVel, down, yVelw, friction1, friction2, friction, width;
     private Rectangle gr;
-    private PositionIO pos;
+    private Position pos;
     private boolean isJumping;
     long last_time = System.nanoTime();
     /**
@@ -24,15 +24,15 @@ public class Partikel {
         down = 200;
         friction1 = 80;
         friction2 = -friction1;
-        gr = new Rectangle(new PositionIO(0,0),1,1);
-        pos = new PositionIO(0, 0);
+        gr = new Rectangle(new Position(0,0),1,1);
+        pos = new Position(0, 0);
     }
     /**
      *
-     * @param pos PositionIO des Rechtecks
+     * @param pos Position des Rechtecks
      * @param w Breite
      */
-    public Partikel(PositionIO pos, double w){
+    public Partikel(Position pos, double w){
         this();
         this.pos = pos;
         this.width = w;

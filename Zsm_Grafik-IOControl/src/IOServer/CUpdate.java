@@ -1,4 +1,5 @@
-package  ioserver;
+
+package ioserver;
 import java.io.*;
 import java.util.UUID;
 
@@ -6,14 +7,12 @@ public class CUpdate {
 
     private UUID id;
     private  Attack amAllg;
-    private PlayerIO playerIO;
+    private Player playerIO;
 
-    public CUpdate(UUID id, Attack amAllg, PlayerIO playerIO) {
+    public CUpdate(UUID id, Attack amAllg, Player playerIO) {
         this.id = id;
         this.amAllg = amAllg;
         this.playerIO = playerIO;
-    }
-    public CUpdate() {
     }
 
     public UUID getId() {
@@ -32,11 +31,11 @@ public class CUpdate {
         this.amAllg = amAllg;
     }
 
-    public PlayerIO getPlayerIO() {
+    public Player getPlayer() {
         return playerIO;
     }
 
-    public void setPlayerIO(PlayerIO playerIO) {
+    public void setPlayer(Player playerIO) {
         this.playerIO = playerIO;
     }
 

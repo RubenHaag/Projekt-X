@@ -1,8 +1,10 @@
 
-package Server;
-import clientserver.UDPclientListener;
-import clientserver.cLoginUpdate;
-import ioserver.*;
+package server;
+
+import ioserver.CUpdate;
+import ioserver.GameManager;
+import ioserver.SUpdate;
+import ioserver.cLoginUpdate;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -27,28 +29,25 @@ public class Client extends Thread{
 	private DatagramSocket datagramSocketSend;
 	private UDPclientListener listener1;
 	private cLoginUpdate loginSelf;
-	private SUpdate supdate;
-	private CUpdate cupdate;
+	private GameManager gameManager;
 
 	/**
-	 * Dies ist der Konstruktor f�r die Klasse "Client". Hier wird die TCP Verbindung zum Server aufgebaut und die UDP Verbindung vorbereitet.
-	 * @param addresse IP-Addresse des Servers
-	 * @param loginSelf Das erste Login-Objekt dann gesendet werden soll
-	 * @param s Das SUpdate Objete
-	 * @param c Das CUpdate Objete
+	 * Dies ist der Konstruktor f�r die Klasse "Client". Hier wird die TCP Verbindung zum server aufgebaut und die UDP Verbindung vorbereitet.
+	 * @param addresse IP-Addresse des Server
 	 */ 
-	public Client(String addresse, cLoginUpdate loginSelf, SUpdate s, CUpdate c) { //die IP des servers
-		this.loginSelf = loginSelf;
-		this.supdate= s;
-		this.port = 3555; //Anfangsport, um den Server zu erreichen
+	public Client(String addresse, GameManager gameManager) { //die IP des servers
+		this.port = 3555; //Anfangsport, um den server zu erreichen
+		this.gameManager = gameManager;
+		loginSelf = gameManager.getOwnCLU();
 		try {
 			ip = InetAddress.getByName(addresse);     
 			server = new Socket(ip,port); 
-			//cLOginUpdate Objekterhalten
+			//cLOginUpdate Objekt erhalten genau E I N S!!!!!!!!!!!!!!!!
 
 			DataInputStream din = new DataInputStream(server.getInputStream());
 			byte[] bytes = din.readAllBytes();
 			loginSelf.awaybyte(bytes);
+			gameManager.setOwnCLU(loginSelf);
 			din.close();
 			server.close();
 			//nachdem das CLU Objekt geschickt wurde, wird sich auf einen neues Port f�r UDP geeinigt
@@ -73,7 +72,7 @@ public class Client extends Thread{
 
 		//ein neuer Thread wird gestartet um alle eingehenden Packete zu empfangen
 		//das ist zum Ablauf w�hrend des Spiels (Realtime)
-		listener1 = new UDPclientListener(port, supdate );	
+		listener1 = new UDPclientListener(port, gameManager);
 		listener1.start();
 
 		while ( true ){
@@ -93,11 +92,11 @@ public class Client extends Thread{
 	}
 	/**
 	 *  Die send()-Methode ist zum Senden der Spiel-Daten notwendig. 
-	 *  Mit dieser Methode werden die Spiel-Daten an den Server gesendet. 
+	 *  Mit dieser Methode werden die Spiel-Daten an den server gesendet.
 	 *  Das passiert über den datagramSocketSend und das „DatagramPacket“.
 	 */
 	private void send() throws IOException {
-		byte[] sandData = cupdate.toByteArray();
+		byte[] sandData = gameManager.cGetUpdateS().toByteArray();
 		DatagramPacket packet = new DatagramPacket( sandData, sandData.length, ip, port );
 		datagramSocketSend.send(packet);
 	}

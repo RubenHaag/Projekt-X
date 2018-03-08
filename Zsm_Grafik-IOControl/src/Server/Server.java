@@ -1,4 +1,4 @@
-package Server;
+package server;
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -15,26 +15,27 @@ import ioserver.*;
 /**
  * @author Moritz Oskar 
  * @version 2.5 
- * Die Klasse "Server" regelt server-seitig die Art der Verbindung. F�r eine Verbindung werden sowohl das UDP als auch das TCP portocol ben�tigt.
+ * Die Klasse "server" regelt server-seitig die Art der Verbindung. F�r eine Verbindung werden sowohl das UDP als auch das TCP portocol ben�tigt.
  * Hier werden das UDP und das TCP protcol zusammengef�hrt.
  * 
  */
 public class Server extends Thread {
 
 	private ServerSocket connect;
-	private ClientData[] clientDatas = new ClientData[3];
+	private server.ClientData[] clientDatas = new ClientData[3];
 	//damit die while-schleife aus portsTauschen() nicht so kompliziert ist, erstelle ich ein Array zum speichern der CLientObjekte
 	private ArrayList<Integer> port = new ArrayList<Integer>();
 	private DatagramSocket sendSocket;
 	private UDPserverListener listener1, listener2, listener3;
 	// Die cLoginUpdate Objekte, die versendet werden
-	private ArrayList<cLoginUpdateIO> CLUs = new ArrayList<cLoginUpdateIO>();
+	private ArrayList<cLoginUpdate> CLUs = new ArrayList<cLoginUpdate>();
 	private SUpdate supdate;
+	private ServerVerwaltung serverVerwaltung;
 
 	/**
-	 * Dies ist der Konstruktor f�r die Klasse "Server". Hier wird die TCP Verbindung zu den drei clients aufgebaut und die UDP Verbindung vorbereitet.
+	 * Dies ist der Konstruktor f�r die Klasse "server". Hier wird die TCP Verbindung zu den drei clients aufgebaut und die UDP Verbindung vorbereitet.
 	 */
-	public Server(cLoginUpdateIO login1, cLoginUpdateIO login2, cLoginUpdateIO login3) {
+	public Server(cLoginUpdate login1, cLoginUpdate login2, cLoginUpdate login3, ServerVerwaltung serverVerwaltung) {
 		CLUs.add(login1);
 		CLUs.add(login2);
 		CLUs.add(login3);
@@ -43,7 +44,7 @@ public class Server extends Thread {
 		port.add(3556);
 		port.add(3557);
 		port.add(3558);
-
+        this.serverVerwaltung = serverVerwaltung;
 		try {
 			connect = new ServerSocket(3555); //zu Anfang verbinden sich alle Clients mit diesem Socket
 			shareClientLogin();
@@ -59,11 +60,11 @@ public class Server extends Thread {
 	public void run() {
 		System.out.println("Mit allen Clients verbunden\nThread wird gestartet");
 		//f�r jeden Client wird ein UDPserverListener gestartet
-		listener1 = new Server.UDPserverListener(clientDatas[0].getZugewiesenerPort());
+		listener1 = new server.UDPserverListener(clientDatas[0].getZugewiesenerPort(), serverVerwaltung);
 		listener1.start();
-		listener2 = new UDPserverListener(clientDatas[1].getZugewiesenerPort());
+		listener2 = new UDPserverListener(clientDatas[1].getZugewiesenerPort(), serverVerwaltung);
 		listener2.start();
-		listener3 = new UDPserverListener(clientDatas[2].getZugewiesenerPort());
+		listener3 = new UDPserverListener(clientDatas[2].getZugewiesenerPort(), serverVerwaltung);
 		listener3.start();
 		while (true) {
 			try {
@@ -82,14 +83,14 @@ public class Server extends Thread {
 
 	private void shareClientLogin() throws IOException {
 		//in dieser Methode wird auf die cLoginUpdate objekte der drei CLients gewartet (TCP)
-		while (CLUs.get(0).getSpielStart()) {
+		while (!CLUs.get(0).getSpielStart()) {
 
 		}
 		for (int i = 0; i < 3; i++) {
 			Socket client = connect.accept();
 			DataOutputStream dout = new DataOutputStream(client.getOutputStream());
 			byte[] data = CLUs.get(i).getbyte();
-			dout.write(data); //sendet sein CloginUpdate Objekt an den Serve
+			dout.write(data); //sendet sein CloginUpdate Objekt an den server
 			dout.close();
 			client.close();
 		}
@@ -106,7 +107,7 @@ public class Server extends Thread {
 	private void send() throws IOException {
 
 		for (ClientData i : clientDatas) {
-			byte[] sandData = ServerVerwaltung.sGetUpdateC().toByteArray();
+			byte[] sandData = serverVerwaltung.sGetUpdateC().toByteArray();
 			DatagramPacket packet = new DatagramPacket(sandData, sandData.length, i.getIa(), 3555);
 			sendSocket.send(packet);
 		}

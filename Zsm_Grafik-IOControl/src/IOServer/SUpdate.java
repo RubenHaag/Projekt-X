@@ -3,11 +3,11 @@ package ioserver;
 import java.io.*;
 
 public class SUpdate {
-    private PlayerIO p1,p2,p3;
+    private Player p1,p2,p3;
     private boolean bosswin, endGame;
     private double cooldown;
 
-    public SUpdate(PlayerIO p1, PlayerIO p2, PlayerIO p3, boolean bosswin, boolean endGame) {
+    public SUpdate(Player p1, Player p2, Player p3, boolean bosswin, boolean endGame) {
         this.p1 = p1;
         this.p2 = p2;
         this.p3 = p3;
@@ -62,27 +62,27 @@ public class SUpdate {
         endGame = in.readBoolean();
         cooldown = in.readDouble();
     }
-    public PlayerIO getP1() {
+    public Player getP1() {
         return p1;
     }
 
-    public void setP1(PlayerIO p1) {
+    public void setP1(Player p1) {
         this.p1 = p1;
     }
 
-    public PlayerIO getP2() {
+    public Player getP2() {
         return p2;
     }
 
-    public void setP2(PlayerIO p2) {
+    public void setP2(Player p2) {
         this.p2 = p2;
     }
 
-    public PlayerIO getP3() {
+    public Player getP3() {
         return p3;
     }
 
-    public void setP3(PlayerIO p3) {
+    public void setP3(Player p3) {
         this.p3 = p3;
     }
 

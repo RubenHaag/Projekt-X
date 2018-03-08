@@ -84,7 +84,7 @@ public class Attack {
         this.cooldown = cooldown;
     }
 
-    public void setPosition(PositionIO pos) {
+    public void setPosition(Position pos) {
         damageBox.setPos(pos);
     }
 
