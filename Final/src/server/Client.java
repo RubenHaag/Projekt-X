@@ -56,7 +56,7 @@ public class Client extends Thread{
 			port = Integer.parseInt(br.readLine()); //der anzusprechende Port wird aus dem Stream gelesen und "port" aktualisiert
 			System.out.println(port);       
 			server.close();
-			this.start();
+			this.run();
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
@@ -76,6 +76,7 @@ public class Client extends Thread{
 		listener1.start();
 
 		while ( true ){
+			System.out.println("I bims in der While true");
 			//zusätzlich sendet der CLient durch diese "while(true)" schleife alle 100ms eigene Packete
 			try {
 				send();
@@ -96,11 +97,13 @@ public class Client extends Thread{
 	 *  Das passiert über den datagramSocketSend und das „DatagramPacket“.
 	 */
 	private void send() throws IOException {
-
+		System.out.println(12345);
 		byte[] sandData = gameManager.cGetUpdateS().toByteArray();
+		System.out.println(sandData);
 		DatagramPacket packet = new DatagramPacket(sandData, sandData.length, ip, port);
+		System.out.println("Bei punkt 2");
 		datagramSocketSend.send(packet);
-		
+
 	}
 
 }

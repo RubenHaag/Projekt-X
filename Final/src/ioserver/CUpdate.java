@@ -10,7 +10,7 @@ public class CUpdate {
     private Player playerIO;
 
     public CUpdate(UUID id, Attack amAllg, Player playerIO) {
-        this.id = id;
+        this.id = UUID.randomUUID();
         this.amAllg = amAllg;
         this.playerIO = playerIO;
     }
