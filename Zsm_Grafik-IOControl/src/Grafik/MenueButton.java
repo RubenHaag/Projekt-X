@@ -30,8 +30,8 @@ class MenueButton{
    * 
    * @param name Text der auf dem Button stehen soll bzw. Dateianfang
    * @param l MouseListener, welcher den Button steuert
-   * @param x X-Position der linken oberen Ecke
-   * @param y Y-Position der linken oberen Ecke
+   * @param x X-PositionIO der linken oberen Ecke
+   * @param y Y-PositionIO der linken oberen Ecke
    * @param width Breite des Buttons
    * @param height H�he des Buttons
    */

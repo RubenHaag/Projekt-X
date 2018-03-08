@@ -4,9 +4,9 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.*;
 
-import ioserver.mapbuilder.MapBuilder;
+import ioserver.mapbuilderIO.MapBuilder;
 import grafik.Game;
-import bessereGrafik.MovementType;
+import grafik.MovementType;
 import grafik.RenderManager;
 import grafik.State;
 
@@ -21,21 +21,21 @@ public class GameManager {
     private int endHilfe = 0;
     private boolean endGame, bosswin;
     private UUID id;
-    private Player pSelf = new Player();
-    private Player pOther1 = new Player();
-    private Player pOther2 = new Player();
+    private PlayerIO pSelf = new PlayerIO();
+    private PlayerIO pOther1 = new PlayerIO();
+    private PlayerIO pOther2 = new PlayerIO();
     private Attack amAllg = pSelf.getAmNormal();
     private List<Rectangle> hbListe;
     private ServerVerwaltung server;
     private Partikel pa = new Partikel(pSelf.getHb().getPos(), pSelf.getHb().getWidth());
-    private cLoginUpdate CLU0=new cLoginUpdate();								//CLU0;CLU1;CLU2 : fuer Werteuebergabe von Server zu CLient
-    private cLoginUpdate CLU1=new cLoginUpdate();
-    private cLoginUpdate CLU2=new cLoginUpdate();
-    private cLoginUpdate ownCLU=new cLoginUpdate(0,null);
+    private cLoginUpdateIO CLU0=new cLoginUpdateIO();								//CLU0;CLU1;CLU2 : fuer Werteuebergabe von server zu CLient
+    private cLoginUpdateIO CLU1=new cLoginUpdateIO();
+    private cLoginUpdateIO CLU2=new cLoginUpdateIO();
+    private cLoginUpdateIO ownCLU=new cLoginUpdateIO(0,null);
     private int charakter;
 
     /**
-     * @param s Server, der angebunden werden soll.
+     * @param s server, der angebunden werden soll.
      *          Konstruktor: der GameManager bekommt ein Serverobjekt zum Methodenaufrufen
      */
     public GameManager(ServerVerwaltung s) {
@@ -60,7 +60,7 @@ public class GameManager {
      *
      * @return Playerobjekt des Clients
      */
-    public Player getpSelf() {
+    public PlayerIO getpSelf() {
         return pSelf;
     }
 
@@ -83,15 +83,15 @@ public class GameManager {
     }
 
     /**
-     * Setzt den Server mit dem der Client kommuniziert
-     * @param s der Server mit dem der Client kommuniziert
+     * Setzt den server mit dem der Client kommuniziert
+     * @param s der server mit dem der Client kommuniziert
      */
     public void cSetServer(ServerVerwaltung s) {
         server = s;
     }
 
     /**
-     * Diese Methode wird vom InputListener aufgerufen und fuehrt die Methode cMoveSelf() aus.
+     * Diese Methode wird vom InputListenerIO aufgerufen und fuehrt die Methode cMoveSelf() aus.
      * Ausserdem werden die Attribute isLookingRight und isSprinting veraendert
      * Sie dient zur Verarbeitung der auf der Tastatur gedruekten Tasten
      * Ausserdem gibt es eine If-Abfrage die eine weitere Eingabe nach dem Tod des Spielers verhindert
@@ -125,7 +125,7 @@ public class GameManager {
     }
 
     /**
-     * Diese Methode wird vom InputListener aufgerufen, wenn ein Mausklick registriert wurde.
+     * Diese Methode wird vom InputListenerIO aufgerufen, wenn ein Mausklick registriert wurde.
      * Sie loest die Methode attack() aus, wenn die linke Maustaste gedrueckt wurde, wertet also den Mausinput aus
      * Ausserdem gibt es eine If-Abfrage die eine weitere Eingabe nach dem Tod des Spielers verhindert
      */
@@ -163,28 +163,29 @@ public class GameManager {
      */
     private void cJumpSelf() {
         pa.addyVel(pSelf.getJumpheight());
+        if (pSelf.jump()) pa.addyVel(pSelf.getJumpheight());
     }
 
     /**
      * TODO
      * @param p Playerobjekt
      */
-    private void cJumpOtherG(Player p) {
+    private void cJumpOtherG(PlayerIO p) {
         //TODO sage grafik das p springt
     }
 
     /**
-     * Methode, die durch InputMouse ausgeloest wird und die Position des Spielers klont. Abhängig von der Richtung in die der Spieler schaut wird die Position des Klons gesetzt.
+     * Methode, die durch InputMouse ausgeloest wird und die PositionIO des Spielers klont. Abhängig von der Richtung in die der Spieler schaut wird die PositionIO des Klons gesetzt.
      * Der Klon uebergibt seine Koordinate an die Attacke bzw die Hitbox der Attacke.
      * Zu erwaehnen ist, dass dies nur passiert, wenn die Mana ausreichend vorhanden ist und der Cooldown der Attacke abgelaufen ist.
      * Abschliessend wird das abgeaenderte Attackobjekt im Attackobjekt amAllg abgespeichert.
-     * Danach wird der Boolean isAttacking auf true gesetzt, sodass bei der naechsten Abfrage des Servers das Attackobjekt amAllg übertragen wird und isAttacking im Server auf true gesetzt.
+     * Danach wird der Boolean isAttacking auf true gesetzt, sodass bei der naechsten Abfrage des Servers das Attackobjekt amAllg übertragen wird und isAttacking im server auf true gesetzt.
      * @param am Attackobjekt das ausgewaehlt ist
      */
     private void cAttack(Attack am) {
         if (pSelf.getMana() >= am.getCost() && am.getCooldown() == 0) {
 
-            Position clone = new Position(pSelf.getHb().getLeft(), pSelf.getHb().getTop());
+            PositionIO clone = new PositionIO(pSelf.getHb().getLeft(), pSelf.getHb().getTop());
             if (pSelf.isLookingRight()) {
                 clone.setXPos(pSelf.getHb().getRight());
                 clone.setYPos(pSelf.getHb().getTop());
@@ -203,12 +204,12 @@ public class GameManager {
     /**
      * Uebergibt der grafik, dass Schaden an einen Spieler ausgef�hrt wurde
      */
-    private void cHit(Player p) {
+    private void cHit(PlayerIO p) {
         //TODO an grafik senden
     }
 
     /**
-     * Fuehrt die sLogin(GameManager) beim Server auf, um eine Verbindung aufzubauen.
+     * Fuehrt die sLogin(GameManager) beim server auf, um eine Verbindung aufzubauen.
 
      */
     /*
@@ -218,7 +219,7 @@ public class GameManager {
     }
     */
     /**
-     * F�hrt die Methode sLogout(GameManager) beim Server aus, um seine Verbindung mit diesem zu trennen.
+     * F�hrt die Methode sLogout(GameManager) beim server aus, um seine Verbindung mit diesem zu trennen.
      */
     public void cLogout() {
         server.sLogout(this);
@@ -227,7 +228,7 @@ public class GameManager {
     /**
      * Signalisiert welche Charackterauswahl dir angezeigt werden soll.
      * @param b Ob Boss oder nicht
-     * @param k eigene Nummer beim Server
+     * @param k eigene Nummer beim server
      */
     public void cSetBoss(boolean b, int k) {
         pSelf.setBoss(b);
@@ -294,7 +295,7 @@ public class GameManager {
         //an grafik
     }
 
-    private MovementType bestimmenMovementType(Player p) {
+    private MovementType bestimmenMovementType(PlayerIO p) {
         if(p.isJumping()) {
             return MovementType.JUMPING;
         }
@@ -306,7 +307,7 @@ public class GameManager {
         }
     }
 
-    private int bestimmenAttackType(Player p) {
+    private int bestimmenAttackType(PlayerIO p) {
         if(!p.isAttacking()) {
             return 0;
         }
@@ -403,7 +404,7 @@ public class GameManager {
      * @param pos Spawnposition des Spielers
      * @param isLookingRight Die Richtung in die der Spieler schaut
      */
-  /*public void cSpawn(Position pos, boolean isLookingRight){
+  /*public void cSpawn(PositionIO pos, boolean isLookingRight){
     this.pos = pos;
     this.isLookingRight = isLookingRight;
   }*/
@@ -419,7 +420,7 @@ public class GameManager {
     }
 
     /**
-     * Wird vom Server aufgerufen, signalisiert die Preparingphase
+     * Wird vom server aufgerufen, signalisiert die Preparingphase
      */
     public void cCharakterauswahlStarten() {
 
@@ -448,7 +449,7 @@ public class GameManager {
 
 
     /**
-     * Fuehrt die sLogin(GameManager) beim Server auf, um eine Verbindung aufzubauen.
+     * Fuehrt die sLogin(GameManager) beim server auf, um eine Verbindung aufzubauen.
      */
     
     /*public void cLogin() { //�bergabe der ServerID!!!
@@ -484,6 +485,7 @@ public class GameManager {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             public void run() {
+                pSelf.updateJumpPower();
                 cUpdateG();
                 intersect(hbListe, pSelf.getHb());
                 if (pSelf.isHitted()) {
@@ -514,7 +516,7 @@ public class GameManager {
     }
 
     /**
-     * Fuehrt die sLogin(GameManager) beim Server auf, um eine Verbindung aufzubauen.
+     * Fuehrt die sLogin(GameManager) beim server auf, um eine Verbindung aufzubauen.
      */
     public void cLogin() { //�bergabe der ServerID!!!
         if (id==null){
@@ -554,16 +556,16 @@ public class GameManager {
      * Der Spieler ist ein normaler Spieler,
      * es wird die Charakterauswahl für Spielercharaktere geöffnet
      */
-    public void auswahlSpieler(cLoginUpdate ownCLU){
+    public void auswahlSpieler(cLoginUpdateIO ownCLU){
         //ownCLU.setCharakter=(Spielerauswahl fÃ¼r Spieler oeffnen)/rückgabewert von grafik, sonst standardauswahl;
         ownCLU.setMode(2);
     }
 
     /**
-     * Der Spieler ist der Boss Player
+     * Der Spieler ist der Boss PlayerIO
      * es wird die Charakterauswahl für den Bosscharakter geöffnen
      */
-    public void auswahlBoss(cLoginUpdate ownCLU){
+    public void auswahlBoss(cLoginUpdateIO ownCLU){
         //ownCLU.setCharakter=(Spielerauswahl fÃ¼r Boss oeffnen)/rückgabewert von grafik sonst standartauswahl
         ownCLU.setMode(2);
     }

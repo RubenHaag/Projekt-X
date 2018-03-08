@@ -17,11 +17,11 @@ public class ServerVerwaltung {
     private boolean b = false;
     private int n = 0;             					// n: Anzahl der eingeloggten Spieler
     private boolean alleVorhanden=false;  			// wenn alle Spieler versucht haben sich einzuloggen true 
-    private cLoginUpdate[] allCLU=new cLoginUpdate[3];		//alle clientLoginUpdate Objekte
-    private cLoginUpdate CLU0;					//CLU0;CLU1;CLU2 : Wie allCLU, aber als eigene Objekte, da einfacher fuer Übertragung auszulesen
-    private cLoginUpdate CLU1;
-    private cLoginUpdate CLU2;
-    private cLoginUpdate naechsteCLU;
+    private cLoginUpdateIO[] allCLU=new cLoginUpdateIO[3];		//alle clientLoginUpdate Objekte
+    private cLoginUpdateIO CLU0;					//CLU0;CLU1;CLU2 : Wie allCLU, aber als eigene Objekte, da einfacher fuer Übertragung auszulesen
+    private cLoginUpdateIO CLU1;
+    private cLoginUpdateIO CLU2;
+    private cLoginUpdateIO naechsteCLU;
     private long last_time = System.nanoTime();
     private SUpdate = s;
     /**
@@ -163,10 +163,10 @@ public class ServerVerwaltung {
 
     /**
      *
-     * @param clu Das cLoginUpdate Ojekt, bei dem die Login Parameter aktualisiert werden
+     * @param clu Das cLoginUpdateIO Ojekt, bei dem die Login Parameter aktualisiert werden
      * @return
      */
-    public cLoginUpdate sLogin(cLoginUpdate clu){
+    public cLoginUpdateIO sLogin(cLoginUpdateIO clu){
         double z=Math.random();
         if (clu.getMode()==0){
             if (n==0&&z<=0.333333) {
@@ -212,7 +212,7 @@ public class ServerVerwaltung {
      *  getrennt fÃ¼r bessere Ãœbersichtlichkeit
      * @param clu Gamemanager, der die Login funktion aufgerufen hat und sich gerade einloggt
      */
-    private void spielerIstBoss(cLoginUpdate clu){
+    private void spielerIstBoss(cLoginUpdateIO clu){
         spielerListe[0]=new GameManager();
         //spielerListe[0].UUID=clu.getUUID();
         n++;
@@ -222,7 +222,7 @@ public class ServerVerwaltung {
         clu.setCharakter(0);
         clu.modeErhoehen();
     }
-    private void spielerIst1(cLoginUpdate clu){
+    private void spielerIst1(cLoginUpdateIO clu){
         spielerListe[1]=new GameManager();
         //spielerListe[1].UUID=clu.getUUID();
         n++;
@@ -232,7 +232,7 @@ public class ServerVerwaltung {
         clu.setCharakter(1);
         clu.modeErhoehen();
     }
-    private void spielerIst2(cLoginUpdate clu){
+    private void spielerIst2(cLoginUpdateIO clu){
         spielerListe[2]=new GameManager();
         //spielerListe[2].UUID=clu.getUUID();
         n++;
@@ -309,12 +309,12 @@ public class ServerVerwaltung {
      **/
     public static void sSetUpdateC(CUpdate update) {
         int y = sGetNumberID(update.getId());
-        spielerListe[y].getpSelf().getHb().setPos(update.getPlayer().getHb().getPos());
+        spielerListe[y].getpSelf().getHb().setPos(update.getPlayerIO().getHb().getPos());
         spielerListe[y].setAmAllg(update.getAmAllg());
-        spielerListe[y].getpSelf().setJumping(update.getPlayer().isJumping());
-        spielerListe[y].getpSelf().setLookingRight(update.getPlayer().isLookingRight());
-        spielerListe[y].getpSelf().setAttacking(update.getPlayer().isAttacking());
-        spielerListe[y].getpSelf().setSprinting(update.getPlayer().isSprinting());
+        spielerListe[y].getpSelf().setJumping(update.getPlayerIO().isJumping());
+        spielerListe[y].getpSelf().setLookingRight(update.getPlayerIO().isLookingRight());
+        spielerListe[y].getpSelf().setAttacking(update.getPlayerIO().isAttacking());
+        spielerListe[y].getpSelf().setSprinting(update.getPlayerIO().isSprinting());
     }
     /**
      * In dieser Methode wird die Regeneration der Leben der Spieler umgesetzt.

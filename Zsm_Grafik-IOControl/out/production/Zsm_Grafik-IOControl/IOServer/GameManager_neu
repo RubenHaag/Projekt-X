@@ -36,7 +36,7 @@ public class GameManager{
     private cLoginUpdate clu=new cLoginUpdate(0,null);
     /**
      *
-     * @param s Server, der angebunden werden soll.
+     * @param s server, der angebunden werden soll.
      * Konstruktor: der GameManager bekommt ein Serverobjekt zum Methodenaufrufen
      */
     public GameManager(ServerVerwaltung s){
@@ -94,8 +94,8 @@ public class GameManager{
         this.amAllg = amAllg;
     }
     /**
-     * Setzt den Server mit dem der Client kommuniziert
-     * @param s der Server mit dem der Client kommuniziert
+     * Setzt den server mit dem der Client kommuniziert
+     * @param s der server mit dem der Client kommuniziert
      */
     public void cSetServer(ServerVerwaltung s){
         server = s;
@@ -154,7 +154,7 @@ public class GameManager{
         }
     }
     /**
-     * �bertr�gt die eigene Bewegung an den Server
+     * �bertr�gt die eigene Bewegung an den server
      */
     public void cMoveSelf(){
         if (pSelf.isLookingRight()) {
@@ -170,7 +170,7 @@ public class GameManager{
         //TODO sage grafik das p springt
     }
     /**
-     * F�hrt die Methode sAttack(ID, attackMode) beim Server aus.
+     * F�hrt die Methode sAttack(ID, attackMode) beim server aus.
      */
     public void cAttack(Attack am) {
         if(pSelf.getMana()>=am.getCost()&&am.getCooldown()==0) {
@@ -197,14 +197,14 @@ public class GameManager{
         //TODO an grafik senden
     }
     /**
-     * F�hrt die sLogin(GameManager) beim Server auf, um eine Verbindung aufzubauen.
+     * F�hrt die sLogin(GameManager) beim server auf, um eine Verbindung aufzubauen.
      */
     /*public void cLogin1(){ //�bergabe der ServerID!!!
         id = UUID.randomUUID();
         server.sLogin(this);
     }*/
     /**
-     * F�hrt die Methode sLogout(GameManager) beim Server aus, um seine Verbindung mit diesem zu trennen.
+     * F�hrt die Methode sLogout(GameManager) beim server aus, um seine Verbindung mit diesem zu trennen.
      */
     public void cLogout(){
         server.sLogout(this);
@@ -212,7 +212,7 @@ public class GameManager{
     /**
      * Signalisiert welche Charackterauswahl dir angezeigt werden soll.
      * @param b Ob Boss oder nicht
-     * @param k eigene Nummer beim Server
+     * @param k eigene Nummer beim server
      */
     public void cSetBoss(boolean b, int k) {
         pSelf.setBoss(b);
@@ -220,7 +220,7 @@ public class GameManager{
 
     }
     /**
-     * Erm�glicht dem Server die UUID des Clients zu bekommen.
+     * Erm�glicht dem server die UUID des Clients zu bekommen.
      * @return �bergibt die UUID des Clients
      */
     public UUID cGetUUID(){
@@ -359,7 +359,7 @@ public class GameManager{
         //an grafik und Preparingphase initialisieren
     }
     /**
-     * Wird vom Server aufgerufen, signalisiert die Preparingphase
+     * Wird vom server aufgerufen, signalisiert die Preparingphase
      */
     public void cCharakterauswahlStarten() {
 
@@ -372,8 +372,8 @@ public class GameManager{
 
     }
 
-    public boolean intersect(Rectangle[] player, Rectangle damage) {
-        for (Rectangle r : player) {
+    public boolean intersect(Rectangle[] playerIO, Rectangle damage) {
+        for (Rectangle r : playerIO) {
             if (!((damage.getRight() <= r.getLeft() || damage.getLeft() >= r.getRight()) && (damage.getBottom() >= r.getTop()))) {
                 pa.setJumping(false);
                 pa.updateGround(r);

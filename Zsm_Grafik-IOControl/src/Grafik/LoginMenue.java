@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 /**
- * Menue in welchem die Server ID eingegeben wird
+ * Menue in welchem die server ID eingegeben wird
  * @author Fabian Scherer
  *
  */

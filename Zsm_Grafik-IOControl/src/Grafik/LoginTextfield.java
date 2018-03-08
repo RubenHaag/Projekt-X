@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 /**
- * Element, welches im LoginMenue gebraucht wird zur Eingabe der Server IP
+ * Element, welches im LoginMenue gebraucht wird zur Eingabe der server IP
  * @author Fabian Scherer
  *
  */
@@ -52,8 +52,8 @@ public class LoginTextfield {
   
   /**
    * Konstruktor, Initialisiert alle Attribute
-   * @param x Die X-Position der oberen linken Ecke
-   * @param y Die Y-Position der oberen linken Ecke
+   * @param x Die X-PositionIO der oberen linken Ecke
+   * @param y Die Y-PositionIO der oberen linken Ecke
    * @param width Die Breite des Textfields
    * @param height Die H�he des Textfields
    */

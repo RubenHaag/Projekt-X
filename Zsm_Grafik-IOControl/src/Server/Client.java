@@ -1,4 +1,10 @@
+
 package netzwerk;
+import clientserver.UDPclientListener;
+import clientserver.cLoginUpdate;
+import ioserver.CUpdate;
+import ioserver.SUpdate;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
@@ -26,7 +32,7 @@ public class Client extends Thread{
 	private CUpdate cupdate;
 
 	/**
-	 * Dies ist der Konstruktor für die Klasse "Client". Hier wird die TCP Verbindung zum Server aufgebaut und die UDP Verbindung vorbereitet.
+	 * Dies ist der Konstruktor fï¿½r die Klasse "Client". Hier wird die TCP Verbindung zum Server aufgebaut und die UDP Verbindung vorbereitet.
 	 * @param addresse IP-Addresse des Servers
 	 * @param login1 Das erste Login-Objekt dann gesendet werden soll
 	 * @param s Das SUpdate Objete
@@ -46,7 +52,7 @@ public class Client extends Thread{
 			loginSelf.awaybyte(bytes);
 			din.close();
 			server.close();
-			//nachdem das CLU Objekt geschickt wurde, wird sich auf einen neues Port für UDP geeinigt
+			//nachdem das CLU Objekt geschickt wurde, wird sich auf einen neues Port fï¿½r UDP geeinigt
 			server = new Socket(ip,port);
 			BufferedReader br = new BufferedReader(new InputStreamReader(server.getInputStream())); 
 			port = Integer.parseInt(br.readLine()); //der anzusprechende Port wird aus dem Stream gelesen und "port" aktualisiert
@@ -67,7 +73,7 @@ public class Client extends Thread{
 		System.out.println(datagramSocketSend);
 
 		//ein neuer Thread wird gestartet um alle eingehenden Packete zu empfangen
-		//das ist zum Ablauf während des Spiels (Realtime)
+		//das ist zum Ablauf wï¿½hrend des Spiels (Realtime)
 		listener1 = new UDPclientListener(port, supdate );	
 		listener1.start();
 
@@ -98,5 +104,3 @@ public class Client extends Thread{
 	}
 
 }
-
-
