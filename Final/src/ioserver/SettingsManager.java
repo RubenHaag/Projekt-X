@@ -3,7 +3,7 @@ package src.ioserver;
 import java.io.*;
 
 public class SettingsManager {
-    private static File file = new File("C:/Users/Frederik/Desktop/config.game");
+    private static File file = new File("settings.game");
 
     public static void saveSettings(Settings settings) {
         try {

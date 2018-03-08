@@ -3,7 +3,6 @@ import java.io.IOException;
 
 
 public class Settings{
-
   private String[][] ausgabe;
   private String pfad;
   private char tastaurLinks;
