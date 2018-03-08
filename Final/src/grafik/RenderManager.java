@@ -1,9 +1,6 @@
 package grafik;
 
-import ioserver.CUpdate;
-import ioserver.GameManager;
-import ioserver.ServerVerwaltung;
-import ioserver.cLoginUpdate;
+import ioserver.*;
 import server.Client;
 
 import java.awt.BorderLayout;
@@ -41,6 +38,7 @@ public class RenderManager {       // Hauptklasse in der grafik, managed wann wa
     private static Client client;
     private static ServerVerwaltung server;
     private static cLoginUpdate cLoginUpdate;
+
    
     /**
      * Main-Methode der grafik
@@ -114,12 +112,12 @@ public class RenderManager {       // Hauptklasse in der grafik, managed wann wa
         }
         switch(s) {
             case GAME:
-                //InputListenerIO listener = new InputListenerIO(g);
+                InputListenerIO listener = new InputListenerIO(gameManager);
                 initGame();
                 p.add(game.getPanel());
                 p.validate();
-                //frame.addKeyListener(listener);
-                //frame.addMouseListener(listener);
+                frame.addKeyListener(listener);
+                frame.addMouseListener(listener);
                 break;
             case SETTINGS:
                 p.add(settings.getPanel());
