@@ -73,9 +73,10 @@ public class Client extends Thread{
 		//ein neuer Thread wird gestartet um alle eingehenden Packete zu empfangen
 		//das ist zum Ablauf w�hrend des Spiels (Realtime)
 		listener1 = new UDPclientListener(port, gameManager);
-		listener1.run();
+		listener1.start();
 
 		while ( true ){
+			System.out.println("I bims in der While true");
 			//zusätzlich sendet der CLient durch diese "while(true)" schleife alle 100ms eigene Packete
 			try {
 				send();
@@ -96,7 +97,7 @@ public class Client extends Thread{
 	 *  Das passiert über den datagramSocketSend und das „DatagramPacket“.
 	 */
 	private void send() throws IOException {
-
+		System.out.println(12345);
 		byte[] sandData = gameManager.cGetUpdateS().toByteArray();
 		System.out.println(sandData);
 		DatagramPacket packet = new DatagramPacket(sandData, sandData.length, ip, port);

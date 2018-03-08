@@ -16,7 +16,7 @@ public class SettingsManager {
     }
 
     public static Settings loadSettings() {
-        Settings settings = null;
+        Settings settings = null;/*
         try {
             ObjectInputStream input = new ObjectInputStream(new FileInputStream(file));
             Object read = input.readObject();
@@ -26,7 +26,7 @@ public class SettingsManager {
             settings = (Settings) read;
         } catch (Exception ex) {
             ex.printStackTrace();
-        }
+        }*/
         return settings;
     }
 }
