@@ -599,4 +599,9 @@ public class GameManager {
             }
         }
     }*/
+
+    public void setpSelf(Player pSelf) {
+        this.pSelf = pSelf;
+    }
+
 }

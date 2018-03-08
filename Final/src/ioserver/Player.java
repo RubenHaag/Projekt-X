@@ -21,6 +21,11 @@ public class Player {
     private Attack amSpec2 = new Attack(new Rectangle(new Position(0,0), 10, 10), 2, 0, 0);
     private Rectangle gr =  new Rectangle(new Position(0,0), 10, 10);
 
+    public Player(){
+        this.regSpeed = 10;
+        this.damage = 0;
+    }
+
     public void setUpdateSSelf(Player p) {
         health = p.getHealth();
         damage = p.getDamage();

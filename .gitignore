@@ -95,5 +95,10 @@ ProjetkX/\.project
 RemoteSystemsTempFiles/\.project
 
 Zsm_Grafik-IOControl/\.idea/workspace\.xml
+<<<<<<< HEAD
 
 Zsm_Grafik-IOControl/src/Grafik/
+=======
+
+Zsm_Grafik-IOControl/src/Grafik/
+>>>>>>> master

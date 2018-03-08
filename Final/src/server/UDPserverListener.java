@@ -31,6 +31,7 @@ public class UDPserverListener extends Thread{
         client.receive( packet );
 
         cupdate.fromByteArray(packet.getData());
+        System.out.println(packet.getData());
         serverVerwaltung.sSetUpdateC(cupdate);
       }
     }

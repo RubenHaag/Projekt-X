@@ -20,12 +20,27 @@ public class ServerVerwaltung {
     private cLoginUpdate CLU2=new cLoginUpdate();
     private boolean uebertragen=false; 				//true wenn alle Spieler generiert sind und die Daten zu den Clients Übertragen werden können
     private long last_time = System.nanoTime();
+    public SUpdate sUpdate;
     /**
      * dt ist die Deltatime
      */
     private double dt;
 
     public ServerVerwaltung() {
+        for(GameManager i:spielerListe){
+            i = new GameManager();
+            i.setpSelf(new Player());
+            System.out.println(i);
+        }
+        spielerListe = new GameManager[3];
+        spielerListe[0] =  new GameManager();
+        spielerListe[0].setpSelf(new Player());
+        spielerListe[1] =  new GameManager();
+        spielerListe[1].setpSelf(new Player());
+        spielerListe[2] =  new GameManager();
+        spielerListe[2].setpSelf(new Player());
+
+        sUpdate = new SUpdate(spielerListe[0].getpSelf(), spielerListe[1].getpSelf(), spielerListe[2].getpSelf(), false , false);
     }
 
     public void login(){							//Methoden für Login Phase ab Z.147
@@ -36,6 +51,8 @@ public class ServerVerwaltung {
         this.sLogin(CLU0);
         this.sLogin(CLU1);
         this.sLogin(CLU2);
+
+
 
         //this.alleDatenSpeichern(CLU0);
         //this.alleDatenSpeichern(CLU1);
@@ -281,13 +298,13 @@ public class ServerVerwaltung {
      */
     public void sLogout(GameManager gameManager) {
         String s = "";
-        if (gameManager.cGetUUID() == spielerListe[1].cGetUUID()) {
+        if (gameManager.cGetUUID().equals(spielerListe[1].cGetUUID())) {
             s = "Spieler 1";
         } // end of if
-        if (gameManager.cGetUUID() == spielerListe[2].cGetUUID()) {
+        if (gameManager.cGetUUID().equals(spielerListe[2].cGetUUID())) {
             s = "Spieler 2";
         } // end of if
-        if (gameManager.cGetUUID() == spielerListe[0].cGetUUID()) {
+        if (gameManager.cGetUUID().equals(spielerListe[0].cGetUUID())) {
             s = "Boss";
         } // end of if
         spielerListe[0].logout(s);
@@ -299,7 +316,9 @@ public class ServerVerwaltung {
      * @return Update-Objekt, mit dem die GameManager der Clients aktualisiert werden
      */
     public SUpdate sGetUpdateC() {
-        return new SUpdate(spielerListe[0].getpSelf(), spielerListe[1].getpSelf(), spielerListe[2].getpSelf(), bosswin, endGame);
+        sUpdate = new SUpdate(spielerListe[0].getpSelf(), spielerListe[1].getpSelf(), spielerListe[2].getpSelf(), bosswin , endGame);
+
+        return sUpdate;
     }
     /**
      * In dieser Methode werden alle relevanten Informationen aus den GameManagern der Clients mit den GameManagern der

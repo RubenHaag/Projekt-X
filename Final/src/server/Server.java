@@ -60,12 +60,17 @@ public class Server extends Thread {
 	public void run() {
 		System.out.println("Mit allen Clients verbunden\nThread wird gestartet");
 		//f�r jeden Client wird ein UDPserverListener gestartet
-		listener1 = new server.UDPserverListener(clientDatas[0].getZugewiesenerPort(), serverVerwaltung);
+        System.out.println(clientDatas[0].getZugewiesenerPort());
+        System.out.println(clientDatas[1].getZugewiesenerPort());
+        System.out.println(clientDatas[2].getZugewiesenerPort());
+
+        listener1 = new server.UDPserverListener(clientDatas[0].getZugewiesenerPort(), serverVerwaltung);
 		listener1.start();
 		listener2 = new UDPserverListener(clientDatas[1].getZugewiesenerPort(), serverVerwaltung);
 		listener2.start();
 		listener3 = new UDPserverListener(clientDatas[2].getZugewiesenerPort(), serverVerwaltung);
 		listener3.start();
+
 		while (true) {
 			try {
 				send();
@@ -106,12 +111,14 @@ public class Server extends Thread {
 	 * An jeden Client werden die packets mit Updates vom laufenden Spiel gesendet.
 	 */
 	private void send() throws IOException {
-
-		for (ClientData i : clientDatas) {
-			byte[] sandData = serverVerwaltung.sGetUpdateC().toByteArray();
-			DatagramPacket packet = new DatagramPacket(sandData, sandData.length, i.getIa(), 3555);
-			sendSocket.send(packet);
-		}
+	    System.out.println("P1:  "+ serverVerwaltung.sUpdate.getP1().getGr().getPos().getXPos()+ "\t"+ serverVerwaltung.sUpdate.getP1().getGr().getPos().getYPos());
+        System.out.println("P2:  "+ serverVerwaltung.sUpdate.getP2().getGr().getPos().getXPos()+ "\t"+ serverVerwaltung.sUpdate.getP2().getGr().getPos().getYPos());
+        System.out.println("P3:  "+ serverVerwaltung.sUpdate.getP3().getGr().getPos().getXPos()+ "\t"+ serverVerwaltung.sUpdate.getP3().getGr().getPos().getYPos());
+        for (ClientData i : clientDatas) {
+            byte[] sandData = serverVerwaltung.sGetUpdateC().toByteArray();
+            DatagramPacket packet = new DatagramPacket(sandData, sandData.length, i.getIa(), 3555);
+            sendSocket.send(packet);
+        }
 	}
 
 	private void portsTauschen() throws IOException {
