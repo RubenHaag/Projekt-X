@@ -48,6 +48,7 @@ public class CUpdate {
 
         out.writeUTF(id.toString());
         out.write(att.length);
+        System.out.println("Läange0 = " + att.length );
         out.write(att);
         out.write(playerIO.toByteArray());
 
@@ -64,6 +65,7 @@ public class CUpdate {
 
         length = in.readInt();
         buffer = new byte[length];
+        System.out.println("Länge: "+ length);
         in.readNBytes(buffer, 0, length);
         amAllg.fromByteArray(buffer);
 

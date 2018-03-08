@@ -27,7 +27,7 @@ public class GameManager {
     private Player pSelf = new Player();
     private Player pOther1 = new Player();
     private Player pOther2 = new Player();
-    private Attack amAllg = pSelf.getAmNormal();
+    private Attack amAllg;
     private List<Rectangle> hbListe;
     private ServerVerwaltung server;
     private Partikel pa = new Partikel(pSelf.getHb().getPos(), pSelf.getHb().getWidth());
@@ -41,6 +41,7 @@ public class GameManager {
      */
     public GameManager(ServerVerwaltung server) {
         this();
+        amAllg = pSelf.getAmNormal();
         pSelf.setNumberID(0);
         this.server = server;
         cSetUpdateS(new SUpdate(pSelf, pOther1, pOther2, false,false ));
