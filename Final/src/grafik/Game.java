@@ -125,7 +125,8 @@ public class Game {
     }
 
     /**
-     * TODO
+     * Getter für die X-Position
+     * @param player Der Spieler wessen X-Position gegeben werden soll
      */
     public static int getPlayerXPos(int player) {
         return players[player].pos.getXPos();
@@ -133,7 +134,8 @@ public class Game {
     }
 
     /**
-     * TODO
+     * Getter für die Y-Position
+     * @param player Der Spieler wessen Y-Position gegeben werden soll
      */
     public static int getPlayerYPos(int player) {
         return players[player].pos.getYPos();

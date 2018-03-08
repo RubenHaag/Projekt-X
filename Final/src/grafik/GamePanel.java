@@ -24,6 +24,11 @@ public class GamePanel extends JPanel {
     private ArrayList<Projectile> projectiles;
 
 
+    /**
+     * Konstruktor
+     * @param players Spieler-Array 
+     * @param projectiles ArrayList aus Projectiles
+     */
     public GamePanel(Player[] players, ArrayList<Projectile> projectiles){
         this.setFocusable(true);
         setPreferredSize(prefSize);
@@ -44,6 +49,9 @@ public class GamePanel extends JPanel {
         return this;
     }
 
+    /**
+     * Initialisiert das Spiel und startet einen Timer der alle 20ms tickt und eine Methode aufruft.
+     */
     private void initGame() {
         this.setBackgroundImage();
         this.creatGameObjects();
@@ -64,6 +72,9 @@ public class GamePanel extends JPanel {
         //Initialisierung der Playerbilder des Spielers
     }
 
+    /**
+     * Setzt das Hintergrundbild des Panels
+     */
     private void setBackgroundImage() {
         String imagePath = IMAGE_DIR + backgroundImagePath;
         System.out.println(imagePath);
@@ -76,10 +87,18 @@ public class GamePanel extends JPanel {
         backgroundImage = new ImageIcon(image);
     }
 
+    /**
+     * Entfernt einen Spieler von dem Panel, so das er nicht mehr gezeichnet wird.
+     * @param player Spieler der nicht mehr gezeichnet werden soll.
+     */
     public void remove(Player player){
         player.setRendered(false);
     }
 
+    /**
+     * Methode die jeden Tick ausgeführt wird.
+     * Sie zeichnet das Panel neu
+     */
     private void doOnTick() {
         //TODO jetzt wird Tankdestroyed gentutztum zuerfahren wann das spiel endet sollte bei uns eine meldung der IOKontrole sein?
         //endGame()

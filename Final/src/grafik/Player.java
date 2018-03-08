@@ -3,10 +3,21 @@ package grafik;
 import java.awt.*;
 import java.io.IOException;
 
+
 public class Player extends GameObject {
     private PlayerAnimation animation;
     private boolean isRendered;
 
+    /**
+     * Konstruktor
+     * @param pos Position des Spielers
+     * @param width Breite des Spielers
+     * @param height Höhe des Spielers
+     * @param isLookingRight Sieht der Spieler nach rechts?
+     * @param name Name des Charakters
+     * @param imageDir DateiPfad zur ImageDirectory
+     * @throws IOException
+     */
     public Player(Position pos, int width, int height, boolean isLookingRight, String name, String imageDir) throws IOException {
         super(pos, width, height, isLookingRight);
 
@@ -29,6 +40,7 @@ public class Player extends GameObject {
         isRendered = rendered;
     }
 
+    
     public void updateMovementType(MovementType mt, boolean r) {
         setLookingRight(r);
         switch (mt) {
@@ -47,6 +59,10 @@ public class Player extends GameObject {
         }
     }
 
+    /**
+     * Updated den Attacktyp
+     * @param attackInt Integer für den AttackType
+     */
     public void updateAttackType(int attackInt) {
         switch(attackInt) {
             case 0:
