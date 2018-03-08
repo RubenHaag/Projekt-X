@@ -25,14 +25,16 @@ public class UDPserverListener extends Thread{
   public void run() {
     //Der thread horcht die ganze zeit ob vom Client ein Packet gesendet wurde
     try {
-      while(true) {
-    	client = new DatagramSocket(port);
-        packet = new DatagramPacket( new byte[1024], 1024 );
-        client.receive( packet );
+        client = new DatagramSocket(port);
+        while(true) {
+            System.out.println("Halöchen ich bin in der While Schleife");
+            packet = new DatagramPacket( new byte[1024], 1024 );
+            client.receive( packet );
+            System.out.println("Test");
 
-        cupdate.fromByteArray(packet.getData());
-        System.out.println(packet.getData());
-        serverVerwaltung.sSetUpdateC(cupdate);
+            cupdate.fromByteArray(packet.getData());
+            System.out.println(packet.getData());
+            serverVerwaltung.sSetUpdateC(cupdate);
       }
     }
     catch(Exception e) {

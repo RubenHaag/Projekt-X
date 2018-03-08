@@ -23,14 +23,13 @@ public class UDPclientListener extends Thread {
 	  public void run() {
 	    //Der thread horcht die ganze zeit ob vom Client ein Packet gesendet wurde
 	    try {
+	      client = new DatagramSocket(port);
 	      while(true) {
-	    	client = new DatagramSocket(port);
+	        System.out.println("Test");
 	        packet = new DatagramPacket( new byte[1024], 1024 );
 	        client.receive( packet ); //<-- der Grund f�r den Thread: falls kein Packet ankommt, wartet .recieve() unendlich lange auf Packete
-			if(packet != null) {
-				update.fromByteArray(packet.getData());
-				gameManager.cSetUpdateS(update);
-			}
+            update.fromByteArray(packet.getData());
+			gameManager.cSetUpdateS(update);
 	      }
 	    }
 	    catch(Exception e) {
