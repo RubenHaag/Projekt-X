@@ -41,6 +41,7 @@ public class RenderManager {       // Hauptklasse in der grafik, managed wann wa
     private static Client client;
     private static ServerVerwaltung server;
     private static cLoginUpdate cLoginUpdate;
+   
     /**
      * Main-Methode der grafik
      * Initialisiert das Fenster und s�mtliche anderen Attribute
@@ -89,6 +90,7 @@ public class RenderManager {       // Hauptklasse in der grafik, managed wann wa
         client = new Client(ip, gameManager);
         gameManager.spielstart();
     }
+    
     /**
      * Aktualisiert den Programmstatus
      * @param s State in dem sich das Programm befindet

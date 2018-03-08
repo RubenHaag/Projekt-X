@@ -9,14 +9,18 @@ import grafik.Game;
 import grafik.MovementType;
 import grafik.RenderManager;
 import grafik.State;
+import src.ioserver.Settings;
+import src.ioserver.SettingsManager;
 
 /**
  * @author Lukas Hofmann, Patrick Waltermann, Max Schulte
+ *
+ * Die Klasse GameManager ist die Hauptklasse des Clients. Hier werden Informationen über die Position des Spielers
+ * und die Tasteneingaben an den Server und an die Grafik geleitet. Vom Server erhaltene Informationen werden in Player-
+ * Objekten gespeichert und an die Grafik weitergeleitet. Der Gamemanager ist also der Verteiler von Informationen
+ * auf der Clientseite.
  */
 public class GameManager {
-    /**
-     * Anmerkung BrutForce soll jetzt benutzt werden (1/20 Sekunde)
-     */
     private int sterbeHilfe = 0;
     private int endHilfe = 0;
     private boolean endGame, bosswin;
@@ -30,6 +34,7 @@ public class GameManager {
     private Partikel pa = new Partikel(pSelf.getHb().getPos(), pSelf.getHb().getWidth());
     //private cLoginUpdate ownCLU;
     private int charakter;
+    private Settings settings;
 
     /**
      * @param server server, der angebunden werden soll.
@@ -40,6 +45,7 @@ public class GameManager {
         pSelf.setNumberID(0);
         this.server = server;
         cSetUpdateS(new SUpdate(pSelf, pOther1, pOther2, false,false ));
+        settings = SettingsManager.loadSettings();
     }
 
     /**
@@ -99,26 +105,22 @@ public class GameManager {
      */
     public void inputKey(KeyEvent e) {
         if (!pSelf.isDead()) { //If-Abfrage: verhindert weitere Eingabe nach dem Tod des Spielers
-            switch (e.getKeyChar()) {
-                case 'a': //Bewegung nach Links bei dem Tastendruck von 'A'
+            switch (settings.getMovement(e.getKeyChar())) {
+                case JUMP:
+                    cJumpSelf();
+                    break;
+
+                case LEFT:
                     pSelf.setLookingRight(false);
                     pSelf.setSprinting(false);
                     cMoveSelf();
                     break;
-                case 'd': //Bewegung nach Rechts bei dem Tastendruck von 'D'
+
+
+                case RIGHT:
                     pSelf.setLookingRight(true);
                     pSelf.setSprinting(false);
                     cMoveSelf();
-                    break;
-                case ' ': //Sprung bei dem Tastendruck von ''bzw der Leertaste
-                    cJumpSelf();
-                    break;
-                case '1': //Auswahl der Attackmodi
-                case '2':
-                case '3':
-                    try {
-                        pSelf.setAttackMode(Integer.parseInt(Character.toString(e.getKeyChar())));
-                    } catch (Exception ignored) {}
                     break;
             }
         }

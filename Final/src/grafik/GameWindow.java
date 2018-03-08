@@ -10,6 +10,9 @@ public class GameWindow extends JFrame {
     //TODO 6.1 EInstellungsmenu mit Verschiedenen Maps fehlt
 
 
+	/**
+	 * Konstruktor
+	 */
     public GameWindow() {
         this.registerWindowListener();
         this.createTopMenu();
@@ -21,6 +24,9 @@ public class GameWindow extends JFrame {
         this.setVisible(true);
     }
 
+    /**
+     * Erstellt das Menü-Leiste im GameWindow
+     */
     private void createTopMenu() {
         JMenuBar topMenu = new JMenuBar();
         this.setJMenuBar(topMenu);
@@ -37,6 +43,10 @@ public class GameWindow extends JFrame {
         addGameMenuItems(gameMenu);
     }
 
+    /**
+     * Fügt die einzelnen Auswahlmöglichkeiten in das File-Menü der Menü-Leiste hinzu
+     * @param fileMenu das File-Menü der Menü-Leiste
+     */
     private void addFileMenuItems(JMenu fileMenu) {
         JMenuItem quitItem = new JMenuItem("Beenden");
         fileMenu.add(quitItem);
@@ -48,6 +58,9 @@ public class GameWindow extends JFrame {
         });
     }
 
+    /**
+     * Fügt dem Fenster einen WindowListener hinzu
+     */
     private void registerWindowListener() {
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -67,6 +80,10 @@ public class GameWindow extends JFrame {
         });
     }
 
+    /**
+     * Fügt die einzelnen Menüelemente in das Game-Menü der Menü-Leiste hinzu
+     * @param gameMenu Das Game-Menü der Menü-Leiste
+     */
     private void addGameMenuItems(JMenu gameMenu) {
         //TODO vermutlich vieles UNbrauchbar da wir doch kein Pause haben
         JMenuItem pauseItem = new JMenuItem("Pause");
