@@ -442,10 +442,12 @@ public class GameManager {
                 pSelf.setJumping(false);
                 System.out.println("intersect");
                 return;
+            } else{
+                pSelf.setJumping(true);
+                pa.setJumping(true);
             }
         }
-        pSelf.setJumping(true);
-        pa.setJumping(true);
+
     }
 
 

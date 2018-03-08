@@ -21,7 +21,7 @@ public class Partikel {
      */
 
     public Partikel() {
-        down = 200;
+        down = 2;
         friction1 = 80;
         friction2 = -friction1;
         gr = new Rectangle(new Position(0,0),1,1);
@@ -52,12 +52,14 @@ public class Partikel {
             long time = System.nanoTime();
             double dt = (double)((time - last_time));
             last_time = time;
+                System.out.println("an");
             if (xVel < -1) {
                 friction = friction1;
             } else if(xVel > 1) {
-                friction = friction2;
+                friction = friction2;}
             if(!isJumping) {
-                yVel = yVelw;
+
+                yVel = 0;
                 pos.setXPos((int) (pos.getXPos()+ xVel));
                 pos.setYPos(gr.getTop()+ 1);
                 if (xVel > 1 || xVel < -1) {
@@ -65,7 +67,7 @@ public class Partikel {
                 }else {
                 	xVel = 0;
                 	}
-                }
+
             } else {
                 pos.setXPos((int) (pos.getXPos()+ xVel));
                 pos.setYPos((int) (pos.getYPos()+ yVel));
