@@ -56,7 +56,7 @@ public class Client extends Thread{
 			port = Integer.parseInt(br.readLine()); //der anzusprechende Port wird aus dem Stream gelesen und "port" aktualisiert
 			System.out.println(port);       
 			server.close();
-			this.start();
+			this.run();
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
@@ -73,7 +73,7 @@ public class Client extends Thread{
 		//ein neuer Thread wird gestartet um alle eingehenden Packete zu empfangen
 		//das ist zum Ablauf w�hrend des Spiels (Realtime)
 		listener1 = new UDPclientListener(port, gameManager);
-		listener1.start();
+		listener1.run();
 
 		while ( true ){
 			//zusätzlich sendet der CLient durch diese "while(true)" schleife alle 100ms eigene Packete
@@ -98,9 +98,11 @@ public class Client extends Thread{
 	private void send() throws IOException {
 
 		byte[] sandData = gameManager.cGetUpdateS().toByteArray();
+		System.out.println(sandData);
 		DatagramPacket packet = new DatagramPacket(sandData, sandData.length, ip, port);
+		System.out.println("Bei punkt 2");
 		datagramSocketSend.send(packet);
-		
+
 	}
 
 }
