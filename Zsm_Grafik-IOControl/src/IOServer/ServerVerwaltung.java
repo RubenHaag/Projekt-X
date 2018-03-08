@@ -15,15 +15,12 @@ public class ServerVerwaltung {
     private boolean s1 = false;          //s1,s2,b : welche rolle ist schon vergeben, wird beim login benÃ¶tigt (s:Spieler b:Boss)
     private boolean s2 = false;
     private boolean b = false;
-    private int n = 0;             					// n: Anzahl der eingeloggten Spieler
-    private boolean alleVorhanden=false;  			// wenn alle Spieler versucht haben sich einzuloggen true 
-    private cLoginUpdateIO[] allCLU=new cLoginUpdateIO[3];		//alle clientLoginUpdate Objekte
-    private cLoginUpdateIO CLU0;					//CLU0;CLU1;CLU2 : Wie allCLU, aber als eigene Objekte, da einfacher fuer Übertragung auszulesen
-    private cLoginUpdateIO CLU1;
-    private cLoginUpdateIO CLU2;
-    private cLoginUpdateIO naechsteCLU;
+    private int n = 0;             					// n: Anzahl der beim Login abgearbeiteten Spieler
+    private cLoginUpdate CLU0=new cLoginUpdate();		//CLU0;CLU1;CLU2: Die Daten zum Login der einzelnen Spieler, entält Daten zum eigenen Spieler und den anderen Spielern
+    private cLoginUpdate CLU1=new cLoginUpdate();
+    private cLoginUpdate CLU2=new cLoginUpdate();
+    private boolean uebertragen=false; 				//true wenn alle Spieler generiert sind und die Daten zu den Clients Übertragen werden können
     private long last_time = System.nanoTime();
-    private SUpdate = s;
     /**
      * dt ist die Deltatime
      */
@@ -31,14 +28,25 @@ public class ServerVerwaltung {
 
     public ServerVerwaltung() {
 
-    }
 
-    //muss waehrend der login phase durchgängig ausgefürt werden:
-    public void login(){
-        this.loginStart();
-        this.login2();
     }
-
+    
+    public void login(){							//Methoden für Login Phase ab Z.147
+	  CLU0.setOwnUUID(UUID.randomUUID());
+	  CLU1.setOwnUUID(UUID.randomUUID());
+	  CLU2.setOwnUUID(UUID.randomUUID());
+	  
+	  this.sLogin(CLU0);
+	  this.sLogin(CLU1);
+	  this.sLogin(CLU2);
+	  
+	  this.alleDatenSpeichern(CLU0);
+	  this.alleDatenSpeichern(CLU1);
+	  this.alleDatenSpeichern(CLU2);
+	  
+	  this.loginFertig();
+     }
+    
     /**
      * Methode, die vom Boolean isAttacking in der run()-Methode ausgelöst wird.
      * Hier werden bei einer Attacke erst die Mana-Werte des Spielers gesenkt und der Cooldown
@@ -128,143 +136,139 @@ public class ServerVerwaltung {
 
     }
 
-    /**
-     *
-     *
-     */
-    public void loginStart(){
-        if (naechsteCLU!=null) {
-            if (allCLU[0]==null) {
-                allCLU[0]=naechsteCLU;
-            } else if (allCLU[0].getUUID()!=naechsteCLU.getUUID()&&allCLU[1]==null){
-                allCLU[1]=naechsteCLU;
-            } else if (allCLU[0].getUUID()!=naechsteCLU.getUUID()&&allCLU[1].getUUID()!=naechsteCLU.getUUID()&&allCLU[2]==null){
-                allCLU[2]=naechsteCLU;
-                alleVorhanden=true;
-            } else if (allCLU[0].getUUID()==naechsteCLU.getUUID()){
-                allCLU[0]=naechsteCLU;
-            } else if (allCLU[1].getUUID()==naechsteCLU.getUUID()){
-                allCLU[1]=naechsteCLU;
-            } else if (allCLU[2].getUUID()==naechsteCLU.getUUID()){
-                allCLU[2]=naechsteCLU;
-            } else {
-                alleVorhanden=true;
-            }
-            for (int m=0; m<allCLU.length; m++) {
-                if (allCLU[m]!=null){
-                    allCLU[m]=sLogin(allCLU[m]);
-                }
-            }
-        }
-        allCLU[0]=CLU0;
-        allCLU[1]=CLU1;
-        allCLU[2]=CLU2;
-    }
-
-    /**
-     *
-     * @param clu Das cLoginUpdateIO Ojekt, bei dem die Login Parameter aktualisiert werden
-     * @return
-     */
-    public cLoginUpdateIO sLogin(cLoginUpdateIO clu){
-        double z=Math.random();
-        if (clu.getMode()==0){
-            if (n==0&&z<=0.333333) {
-                spielerIstBoss(clu);
-            } else if (n==0&&z>0.333333&&z<=0.666666) {
-                spielerIst1(clu);
-            } else if (n==0&&z>0.666666) {
-                spielerIst2(clu);
-            } else if (n==1&&b&&z<=0.5) {
-                spielerIst1(clu);
-            } else if (n==1&&s1&&z<=0.5) {
-                spielerIstBoss(clu);
-            } else if (n==1&&s2&&z<=0.5) {
-                spielerIstBoss(clu);
-            } else if (n==1&&b&&z>0.5) {
-                spielerIst2(clu);
-            } else if (n==1&&s1&&z>0.5) {
-                spielerIst2(clu);
-            } else if (n==1&&s2&&z>0.5) {
-                spielerIst1(clu);
-            } else if (n==2&&s1&&s2) {
-                spielerIstBoss(clu);
-            } else if (n==2&&b&&s1) {
-                spielerIst2(clu);
-            } else if (n==2&&b&&s2) {
-                spielerIst1(clu);
-            }
-        }
-        else if (clu.getMode()==1){
-            for (int l=0; l<spielerListe.length;l++){
-                if (spielerListe[l].cGetUUID()==clu.getUUID()){
-                    spielerListe[l].cSetCharakter(clu.getCharakter());                //Charakter in GM nicht enthalten. vergessen oder Absicht?
-                }
-                return clu;
-            }
-        }
-        return clu;
-    }
-
-
-    /**
-     *  spielerIstBoss,spielerIst1,spielerIst2 werden beim Login aufgerufen,
-     *  getrennt fÃ¼r bessere Ãœbersichtlichkeit
-     * @param clu Gamemanager, der die Login funktion aufgerufen hat und sich gerade einloggt
-     */
-    private void spielerIstBoss(cLoginUpdateIO clu){
-        spielerListe[0]=new GameManager();
-        //spielerListe[0].UUID=clu.getUUID();
-        n++;
-        b=true;
-        clu.setIstBoss(true);
-        spielerListe[0].cSetCharakter(0);					//Standard Charakter für Boss: 0
-        clu.setCharakter(0);
-        clu.modeErhoehen();
-    }
-    private void spielerIst1(cLoginUpdateIO clu){
-        spielerListe[1]=new GameManager();
-        //spielerListe[1].UUID=clu.getUUID();
-        n++;
-        s1=true;
-        clu.setIstBoss(false);
-        spielerListe[1].cSetCharakter(1);					//Standard Charakter für Spieler1: 1
-        clu.setCharakter(1);
-        clu.modeErhoehen();
-    }
-    private void spielerIst2(cLoginUpdateIO clu){
-        spielerListe[2]=new GameManager();
-        //spielerListe[2].UUID=clu.getUUID();
-        n++;
-        s2=true;
-        clu.setIstBoss(false);
-        spielerListe[2].cSetCharakter(2);					//Standard Charakter für Spieler2: 2
-        clu.setCharakter(2);
-        clu.modeErhoehen();
-    }
-
-    public void login2(){
-        if (this.alleVorhanden) {
-            //double aktZeit=System.currentTimeMillis();
-            String s="Alle Spieler eingeloggt! Start in 15s!";
-	      /*for (int l=0; l<spielerListe.length; l++ ){
-	      spielerListe[l].zeigen(s);
-	      }*/
-            try{
-                Thread.sleep(15000);
-            }catch (InterruptedException e){}
-            //Spielstart
-
-            CLU0.setSpielStart(true);
-            CLU1.setSpielStart(true);
-            CLU2.setSpielStart(true);
-
-            for (int j=0; j<spielerListe.length; j++){
-                spielerListe[j].spielstart();
-            }
-        }
-
-    }
+  public boolean getUebertragen(){
+	  return(this.uebertragen);
+  }
+  
+  /**
+  * 
+  * @param @param clu Das clu Objekt, das grade bearbeitet wird
+  * @return
+  */
+  public void sLogin(cLoginUpdate clu){
+    double z=Math.random();
+    if (n==0&&z<=0.333333) {
+    	spielerIstBoss(clu);
+    } // end of if
+    else if (n==0&&z>0.333333&&z<=0.666666) {
+    	spielerIst1(clu);
+    } // end of if
+    else if (n==0&&z>0.666666) {
+    	spielerIst2(clu);
+    } // end of if
+    else if (n==1&&b&&z<=0.5) {
+    	spielerIst1(clu);
+    } // end of if
+    else if (n==1&&s1&&z<=0.5) {
+    	spielerIstBoss(clu);
+    } // end of if
+    else if (n==1&&s2&&z<=0.5) {
+    	spielerIstBoss(clu);
+    } // end of if
+    else if (n==1&&b&&z>0.5) {
+    	spielerIst2(clu);
+    } // end of if
+    else if (n==1&&s1&&z>0.5) {
+    	spielerIst2(clu);
+    } // end of if
+    else if (n==1&&s2&&z>0.5) {
+    	spielerIst1(clu);
+    } // end of if
+    
+    else if (n==2&&s1&&s2) {
+    	spielerIstBoss(clu);
+    } // end of if
+    else if (n==2&&b&&s1) {
+    	spielerIst2(clu);
+    } // end of if
+    else if (n==2&&b&&s2) {
+    	spielerIst1(clu);
+    } // end of if
+  }
+  
+  
+  /**
+  *  spielerIstBoss,spielerIst1,spielerIst2 werden beim Login aufgerufen,
+  *  getrennt fÃ¼r bessere Ãœbersichtlichkeit
+  * @param @param clu Das clu Objekt, das grade bearbeitet wird
+  */
+  private void spielerIstBoss(cLoginUpdate clu){
+    spielerListe[0]=new GameManager();
+    //spielerListe[0].UUID=clu.getUUID();
+    n++;
+    b=true;
+    clu.setOwnIstBoss(true);
+    spielerListe[0].cSetCharakter(0);					//Standard Charakter für Boss: 0
+    clu.setOwnCharakter(0);
+  }
+  private void spielerIst1(cLoginUpdate clu){
+    spielerListe[1]=new GameManager();
+    //spielerListe[1].UUID=clu.getUUID();
+    n++;
+    s1=true;
+    clu.setOwnIstBoss(false);
+    spielerListe[1].cSetCharakter(1);					//Standard Charakter für Spieler1: 1
+    clu.setOwnCharakter(1);
+  }
+  private void spielerIst2(cLoginUpdate clu){
+    spielerListe[2]=new GameManager();
+    //spielerListe[2].UUID=clu.getUUID();
+    n++;
+    s2=true;
+    clu.setOwnIstBoss(false);           
+    spielerListe[2].cSetCharakter(2);					//Standard Charakter für Spieler2: 2
+    clu.setOwnCharakter(2);
+  }
+  
+  /*
+   * Die Login Daten der anderen CLUs speichern um se dem Client zu übergeben
+   * @param clu Das CLU Objekt, das verändert werden soll
+   */
+  
+  public void alleDatenSpeichern(cLoginUpdate clu){
+	  if (clu.getOwnUUID()==CLU0.getOwnUUID()){
+		  clu.setS1UUID(CLU1.getOwnUUID());
+		  clu.setS2UUID(CLU2.getOwnUUID());
+		  clu.setS1Charakter(CLU1.getOwnCharakter());
+		  clu.setS2Charakter(CLU2.getOwnCharakter());
+		  clu.setS1IstBoss(CLU1.getOwnIstBoss());
+		  clu.setOwnS2Boss(CLU2.getOwnIstBoss());
+	  }
+	  else if(clu.getOwnUUID()==CLU1.getOwnUUID()){
+		  clu.setS1UUID(CLU0.getOwnUUID());
+		  clu.setS2UUID(CLU2.getOwnUUID());
+		  clu.setS1Charakter(CLU0.getOwnCharakter());
+		  clu.setS2Charakter(CLU2.getOwnCharakter());
+		  clu.setS1IstBoss(CLU0.getOwnIstBoss());
+		  clu.setOwnS2Boss(CLU2.getOwnIstBoss());
+	  }
+	  else if(clu.getOwnUUID()==CLU2.getOwnUUID()){
+		  clu.setS1UUID(CLU0.getOwnUUID());
+		  clu.setS2UUID(CLU1.getOwnUUID());
+		  clu.setS1Charakter(CLU0.getOwnCharakter());
+		  clu.setS2Charakter(CLU1.getOwnCharakter());
+		  clu.setS1IstBoss(CLU0.getOwnIstBoss());
+		  clu.setOwnS2Boss(CLU1.getOwnIstBoss());
+	  }
+	  
+  }
+  
+  public void loginFertig(){				//Login Phase ist abgeschlossen, Spiel kkann gestartet werden
+      //double aktZeit=System.currentTimeMillis();
+      String s="Alle Spieler eingeloggt! Start in 5s!";
+      /*for (int l=0; l<spielerListe.length; l++ ){
+      spielerListe[l].zeigen(s);
+      }*/
+      CLU0.setSpielStart(true);
+      CLU1.setSpielStart(true);
+      CLU2.setSpielStart(true);
+      
+      this.uebertragen=true;
+      
+      for (int j=0; j<spielerListe.length; j++){
+        spielerListe[j].spielstart();
+      }
+  }
 
 
     //private void setSkin (int Skin, Gamemanager g){   //skin entweder int oder enum
@@ -282,13 +286,13 @@ public class ServerVerwaltung {
         String s = "";
         if (gameManager.cGetUUID() == spielerListe[1].cGetUUID()) {
             s = "Spieler 1";
-        }
+        } // end of if
         if (gameManager.cGetUUID() == spielerListe[2].cGetUUID()) {
             s = "Spieler 2";
-        }
+        } // end of if
         if (gameManager.cGetUUID() == spielerListe[0].cGetUUID()) {
             s = "Boss";
-        }
+        } // end of if
         spielerListe[0].logout(s);
         spielerListe[1].logout(s);
         spielerListe[2].logout(s);
@@ -307,14 +311,14 @@ public class ServerVerwaltung {
      * @param update CUpdate-Objekt das vom GameManager in der cUpdateS() Methode erzeugt und
      *              von der Serveruebertragung an die ServerVerwaltung weitergeleitet wird.
      **/
-    public static void sSetUpdateC(CUpdate update) {
+    public void sSetUpdateC(CUpdate update) {
         int y = sGetNumberID(update.getId());
-        spielerListe[y].getpSelf().getHb().setPos(update.getPlayerIO().getHb().getPos());
+        spielerListe[y].getpSelf().getHb().setPos(update.getPlayer().getHb().getPos());
         spielerListe[y].setAmAllg(update.getAmAllg());
-        spielerListe[y].getpSelf().setJumping(update.getPlayerIO().isJumping());
-        spielerListe[y].getpSelf().setLookingRight(update.getPlayerIO().isLookingRight());
-        spielerListe[y].getpSelf().setAttacking(update.getPlayerIO().isAttacking());
-        spielerListe[y].getpSelf().setSprinting(update.getPlayerIO().isSprinting());
+        spielerListe[y].getpSelf().setJumping(update.getPlayer().isJumping());
+        spielerListe[y].getpSelf().setLookingRight(update.getPlayer().isLookingRight());
+        spielerListe[y].getpSelf().setAttacking(update.getPlayer().isAttacking());
+        spielerListe[y].getpSelf().setSprinting(update.getPlayer().isSprinting());
     }
     /**
      * In dieser Methode wird die Regeneration der Leben der Spieler umgesetzt.
@@ -358,6 +362,10 @@ public class ServerVerwaltung {
                 local.getpSelf().setMana(local.getpSelf().getMana() + dt / 1000000000 * 0.01 * local.getpSelf().getRegSpeed());
             }
         }
+    }
+
+    public boolean getZurueck(){
+	    return zurueck;
     }
 
 }
