@@ -38,19 +38,9 @@ public class Client extends Thread{
 	public Client(String addresse, GameManager gameManager) { //die IP des servers
 		this.port = 3555; //Anfangsport, um den server zu erreichen
 		this.gameManager = gameManager;
-		//loginSelf = gameManager.getOwnCLU();
 		try {
 			ip = InetAddress.getByName(addresse);     
-			//server = new Socket(ip,port);
-			//cLOginUpdate Objekt erhalten genau E I N S!!!!!!!!!!!!!!!!
 
-			//DataInputStream din = new DataInputStream(server.getInputStream());
-			//byte[] bytes = din.readAllBytes();
-			//loginSelf.awaybyte(bytes);
-			//gameManager.setOwnCLU(loginSelf);
-			//din.close();
-			//server.close();
-			//nachdem das CLU Objekt geschickt wurde, wird sich auf einen neues Port f�r UDP geeinigt
 			server = new Socket(ip,port);
 			BufferedReader br = new BufferedReader(new InputStreamReader(server.getInputStream())); 
 			port = Integer.parseInt(br.readLine()); //der anzusprechende Port wird aus dem Stream gelesen und "port" aktualisiert
