@@ -27,16 +27,13 @@ public class ServerVerwaltung {
     private double dt;
 
     public ServerVerwaltung() {
-        for(GameManager i:spielerListe){
-            i = new GameManager();
-            i.setpSelf(new Player());
-            System.out.println(i);
-        }
+
         spielerListe = new GameManager[3];
         spielerListe[0] =  new GameManager();
         spielerListe[0].setpSelf(new Player());
         spielerListe[1] =  new GameManager();
         spielerListe[1].setpSelf(new Player());
+        spielerListe[1].getpSelf().getHb().getPos().setXPos(800);
         spielerListe[2] =  new GameManager();
         spielerListe[2].setpSelf(new Player());
 
@@ -234,45 +231,11 @@ public class ServerVerwaltung {
         clu.setCharakter(2);
     }
 
-    /*
-     * Die Login Daten der anderen CLUs speichern um se dem Client zu übergeben
-     * @param clu Das CLU Objekt, das verändert werden soll
-     */
 
-    /*public void alleDatenSpeichern(cLoginUpdate clu){
-        if (clu.getUUID().equals(CLU0.getUUID())){
-            clu.setS1UUID(CLU1.getUUID());
-            clu.setS2UUID(CLU2.getUUID());
-            clu.setS1Charakter(CLU1.getCharakter());
-            clu.setS2Charakter(CLU2.getCharakter());
-            clu.setS1IstBoss(CLU1.getIstBoss());
-            clu.setS2Boss(CLU2.getIstBoss());
-        }
-        else if(clu.getUUID().equals(CLU1.getUUID())){
-            clu.setS1UUID(CLU0.getUUID());
-            clu.setS2UUID(CLU2.getUUID());
-            clu.setS1Charakter(CLU0.getCharakter());
-            clu.setS2Charakter(CLU2.getCharakter());
-            clu.setS1IstBoss(CLU0.getIstBoss());
-            clu.setS2Boss(CLU2.getIstBoss());
-        }
-        else if(clu.getUUID().equals(CLU2.getUUID())){
-            clu.setS1UUID(CLU0.getUUID());
-            clu.setS2UUID(CLU1.getUUID());
-            clu.setS1Charakter(CLU0.getCharakter());
-            clu.setS2Charakter(CLU1.getCharakter());
-            clu.setS1IstBoss(CLU0.getIstBoss());
-            clu.setS2Boss(CLU1.getIstBoss());
-        }
-
-    }*/
 
     public void loginFertig(){				//Login Phase ist abgeschlossen, Spiel kkann gestartet werden
         //double aktZeit=System.currentTimeMillis();
         String s="Alle Spieler eingeloggt! Start in 5s!";
-      /*for (int l=0; l<spielerListe.length; l++ ){
-      spielerListe[l].zeigen(s);
-      }*/
         CLU0.setSpielStart(true);
         CLU1.setSpielStart(true);
         CLU2.setSpielStart(true);

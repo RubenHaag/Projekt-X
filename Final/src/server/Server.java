@@ -119,6 +119,7 @@ public class Server extends Thread {
             byte[] sandData = serverVerwaltung.sGetUpdateC().toByteArray();
             DatagramPacket packet = new DatagramPacket(sandData, sandData.length, i.getIa(), 3555);
             sendSocket.send(packet);
+            System.out.println("gesendet");
         }
 	}
 

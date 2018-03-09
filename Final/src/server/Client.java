@@ -64,7 +64,7 @@ public class Client extends Thread{
 
 	public void run() {
 		try {
-			datagramSocketSend =new DatagramSocket();
+			datagramSocketSend = new DatagramSocket();
 		} catch (SocketException e1) {
 			e1.printStackTrace();
 		}

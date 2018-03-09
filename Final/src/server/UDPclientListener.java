@@ -23,7 +23,7 @@ public class UDPclientListener extends Thread {
 	  public void run() {
 	    //Der thread horcht die ganze zeit ob vom Client ein Packet gesendet wurde
 	    try {
-	      client = new DatagramSocket(port);
+	      client = new DatagramSocket(3555);
 	      while(true) {
 	        System.out.println("Test");
 	        packet = new DatagramPacket( new byte[1024], 1024 );
