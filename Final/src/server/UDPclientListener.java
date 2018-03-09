@@ -24,9 +24,7 @@ public class UDPclientListener extends Thread {
 	    //Der thread horcht die ganze zeit ob vom Client ein Packet gesendet wurde
 	    try {
 	      client = new DatagramSocket(3555);
-            System.out.println("Ich bin jetzt in der while true schleife");
 	      while(true) {
-	        System.out.println("Test");
 	        packet = new DatagramPacket( new byte[1024], 1024 );
 	        client.receive( packet ); //<-- der Grund f�r den Thread: falls kein Packet ankommt, wartet .recieve() unendlich lange auf Packete
             update.fromByteArray(packet.getData());
