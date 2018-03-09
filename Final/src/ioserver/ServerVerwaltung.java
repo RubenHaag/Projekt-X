@@ -115,8 +115,8 @@ public class ServerVerwaltung {
      * @return NumberID int um Spieler leichter zu identifizieren
      */
     private int sGetNumberID(UUID id) {
-        int x = 5;//absichtlich falscher Int
-        for (int i = 0; i <= spielerListe.length; i++) {
+        int x = 0;//absichtlich falscher Int
+        for (int i = 0; i < spielerListe.length; i++) {
             GameManager local = spielerListe[i];
             if (local.cGetUUID() == id) {
                 return local.cGetNumberID();
@@ -402,5 +402,13 @@ public class ServerVerwaltung {
 
     public void setCLU2(cLoginUpdate CLU2) {
         this.CLU2 = CLU2;
+    }
+
+    public GameManager[] getSpielerListe() {
+        return spielerListe;
+    }
+
+    public void setSpielerListe(GameManager[] spielerListe) {
+        this.spielerListe = spielerListe;
     }
 }

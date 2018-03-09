@@ -112,7 +112,7 @@ public class Server extends Thread {
 	 * An jeden Client werden die packets mit Updates vom laufenden Spiel gesendet.
 	 */
 	private void send() throws IOException {
-	    System.out.println("P1:  "+ serverVerwaltung.sUpdate.getP1().getGr().getPos().getXPos()+ "\t"+ serverVerwaltung.sUpdate.getP1().getGr().getPos().getYPos());
+	    System.out.println("P1:  "+ serverVerwaltung.getSpielerListe()[0].getpSelf().getHb().getPos().getXPos()+ "\t"+ serverVerwaltung.getSpielerListe()[0].getpSelf().getHb().getPos().getYPos());
         System.out.println("P2:  "+ serverVerwaltung.sUpdate.getP2().getGr().getPos().getXPos()+ "\t"+ serverVerwaltung.sUpdate.getP2().getGr().getPos().getYPos());
         System.out.println("P3:  "+ serverVerwaltung.sUpdate.getP3().getGr().getPos().getXPos()+ "\t"+ serverVerwaltung.sUpdate.getP3().getGr().getPos().getYPos());
         for (ClientData i : clientDatas) {

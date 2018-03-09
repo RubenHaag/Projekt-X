@@ -65,6 +65,7 @@ public class Player {
         DataInputStream in = new DataInputStream(bais);
         hb.getPos().setXPos(in.readInt());
         hb.getPos().setYPos(in.readInt());
+        System.out.println("x:"+ hb.getPos().getXPos()+"\ty:"+hb.getPos().getYPos());
         jumpPower = in.readInt();
         isJumping = in.readBoolean();
         isLookingRight = in.readBoolean();

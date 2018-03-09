@@ -35,7 +35,6 @@ public class GamePanel extends JPanel {
         this.players = players;
         this.projectiles = projectiles;
         initGame();
-        //startGame();
     }
 
 
@@ -103,14 +102,14 @@ public class GamePanel extends JPanel {
         //TODO jetzt wird Tankdestroyed gentutztum zuerfahren wann das spiel endet sollte bei uns eine meldung der IOKontrole sein?
         //endGame()
 
-        repaint();
+        this.repaint();
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
+        System.out.println("Ich Painte jetzt");
         backgroundImage.paintIcon(null, g, 0, 0);
 
         g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 19));
