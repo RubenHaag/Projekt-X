@@ -56,7 +56,7 @@ public class Client extends Thread{
 			port = Integer.parseInt(br.readLine()); //der anzusprechende Port wird aus dem Stream gelesen und "port" aktualisiert
 			System.out.println(port);       
 			server.close();
-			this.run();
+			this.start();
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
