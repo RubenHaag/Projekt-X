@@ -12,7 +12,7 @@ public class Player extends GameObject {
      * Konstruktor
      * @param pos Position des Spielers
      * @param width Breite des Spielers
-     * @param height Höhe des Spielers
+     * @param height Hï¿½he des Spielers
      * @param isLookingRight Sieht der Spieler nach rechts?
      * @param name Name des Charakters
      * @param imageDir DateiPfad zur ImageDirectory
@@ -26,6 +26,7 @@ public class Player extends GameObject {
         updateMovementType(MovementType.IDLE, isLookingRight);
         updateAttackType(0);
         System.out.println("fertig");
+        isRendered = true;
     }
 
     public void takeDamage(){
@@ -61,7 +62,7 @@ public class Player extends GameObject {
 
     /**
      * Updated den Attacktyp
-     * @param attackInt Integer für den AttackType
+     * @param attackInt Integer fï¿½r den AttackType
      */
     public void updateAttackType(int attackInt) {
         switch(attackInt) {
