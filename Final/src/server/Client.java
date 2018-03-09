@@ -95,8 +95,11 @@ public class Client extends Thread{
 	 *  Das passiert über den datagramSocketSend und das „DatagramPacket“.
 	 */
 	private void send() throws IOException {
-		System.out.println(12345);
-		byte[] sandData = gameManager.cGetUpdateS().toByteArray();
+		byte[] senden = gameManager.cGetUpdateS().toByteArray();
+		byte[] sandData = new byte[1024];
+		for(int i = 0; i<senden.length; i++){
+		    sandData[i] = senden[i];
+        }
 		System.out.println(sandData.length);
 		DatagramPacket packet = new DatagramPacket(sandData, sandData.length, ip, port);
 		datagramSocketSend.send(packet);

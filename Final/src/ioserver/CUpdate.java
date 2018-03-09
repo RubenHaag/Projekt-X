@@ -46,12 +46,12 @@ public class CUpdate {
         byte[] att = amAllg.toByteArray();
         byte[] pl = playerIO.toByteArray();
 
-        out.writeUTF(id.toString());
-        out.write(att.length);
+
+        out.writeInt(att.length);
         System.out.println("Läange0 = " + att.length );
         out.write(att);
-        out.write(playerIO.toByteArray());
-
+        out.write(pl);
+        out.writeUTF(id.toString());
         byte[] data = baos.toByteArray();
         return data;
     }
@@ -61,7 +61,7 @@ public class CUpdate {
         ByteArrayInputStream bais = new ByteArrayInputStream(data);
         DataInputStream in = new DataInputStream(bais);
 
-        id = UUID.fromString(in.readUTF());
+
 
         length = in.readInt();
         buffer = new byte[length];
@@ -73,5 +73,6 @@ public class CUpdate {
         buffer = new  byte[length];
         in.readNBytes(buffer, 0, length);
         playerIO.fromByteArray(buffer);
+        id = UUID.fromString(in.readUTF());
     }
 }

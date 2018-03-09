@@ -23,6 +23,7 @@ public class Attack {
         out.write(damageBox.getPos().getYPos());
         out.write(damageBox.getWidth());
         out.write(damageBox.getHeigth());
+
         out.writeDouble(damage);
         out.writeDouble(cost);
         out.writeDouble(cooldownZeit);
@@ -37,6 +38,7 @@ public class Attack {
         damageBox.getPos().setYPos(in.readInt());
         damageBox.setWidth(in.readInt());
         damageBox.setHeigth(in.readInt());
+
         damage = in.readDouble();
         cost = in.readDouble();
         cooldownZeit = in.readDouble();
