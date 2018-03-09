@@ -19,10 +19,10 @@ public class Attack {
     public byte[] toByteArray()throws IOException{
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream out = new DataOutputStream(baos);
-        out.write(damageBox.getPos().getXPos());
-        out.write(damageBox.getPos().getYPos());
-        out.write(damageBox.getWidth());
-        out.write(damageBox.getHeigth());
+        out.writeInt(damageBox.getPos().getXPos());
+        out.writeInt(damageBox.getPos().getYPos());
+        out.writeInt(damageBox.getWidth());
+        out.writeInt(damageBox.getHeigth());
 
         out.writeDouble(damage);
         out.writeDouble(cost);

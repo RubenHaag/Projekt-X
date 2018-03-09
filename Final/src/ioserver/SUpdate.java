@@ -19,15 +19,15 @@ public class SUpdate {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream out = new DataOutputStream(baos);
         buffer = p1.toByteArray();
-        out.write(buffer.length);
+        out.writeInt(buffer.length);
         out.write(buffer);
 
         buffer = p2.toByteArray();
-        out.write(buffer.length);
+        out.writeInt(buffer.length);
         out.write(buffer);
 
         buffer = p3.toByteArray();
-        out.write(buffer.length);
+        out.writeInt(buffer.length);
         out.write(buffer);
 
         out.writeBoolean(bosswin);
