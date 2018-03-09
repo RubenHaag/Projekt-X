@@ -50,6 +50,7 @@ public class CUpdate {
         out.writeInt(att.length);
         System.out.println("Läange0 = " + att.length );
         out.write(att);
+        out.writeInt(pl.length);
         out.write(pl);
         out.writeUTF(id.toString());
         byte[] data = baos.toByteArray();
@@ -66,12 +67,13 @@ public class CUpdate {
         length = in.readInt();
         buffer = new byte[length];
         System.out.println("Länge: "+ length);
-        in.readNBytes(buffer, 0, length);
+        in.read(buffer, 0, length);
         amAllg.fromByteArray(buffer);
 
         length = in.readInt();
+        System.out.println("Länge1: "+ length);
         buffer = new  byte[length];
-        in.readNBytes(buffer, 0, length);
+        in.read(buffer, 0, length);
         playerIO.fromByteArray(buffer);
         id = UUID.fromString(in.readUTF());
     }

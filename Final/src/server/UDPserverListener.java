@@ -1,7 +1,6 @@
 
 package server;
-import ioserver.CUpdate;
-import ioserver.ServerVerwaltung;
+import ioserver.*;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -19,7 +18,7 @@ public class UDPserverListener extends Thread{
   
   public UDPserverListener(int port, ServerVerwaltung serverVerwaltung) {
     this.port = port;
-    cupdate = new CUpdate(null, null, null);
+    cupdate = new CUpdate(null,  new Attack(new Rectangle(new Position(0,0), 10, 10), 0, 0, 0), new Player());
     this.serverVerwaltung = serverVerwaltung;
   }
   public void run() {

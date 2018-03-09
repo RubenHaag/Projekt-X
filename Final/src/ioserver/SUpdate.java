@@ -45,17 +45,17 @@ public class SUpdate {
 
         length = in.readInt();
         buffer = new byte[length];
-        in.readNBytes(buffer, 0, length);
+        in.read(buffer, 0, length);
         p1.fromByteArray(buffer);
 
         length = in.readInt();
         buffer = new byte[length];
-        in.readNBytes(buffer, 0, length);
+        in.read(buffer, 0, length);
         p2.fromByteArray(buffer);
 
         length = in.readInt();
         buffer = new byte[length];
-        in.readNBytes(buffer, 0, length);
+        in.read(buffer, 0, length);
         p3.fromByteArray(buffer);
 
         bosswin = in.readBoolean();

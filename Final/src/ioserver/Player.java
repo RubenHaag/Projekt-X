@@ -51,8 +51,8 @@ public class Player {
     public byte[] toByteArray() throws IOException{
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream out = new DataOutputStream(baos);
-        out.write(hb.getPos().getXPos());
-        out.write(hb.getPos().getYPos());
+        out.writeInt(hb.getPos().getXPos());
+        out.writeInt(hb.getPos().getYPos());
         out.writeInt(jumpPower);
         out.writeBoolean(isJumping);
         out.writeBoolean(isLookingRight);

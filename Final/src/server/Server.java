@@ -22,7 +22,7 @@ import ioserver.*;
 public class Server extends Thread {
 
 	private ServerSocket connect;
-	private server.ClientData[] clientDatas = new ClientData[3];
+	private server.ClientData[] clientDatas = new ClientData[1];
 	//damit die while-schleife aus portsTauschen() nicht so kompliziert ist, erstelle ich ein Array zum speichern der CLientObjekte
 	private ArrayList<Integer> port = new ArrayList<Integer>();
 	private DatagramSocket sendSocket;
@@ -42,8 +42,8 @@ public class Server extends Thread {
 
 		//Intern Port festlegen, ein Port f�r jeden CLient
 		port.add(3556);
-		port.add(3557);
-		port.add(3558);
+		//port.add(3557);
+		//port.add(3558);
         this.serverVerwaltung = serverVerwaltung;
 		try {
 			connect = new ServerSocket(3555); //zu Anfang verbinden sich alle Clients mit diesem Socket
@@ -61,15 +61,15 @@ public class Server extends Thread {
 		System.out.println("Mit allen Clients verbunden\nThread wird gestartet");
 		//f�r jeden Client wird ein UDPserverListener gestartet
         System.out.println(clientDatas[0].getZugewiesenerPort());
-        System.out.println(clientDatas[1].getZugewiesenerPort());
-        System.out.println(clientDatas[2].getZugewiesenerPort());
+//        System.out.println(clientDatas[1].getZugewiesenerPort());
+//        System.out.println(clientDatas[2].getZugewiesenerPort());
 
         listener1 = new server.UDPserverListener(clientDatas[0].getZugewiesenerPort(), serverVerwaltung);
 		listener1.start();
-		listener2 = new UDPserverListener(clientDatas[1].getZugewiesenerPort(), serverVerwaltung);
-		listener2.start();
-		listener3 = new UDPserverListener(clientDatas[2].getZugewiesenerPort(), serverVerwaltung);
-		listener3.start();
+		//listener2 = new UDPserverListener(clientDatas[1].getZugewiesenerPort(), serverVerwaltung);
+		//listener2.start();
+		//listener3 = new UDPserverListener(clientDatas[2].getZugewiesenerPort(), serverVerwaltung);
+		//listener3.start();
 
 		while (true) {
 		    System.out.println("I am in the while true");
