@@ -109,7 +109,9 @@ public class GamePanel extends JPanel {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        System.out.println("Ich Painte jetzt");
+        for(Player i: players){
+            i.selfPaint(g);
+        }
         backgroundImage.paintIcon(null, g, 0, 0);
 
         g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 19));

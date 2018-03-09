@@ -82,15 +82,14 @@ public class Player extends GameObject {
 
     @Override
     public void selfPaint(Graphics g) {
-        if (isRendered) {
-            Graphics2D g2d = (Graphics2D) g;
+        Graphics2D g2d = (Graphics2D) g;
+        System.out.println("Ich Painte jetzt");
+        if (isLookingRight()) {
+            g2d.drawImage(animation.getImage(), pos.getYPos(), pos.getYPos(), getWidth(), getHeight(), null);
+        } else {
+            g2d.drawImage(animation.getImage(), pos.getYPos(), pos.getYPos(), -getWidth(), getHeight(), null);
 
-            if (isLookingRight()) {
-                g2d.drawImage(animation.getImage(), pos.getYPos(), pos.getYPos(), getWidth(), getHeight(), null);
-            } else {
-                g2d.drawImage(animation.getImage(), pos.getYPos(), pos.getYPos(), -getWidth(), getHeight(), null);
-
-            }
         }
+
     }
 }
