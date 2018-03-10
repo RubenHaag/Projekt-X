@@ -6,6 +6,8 @@
     <file url="file://$PROJECT_DIR$/src/clientserver/UDPserverListener.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/clientserver/cLoginUpdate.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/grafik/Game.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/grafik/GameObject.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/grafik/GameWindow.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/grafik/Player.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/ioserver/Attack.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/ioserver/cLoginUpdate.java" charset="UTF-16" />

@@ -14,15 +14,15 @@ import ioserver.*;
 
 /**
  * @author Moritz Oskar 
- * @version 2.5 
- * Die Klasse "server" regelt server-seitig die Art der Verbindung. F�r eine Verbindung werden sowohl das UDP als auch das TCP portocol ben�tigt.
- * Hier werden das UDP und das TCP protcol zusammengef�hrt.
+ * @version 2.5
+ * Die Klasse "server" regelt server-seitig die Art der Verbindung. Für eine Verbindung werden sowohl das UDP als auch das TCP portocol benötigt.
+ * Hier werden das UDP und das TCP protcol zusammengeführt.
  * 
  */
 public class Server extends Thread {
 
 	private ServerSocket connect;
-	private server.ClientData[] clientDatas = new ClientData[1];
+	private server.ClientData[] clientDatas = new ClientData[3];
 	//damit die while-schleife aus portsTauschen() nicht so kompliziert ist, erstelle ich ein Array zum speichern der CLientObjekte
 	private ArrayList<Integer> port = new ArrayList<Integer>();
 	private DatagramSocket sendSocket;
@@ -33,21 +33,24 @@ public class Server extends Thread {
 	private ServerVerwaltung serverVerwaltung;
 
 	/**
-	 * Dies ist der Konstruktor f�r die Klasse "server". Hier wird die TCP Verbindung zu den drei clients aufgebaut und die UDP Verbindung vorbereitet.
-	 */
+	 * Dies ist der Konstruktor für die Klasse server. Hier wird die TCP Verbindung zu den drei clients aufgebaut und die UDP Verbindung vorbereitet.
+     * @param login1 Das is das erste cLoginUpdate Objekte was versendet werden soll
+     * @param login2 Das is das zweite cLoginUpdate Objekte was versendet werden soll
+     * @param login3 Das is das dritte cLoginUpdate Objekte was versendet werden soll
+     * @param serverVerwaltung Die ServerVerwaltung, die geändert werden soll
+     */
 	public Server(cLoginUpdate login1, cLoginUpdate login2, cLoginUpdate login3, ServerVerwaltung serverVerwaltung) {
 		CLUs.add(login1);
 		CLUs.add(login2);
 		CLUs.add(login3);
 
-		//Intern Port festlegen, ein Port f�r jeden CLient
+        //Intern Port festlegen, ein Port für jeden CLient
 		port.add(3556);
-		//port.add(3557);
-		//port.add(3558);
+		port.add(3557);
+		port.add(3558);
         this.serverVerwaltung = serverVerwaltung;
 		try {
 			connect = new ServerSocket(3555); //zu Anfang verbinden sich alle Clients mit diesem Socket
-			//shareClientLogin();
 			portsTauschen();
 			sendSocket = new DatagramSocket();
 			this.run(); //sobald alle freien Ports an verschiedene CLients vergeben wurden, startet die UDP Daten�bertragung
@@ -59,17 +62,16 @@ public class Server extends Thread {
 
 	public void run() {
 		System.out.println("Mit allen Clients verbunden\nThread wird gestartet");
-		//f�r jeden Client wird ein UDPserverListener gestartet
+		//für jeden Client wird ein UDPserverListener gestartet
         System.out.println(clientDatas[0].getZugewiesenerPort());
-//        System.out.println(clientDatas[1].getZugewiesenerPort());
-//        System.out.println(clientDatas[2].getZugewiesenerPort());
+
 
         listener1 = new server.UDPserverListener(clientDatas[0].getZugewiesenerPort(), serverVerwaltung);
 		listener1.start();
-		//listener2 = new UDPserverListener(clientDatas[1].getZugewiesenerPort(), serverVerwaltung);
-		//listener2.start();
-		//listener3 = new UDPserverListener(clientDatas[2].getZugewiesenerPort(), serverVerwaltung);
-		//listener3.start();
+		listener2 = new UDPserverListener(clientDatas[1].getZugewiesenerPort(), serverVerwaltung);
+		listener2.start();
+		listener3 = new UDPserverListener(clientDatas[2].getZugewiesenerPort(), serverVerwaltung);
+		listener3.start();
 
 		while (true) {
 		    System.out.println("I am in the while true");
@@ -87,29 +89,13 @@ public class Server extends Thread {
 		}
 	}
 
-	/*private void shareClientLogin() throws IOException {
-		//in dieser Methode wird auf die cLoginUpdate objekte der drei CLients gewartet (TCP)
-        System.out.println("Test");
-		while (!CLUs.get(0).getSpielStart()) {
-
-		}
-		for (int i = 0; i < 3; i++) {
-			Socket client = connect.accept();
-			DataOutputStream dout = new DataOutputStream(client.getOutputStream());
-			byte[] data = CLUs.get(i).getbyte();
-			dout.write(data); //sendet sein CloginUpdate Objekt an den server
-			dout.close();
-			client.close();
-		}
-
-	}*/
 
 	/**
 	 * Die send()-Methode ist zum Senden der Spiel-Daten notwendig.
 	 * Mit dieser Methode werden die Spiel-Daten an alle Clients gesendet.
-	 * Das passiert �ber den datagramSocketSend und das �DatagramPacket�.
-	 * Jeder Client bekommt alle drei "cLoginUpdate-Objekte".
+     * Das passiert über den datagramSocketSend und das DatagramPacket.	 * Jeder Client bekommt alle drei "cLoginUpdate-Objekte".
 	 * An jeden Client werden die packets mit Updates vom laufenden Spiel gesendet.
+     * @throws IOException Wenn die Verbindung zum Client zustandekommt.
 	 */
 	private void send() throws IOException {
 	    System.out.println("P1:  "+ serverVerwaltung.getSpielerListe()[0].getpSelf().getHb().getPos().getXPos()+ "\t"+ serverVerwaltung.getSpielerListe()[0].getpSelf().getHb().getPos().getYPos());

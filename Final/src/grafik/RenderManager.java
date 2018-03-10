@@ -43,7 +43,7 @@ public class RenderManager {       // Hauptklasse in der grafik, managed wann wa
     /**
      * Main-Methode der grafik
      * Initialisiert das Fenster und s�mtliche anderen Attribute
-     * @param args
+     * @param args Die Übergebenen Argumente
      */
     public static void main(String[] args) {
         frame = new GameWindow();
@@ -112,8 +112,9 @@ public class RenderManager {       // Hauptklasse in der grafik, managed wann wa
         }
         switch(s) {
             case GAME:
-                InputListenerIO listener = new InputListenerIO(gameManager);
+
                 initGame();
+                InputListenerIO listener = new InputListenerIO(gameManager);
                 p.add(game.getPanel());
                 p.validate();
                 frame.addKeyListener(listener);

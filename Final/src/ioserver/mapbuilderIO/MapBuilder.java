@@ -68,10 +68,11 @@ public class MapBuilder {
     }
 
     /**
-     *
-     * @param bim
-     * @param farbe
-     * @return
+     * Diese Methode durchsucht ein Bild nach einer bestimmten Farbe und gibt diese zweidimensionalen als Boolean Array
+     * zurück (true, wenn die im jeweiligen  Pixel schwarz sind, false, wenn nicht).
+     * @param bim Das auszulesende Bufferd Image
+     * @param farbe Die Farbe die ausgelesen werden soll.
+     * @return Einen zeidimensionalen Array mit der Größe des Bildes (true, wenn die im jeweiligen  Pixel schwarz sind, false, wenn nicht).
      */
     private static boolean[][] bildZuFarbe(BufferedImage bim, int farbe){
         boolean[][] istFarbe = new boolean[bim.getWidth()][bim.getHeight()];

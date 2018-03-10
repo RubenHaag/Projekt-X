@@ -110,7 +110,7 @@ public class GamePanel extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        backgroundImage.paintIcon(null, g, 0, 0);
+        backgroundImage.paintIcon(null, g2d, 0, 0);
 
         g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 19));
         g.setColor(Color.BLUE);
@@ -120,10 +120,11 @@ public class GamePanel extends JPanel {
             g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 50));
             g.setColor(Color.RED);
             g.drawString("GAME OVER!", prefSize.width / 2 - 130, prefSize.height / 5);
+            for(Player i: players){
+                i.selfPaint(g);
+            }
         }
-        for(Player i: players){
-            i.selfPaint(g);
-        }
+
     }
 
 }

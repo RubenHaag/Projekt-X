@@ -14,11 +14,15 @@ public class ClientData {
     this.setIa(ia);
     this.setZugewiesenerPort(zugewiesenerPort);
   }
-  
-  
+
+  /**
+   * gibt den zugewiesenen Port zurück
+   * @return der zugewiesene Port
+   */
   public int getZugewiesenerPort() {
     return zugewiesenerPort;
   }
+
   public void setZugewiesenerPort(int zugewiesenerPort) {
     this.zugewiesenerPort = zugewiesenerPort;
   }

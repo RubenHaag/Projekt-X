@@ -64,7 +64,7 @@ public class ServerVerwaltung {
      * zurückgesetzt. Anschließend werden die getroffenen Spieler ermittelt, ihnen wird Leben
      * abgezogen und falls einer der Spieler tot ist, wird auch dies in den Boolean isDead gesichert
      * und gegebenenfalls wird das Spiel beendet indem der boolean endGame auf true gesetzt wird.
-     * Außerdem wird bei einem Tod ein Todeszähler (deathcounter) hochgesetzt und wenn deathcounter > 1 oder ein
+     * Außerdem wird bei einem Tod ein Todeszähler (deathcounter) hochgesetzt und wenn deathcounter größer 1 oder ein
      * Boss ist, entschieden, wer das Spiel gewonnen hat. Hierzu wird bosswin entweder auf true oder false gesetzt.
      *
      * @param id UUID zur eindeutigen Identifikation des schlagenden Spielers
@@ -153,8 +153,7 @@ public class ServerVerwaltung {
 
     /**
      *
-     * @param @param clu Das clu Objekt, das grade bearbeitet wird
-     * @return
+     * @param clu Das clu Objekt, das grade bearbeitet wird
      */
     public void sLogin(cLoginUpdate clu){
         double z=Math.random();
@@ -200,8 +199,8 @@ public class ServerVerwaltung {
 
     /**
      *  spielerIstBoss,spielerIst1,spielerIst2 werden beim Login aufgerufen,
-     *  getrennt fÃ¼r bessere Ãœbersichtlichkeit
-     * @param @param clu Das clu Objekt, das grade bearbeitet wird
+     *  getrennt für bessere Übersichtlichkeit
+     * @param clu Das clu Objekt, das grade bearbeitet wird
      */
     private void spielerIstBoss(cLoginUpdate clu){
         spielerListe[0]=new GameManager();

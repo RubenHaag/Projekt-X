@@ -17,8 +17,9 @@ public class cLoginUpdate {
   /**
    * @author Oskar Moritz
    * Die Methode "getbyte" erstellt aus allen Attributen der Klasse "cLoginUpdate" einen Byte Array.
-   * Diese Methode wird f�r das Versenden eines "cLoginUpdate-Objekts" verwendet.
-   * @return data ist der erstellte Byte Array. Er enth�lt alle Attribute der Klasse.
+   * Diese Methode wird für das Versenden eines "cLoginUpdate-Objekts" verwendet.
+   * @return data ist der erstellte Byte Array. Er enthählt alle Attribute der Klasse.
+   * @throws IOException Wenn der DataOutputStream nicht richtig kreiert wird.
    */
   public byte[] getbyte() throws IOException {
       ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -37,7 +38,8 @@ public class cLoginUpdate {
    * @author Oskar Moritz
    * Die Methode "awaybyte" wandelt einen Byte Array in die Attribute der Klasse um.
    * Diese Methode wird zum Umwandeln von empfangenen Daten verwendet.
-   * @param data ist ein Byte Array. 
+   * @param data ist ein Byte Array.
+   * @throws IOException Wenn der DataInputStream nicht richtig kreiert wird.
    */
     public void awaybyte(byte[] data) throws IOException {
       ByteArrayInputStream bais = new ByteArrayInputStream(data);

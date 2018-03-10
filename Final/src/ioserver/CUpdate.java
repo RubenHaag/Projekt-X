@@ -9,6 +9,7 @@ public class CUpdate {
     private  Attack amAllg;
     private Player playerIO;
 
+
     public CUpdate(UUID id, Attack amAllg, Player playerIO) {
         this.id = UUID.randomUUID();
         this.amAllg = amAllg;
@@ -43,12 +44,14 @@ public class CUpdate {
     public byte[] toByteArray() throws IOException{
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream out = new DataOutputStream(baos);
+
+        //Erstellt zwei neue Byte Arrays
         byte[] att = amAllg.toByteArray();
         byte[] pl = playerIO.toByteArray();
 
-
+        //Um später die länge des später auszulesenden Arrays zu speichern
         out.writeInt(att.length);
-        System.out.println("Läange0 = " + att.length );
+        //Schreibt die Attacke
         out.write(att);
         out.writeInt(pl.length);
         out.write(pl);
@@ -59,21 +62,25 @@ public class CUpdate {
     public void fromByteArray(byte[] data) throws IOException {
         int length;
         byte[] buffer;
+
+        //Erschaffe einen Datainputstream um aus diesem Später ein Byte Array zu machen
         ByteArrayInputStream bais = new ByteArrayInputStream(data);
         DataInputStream in = new DataInputStream(bais);
 
 
-
+        //Lese die Übergebene Attacke aus
         length = in.readInt();
         buffer = new byte[length];
         System.out.println("Länge: "+ length);
         in.read(buffer, 0, length);
         amAllg.fromByteArray(buffer);
 
+        //Lese den zu übergebenen Spieler aus dem Buffer(Siehe ioserver.player)
         length = in.readInt();
-        System.out.println("Länge1: "+ length);
         buffer = new  byte[length];
         in.read(buffer, 0, length);
+
+        //Ändert die Parameter im Spieler entsprchend den gegebenheiten
         playerIO.fromByteArray(buffer);
         id = UUID.fromString(in.readUTF());
     }

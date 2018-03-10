@@ -117,8 +117,8 @@ public class LoginMenue {
   }
   
   /**
-   * Gibt das Panel, auf welchem gezeichnet wird, zur�ck
-   * @return
+   * Gibt das Panel, auf welchem gezeichnet wird, zurück
+   * @return Das Pannel, auf dem das Menü gezeichnet wird.
    */
   public JPanel getPanel() {
     return mp;

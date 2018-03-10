@@ -25,8 +25,9 @@ public class PlayerAnimation extends Thread {
      * Konstruktor
      *
      * @param playerName Name des Spielers f�r welchen die Animationen sind
+     * @param imageDir Der Dateipfad zu den Bilddateien des Spiels
      */
-    PlayerAnimation(String playerName, String imageDir) throws IOException {
+    PlayerAnimation(String playerName, String imageDir){
         name = playerName;
         animZaehler = 0;
         imageZaehler = 1;
@@ -36,12 +37,10 @@ public class PlayerAnimation extends Thread {
 
     /**
      * Initialisiert die Animationen.
-     * L�dt alle Bilder in den Speicher
+     * Lädt alle Bilder in den Speicher
      *
-     * @throws IOException
+     * @throws IOException Wenn die geladenen Bilder nicht vorhanden sind.
      */
-
-
     public void initPlayerAnimations() throws IOException {
         for (int i = 1; i < 6; i++) {
             System.out.println(path + name + "/" + name + "_laufen(" + i + ").png");

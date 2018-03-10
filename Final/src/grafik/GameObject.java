@@ -28,7 +28,7 @@ public abstract class GameObject {
 
     /**
      * Abstrakte Methode die in jedem Sohn überschrieben werden muss. Die Methode wird aufgerufen um den Sohn zu zeichnen
-     * @param g
+     * @param g Das Grafics-Objekt von dem Gemalt werden soll.
      */
     public abstract void selfPaint(Graphics g);
 

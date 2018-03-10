@@ -15,7 +15,7 @@ public class GameWindow extends JFrame {
 	 */
     public GameWindow() {
         this.registerWindowListener();
-        this.createTopMenu();
+        //this.createTopMenu();
 
         this.setTitle("Battle of the Olymp");
         this.setLocation(10, 10);
@@ -27,7 +27,7 @@ public class GameWindow extends JFrame {
     /**
      * Erstellt das Menü-Leiste im GameWindow
      */
-    private void createTopMenu() {
+    /*private void createTopMenu() {
         JMenuBar topMenu = new JMenuBar();
         this.setJMenuBar(topMenu);
 
@@ -41,7 +41,7 @@ public class GameWindow extends JFrame {
 
         addFileMenuItems(fileMenu);
         addGameMenuItems(gameMenu);
-    }
+    }*/
 
     /**
      * Fügt die einzelnen Auswahlmöglichkeiten in das File-Menü der Menü-Leiste hinzu

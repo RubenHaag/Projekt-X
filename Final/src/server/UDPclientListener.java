@@ -6,7 +6,12 @@ import ioserver.SUpdate;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-
+/**
+ * @author Moritz Oskar
+ * @version 2.5
+ * Die Klasse "UDPclientListener" hört ob Daten vom Server angekommen sind. Empfängt die Daten vom Server. (client-seitig)
+ *
+ */
 public class UDPclientListener extends Thread {
 	private DatagramPacket packet;
 	private DatagramSocket client;

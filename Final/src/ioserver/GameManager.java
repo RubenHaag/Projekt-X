@@ -31,7 +31,6 @@ public class GameManager {
     private List<Rectangle> hbListe;
     private ServerVerwaltung server;
     private Partikel pa = new Partikel(pSelf.getHb().getPos(), pSelf.getHb().getWidth());
-    //private cLoginUpdate ownCLU;
     private int charakter;
     private Settings settings;
 
@@ -105,23 +104,25 @@ public class GameManager {
      */
     public void inputKey(KeyEvent e) {
         if (!pSelf.isDead()) { //If-Abfrage: verhindert weitere Eingabe nach dem Tod des Spielers
-            switch (settings.getMovement(e.getKeyChar())) {
-                case JUMP:
+            switch (e.getKeyChar()) {
+                case ' ':
                     cJumpSelf();
                     break;
 
-                case LEFT:
+                case 'd':
                     pSelf.setLookingRight(false);
                     pSelf.setSprinting(false);
                     cMoveSelf();
                     break;
 
 
-                case RIGHT:
+                case 'a':
                     pSelf.setLookingRight(true);
                     pSelf.setSprinting(false);
                     cMoveSelf();
                     break;
+                 default:
+                     System.out.println("Diese Taste (" + e.getKeyChar()+ ") ist nicht relevant!");
             }
         }
     }
@@ -130,6 +131,7 @@ public class GameManager {
      * Diese Methode wird vom InputListenerIO aufgerufen, wenn ein Mausklick registriert wurde.
      * Sie loest die Methode attack() aus, wenn die linke Maustaste gedrueckt wurde, wertet also den Mausinput aus
      * Ausserdem gibt es eine If-Abfrage die eine weitere Eingabe nach dem Tod des Spielers verhindert
+     * @param m Das MouseEvent auf das die Mathode angewendet werden soll.
      */
     public void inputMouse(MouseEvent m) {
         if (m.getButton() == 1 && !pSelf.isDead()) { //If-Abfrage: verhindert weitere Eingabe nach dem Tod des Spielers
@@ -204,8 +206,10 @@ public class GameManager {
     }
 
     /**
-     * Uebergibt der grafik, dass Schaden an einen Spieler ausgef�hrt wurde
+     * Uebergibt der grafik, dass Schaden an einen Spieler ausgeführt wurde
+     * @param p Der geschlagene Spieler
      */
+
     private void cHit(Player p) {
         //TODO an grafik senden
     }
@@ -342,7 +346,8 @@ public class GameManager {
     }
 
     /**
-     *
+     * Ein Getter für das CUpdate Objekt
+     * @return Das CUpdate Objekt des GameManagers
      */
     public CUpdate cGetUpdateS() {
         CUpdate r = new CUpdate(id, amAllg, pSelf);
@@ -351,6 +356,10 @@ public class GameManager {
 
     }
 
+    /**
+     * Eine Methode um die im, vom Server Empfangenen SUpdate Objekt enthaltenen Daten auszulesen
+     * @param update Das zu setzende Update
+     */
     public void cSetUpdateS(SUpdate update) {
         endGame = update.isEndGame();
         bosswin = update.isBosswin();
@@ -430,6 +439,7 @@ public class GameManager {
 
     /**
      * Setzt den/die Character der Spieler
+     * @param charakter Der zu setzende Charackter
      */
     public void cSetCharakter(int charakter) {
         this.charakter = charakter;
@@ -451,27 +461,18 @@ public class GameManager {
 
     }
 
-
-    /**
-     * Fuehrt die sLogin(GameManager) beim server auf, um eine Verbindung aufzubauen.
-     */
-    
-    /*public void cLogin() { //�bergabe der ServerID!!!
-        id = UUID.randomUUID();
-        server.sLogin(this);
-    }*/
-
     /**
      * Einer der Spieler hat sich ausgeloggt oder das Spiel ist zu Ende
      * Der Spieler kehrt zum Hauptbildschirm zurück
+     * @param s Den String, den der Render Manager bestimmen soll.
      */
-
     public void logout(String s) {
         RenderManager.changeState(State.HAUPTMENUE);
         zeigen(s);
     }
 
     /**
+     * Diese Methode zeigt einen String an.
      * @param s String der auf dem Bildschirm angezeigt wird, um dem Spieler zu erklären was passiert ist
      *          zum Beispiel welcher Spieler sich ausgeloggt hat oder wer gewonnen hat
      */
@@ -520,90 +521,9 @@ public class GameManager {
     }
 
     /**
-     * Fuehrt die sLogin(GameManager) beim server auf, um eine Verbindung aufzubauen.
+     * Eine setter Methode für den Spielr auf diesem CLient
+     * @param pSelf Der zu setzende Spieler
      */
-    /*public void cLogin() { //�bergabe der ServerID!!!
-        if (id==null){
-            this.id = UUID.randomUUID();
-            ownCLU.setUUID(id);
-        }
-        else if(id==CLU0.getUUID()){
-            ownCLU=CLU0;
-        }
-        else if(id==CLU1.getUUID()){
-            ownCLU=CLU1;
-        }
-        else if(id==CLU2.getUUID()){
-            ownCLU=CLU2;
-        }
-        if (ownCLU.getMode()==1){
-            if (ownCLU.getSpielStart()){
-                this.spielstart();
-            }
-            else{
-
-                if(ownCLU.getIstBoss()){
-                    this.auswahlBoss(ownCLU);
-                }
-                else{
-                    this.auswahlSpieler(ownCLU);
-                }
-            }
-        }
-        else{
-        }
-    }*/
-
-
-
-    /**
-     * Der Spieler ist ein normaler Spieler,
-     * es wird die Charakterauswahl für Spielercharaktere geöffnet
-     */
-    public void auswahlSpieler(cLoginUpdate ownCLU){
-        //ownCLU.setCharakter=(Spielerauswahl fÃ¼r Spieler oeffnen)/rückgabewert von grafik, sonst standardauswahl;
-        ownCLU.setMode(2);
-    }
-
-    /**
-     * Der Spieler ist der Boss Player
-     * es wird die Charakterauswahl für den Bosscharakter geöffnen
-     */
-    public void auswahlBoss(cLoginUpdate ownCLU){
-        //ownCLU.setCharakter=(Spielerauswahl fÃ¼r Boss oeffnen)/rückgabewert von grafik sonst standartauswahl
-        ownCLU.setMode(2);
-    }
-
-    public Partikel getPartikel() {
-        return pa;
-    }
-
-    public void setPartikel(Partikel pa) {
-        this.pa = pa;
-    }
-
-    /*public cLoginUpdate getOwnCLU() {
-        return ownCLU;
-    }
-
-    /*public void setOwnCLU(cLoginUpdate ownCLU) {
-        this.ownCLU = ownCLU;
-        if (ownCLU.getMode()==1){
-            if (ownCLU.getSpielStart()){
-                this.spielstart();
-            }
-            else{
-
-                if(ownCLU.getIstBoss()){
-                    this.auswahlBoss(ownCLU);
-                }
-                else{
-                    this.auswahlSpieler(ownCLU);
-                }
-            }
-        }
-    }*/
-
     public void setpSelf(Player pSelf) {
         this.pSelf = pSelf;
     }

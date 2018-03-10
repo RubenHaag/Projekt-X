@@ -24,9 +24,9 @@ public class Projectile extends GameObject {
         Graphics2D g2d = (Graphics2D) g;
 
         if (isLookingRight()) {
-            g2d.drawImage(img, pos.getYPos(), pos.getYPos(), getWidth(), getHeight(), null);
+            g2d.drawImage(img, pos.getXPos(), pos.getYPos(), getWidth(), getHeight(), null);
         } else {
-            g2d.drawImage(img, pos.getYPos(), pos.getYPos(), -getWidth(), getHeight(), null);
+            g2d.drawImage(img, pos.getXPos(), pos.getYPos(), -getWidth(), getHeight(), null);
 
         }
     }

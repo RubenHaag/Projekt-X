@@ -43,6 +43,7 @@ public class Game {
      * @param x X-Position der oberen linken Ecke des Projektils
      * @param y Y-Position der oberen linken Ecke des Projektils
      * @param right Flugrichtung des Projektils, true = rechts
+     * @throws IOException Wenn die Bilddatei nicht vorhanden ist
      */
     public static void spawnProjectile(int x, int y, boolean right) throws IOException {
 
@@ -70,8 +71,10 @@ public class Game {
      * @param right Blickrichtung des Spielers
      * @param hp Lebenspunkte des Spielers als Prozent
      * @param mp Manapunkte des Spielers als Prozent
+     * @param player Der zu aktualisierende Spieler(aus der Grafik)
      */
     public static void updatePlayer(int player, int x, int y, MovementType mt, int at, boolean right, double hp, double mp){
+
         players[player].setPos(new Position(x, y));
         players[player].updateMovementType(mt, right);
         players[player].updateAttackType(at);
@@ -126,7 +129,9 @@ public class Game {
 
     /**
      * Getter für die X-Position
-     * @param player Der Spieler wessen X-Position gegeben werden soll
+     * @param player Der Spieler wessen X-Position gegeben werden soll;
+     * @return Die X-Position des Spielers.
+     *
      */
     public static int getPlayerXPos(int player) {
         return players[player].pos.getXPos();
@@ -135,17 +140,11 @@ public class Game {
 
     /**
      * Getter für die Y-Position
-     * @param player Der Spieler wessen Y-Position gegeben werden soll
+     * @param player Der Spieler wessen Y-Position gegeben werden soll.
+     * @return Die Y-Position des Spielers.
+     *
      */
     public static int getPlayerYPos(int player) {
         return players[player].pos.getYPos();
     }
-
-
-    //TODO Projectile hier implementieren
-    /*
-    public static void main(String[] args) {
-        new GameWindow();
-    }
-    */
 }

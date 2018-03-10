@@ -12,11 +12,11 @@ public class Player extends GameObject {
      * Konstruktor
      * @param pos Position des Spielers
      * @param width Breite des Spielers
-     * @param height H�he des Spielers
+     * @param height Höhe des Spielers
      * @param isLookingRight Sieht der Spieler nach rechts?
      * @param name Name des Charakters
      * @param imageDir DateiPfad zur ImageDirectory
-     * @throws IOException
+     * @throws IOException Wenn eins der zu ladenden Spielerbilder nicht vorhanden ist.
      */
     public Player(Position pos, int width, int height, boolean isLookingRight, String name, String imageDir) throws IOException {
         super(pos, width, height, isLookingRight);
@@ -84,11 +84,10 @@ public class Player extends GameObject {
     @Override
     public void selfPaint(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        System.out.println("Ich Painte jetzt");
         if (isLookingRight()) {
-            g2d.drawImage(animation.getImage(), pos.getYPos(), pos.getYPos(), getWidth(), getHeight(), null);
+            g2d.drawImage(animation.getImage(), pos.getXPos(), pos.getYPos(), getWidth(), getHeight(), null);
         } else {
-            g2d.drawImage(animation.getImage(), pos.getYPos(), pos.getYPos(), -getWidth(), getHeight(), null);
+            g2d.drawImage(animation.getImage(), pos.getXPos(), pos.getYPos(), -getWidth(), getHeight(), null);
 
         }
 

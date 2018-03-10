@@ -8,7 +8,13 @@ public class Rectangle {
 	private Position pos;
 	private int width;
 	private int heigth;
-	
+
+	/**
+	 * Ein Konstrukter um ein Objekt dieser Klasse zu erschaffen
+	 * @param pos Position des Rectangle Objekts
+	 * @param width Dies Breite des Rectangle Objekts
+	 * @param heigth Die Höhe des Rectangle Objekts
+	 */
 	public Rectangle(Position pos, int width, int heigth) {
 		this.pos = pos;
 		this.width = width;
@@ -53,9 +59,9 @@ public class Rectangle {
 		width =w;
 	}
 	/**
-	 *
-	 * @param rectangle
-	 * @return �berlappt die Hitbox des eigenen Rechtecks mit einer Hitbox-> true oder false
+	 * Diese Methode überprüft, ob das übergebene Rechteck mit der eigenen Hitbox überlappt
+	 * @param rectangle Das Rectangle Objekt, mit dem geprüft werden soll.
+	 * @return  true, wenn die Hitbox des eigenen Rechtecks mit einer Hitbox Überlappt
 	 */
 	public boolean intersect(Rectangle rectangle) {
         return !((this.getRight() <= rectangle.getLeft() || this.getLeft() >= rectangle.getRight()) && (this.getBottom() >= rectangle.getTop()));

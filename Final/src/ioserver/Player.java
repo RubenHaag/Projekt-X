@@ -48,10 +48,16 @@ public class Player {
         isLookingRight = p.isLookingRight();
         hb.setPos(p.getHb().getPos());
     }
+    /**
+     * @author Ruben Haag
+     * Diese Methode schreibt alle, für den Server wichtigen, Atrribute des Objects in fester Reihenfolge in einen ByteArray.
+     * @return Ein z.B. über einen Server sendbarer Byte-Array, der alle für den Server wichtigen Player Attribute schickt.
+     * @throws IOException Wenn es Probleme beim erstellen des Dataoutputstreams gibt.
+     */
     public byte[] toByteArray() throws IOException{
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream out = new DataOutputStream(baos);
-        System.out.println("x:"+ hb.getPos().getXPos()+ "\ty:"+ hb.getPos().getYPos());
+        //System.out.println("x:"+ hb.getPos().getXPos()+ "\ty:"+ hb.getPos().getYPos());
         out.writeInt(hb.getPos().getXPos());
         out.writeInt(hb.getPos().getYPos());
         out.writeInt(jumpPower);
@@ -61,12 +67,18 @@ public class Player {
         byte[] data = baos.toByteArray();
         return data;
     }
+
+    /**
+     * Diese Methode liest alle für den Server relevanten Parameter aus einem Byte-Array aus und Speichert sie in diesem Objekt.
+     * @param data Der Auszulesende Byte Array.
+     * @throws IOException Wenn der Datainputstream nicht
+     */
     public void fromByteArray(byte[] data) throws IOException{
         ByteArrayInputStream bais = new ByteArrayInputStream(data);
         DataInputStream in = new DataInputStream(bais);
         hb.getPos().setXPos(in.readInt());
         hb.getPos().setYPos(in.readInt());
-        System.out.println("x:"+ hb.getPos().getXPos()+"\ty:"+hb.getPos().getYPos());
+        //System.out.println("x:"+ hb.getPos().getXPos()+"\ty:"+hb.getPos().getYPos());
         jumpPower = in.readInt();
         isJumping = in.readBoolean();
         isLookingRight = in.readBoolean();
