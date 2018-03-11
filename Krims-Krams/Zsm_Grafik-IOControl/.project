@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>ZsMIO</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>src/.idea</name>
+			<type>2</type>
+			<location>C:/Users/Lukas Hofmann/Documents/Schule/IOControll/Projekt-X/Projekt-X/Zsm_Grafik-IOControl/src/IOServer/.idea</location>
+		</link>
+		<link>
+			<name>src/grafik/AttackType.java</name>
+			<type>1</type>
+			<location>C:/Users/Lukas Hofmann/Documents/Schule/IOControll/Projekt-X/Projekt-X/Zsm_Grafik-IOControl/src/Grafik/AttackType.java</location>
+		</link>
+		<link>
+			<name>src/grafik/Game.java</name>
+			<type>1</type>
+			<location>C:/Users/Lukas Hofmann/Documents/Schule/IOControll/Projekt-X/Projekt-X/Zsm_Grafik-IOControl/src/Grafik/Game.java</location>
+		</link>
+		<link>
+			<name>src/grafik/Lifebar.java</name>
+			<type>1</type>
+			<location>C:/Users/Lukas Hofmann/Documents/Schule/IOControll/Projekt-X/Projekt-X/Zsm_Grafik-IOControl/src/Grafik/Lifebar.java</location>
+		</link>
+		<link>
+			<name>src/grafik/LoginMenue.java</name>
+			<type>1</type>
+			<location>C:/Users/Lukas Hofmann/Documents/Schule/IOControll/Projekt-X/Projekt-X/Zsm_Grafik-IOControl/src/Grafik/LoginMenue.java</location>
+		</link>
+		<link>
+			<name>src/grafik/LoginTextfield.java</name>
+			<type>1</type>
+			<location>C:/Users/Lukas Hofmann/Documents/Schule/IOControll/Projekt-X/Projekt-X/Zsm_Grafik-IOControl/src/Grafik/LoginTextfield.java</location>
+		</link>
+		<link>
+			<name>src/grafik/Manabar.java</name>
+			<type>1</type>
+			<location>C:/Users/Lukas Hofmann/Documents/Schule/IOControll/Projekt-X/Projekt-X/Zsm_Grafik-IOControl/src/Grafik/Manabar.java</location>
+		</link>
+		<link>
+			<name>src/grafik/Menue.java</name>
+			<type>1</type>
+			<location>C:/Users/Lukas Hofmann/Documents/Schule/IOControll/Projekt-X/Projekt-X/Zsm_Grafik-IOControl/src/Grafik/Menue.java</location>
+		</link>
+		<link>
+			<name>src/grafik/MenueButton.java</name>
+			<type>1</type>
+			<location>C:/Users/Lukas Hofmann/Documents/Schule/IOControll/Projekt-X/Projekt-X/Zsm_Grafik-IOControl/src/Grafik/MenueButton.java</location>
+		</link>
+		<link>
+			<name>src/grafik/MovementType.java</name>
+			<type>1</type>
+			<location>C:/Users/Lukas Hofmann/Documents/Schule/IOControll/Projekt-X/Projekt-X/Zsm_Grafik-IOControl/src/Grafik/MovementType.java</location>
+		</link>
+		<link>
+			<name>src/grafik/Player.java</name>
+			<type>1</type>
+			<location>C:/Users/Lukas Hofmann/Documents/Schule/IOControll/Projekt-X/Projekt-X/Zsm_Grafik-IOControl/src/Grafik/Player.java</location>
+		</link>
+		<link>
+			<name>src/grafik/PlayerAnimation.java</name>
+			<type>1</type>
+			<location>C:/Users/Lukas Hofmann/Documents/Schule/IOControll/Projekt-X/Projekt-X/Zsm_Grafik-IOControl/src/Grafik/PlayerAnimation.java</location>
+		</link>
+		<link>
+			<name>src/grafik/PlayerAnzeige.java</name>
+			<type>1</type>
+			<location>C:/Users/Lukas Hofmann/Documents/Schule/IOControll/Projekt-X/Projekt-X/Zsm_Grafik-IOControl/src/Grafik/PlayerAnzeige.java</location>
+		</link>
+		<link>
+			<name>src/grafik/Projectile.java</name>
+			<type>1</type>
+			<location>C:/Users/Lukas Hofmann/Documents/Schule/IOControll/Projekt-X/Projekt-X/Zsm_Grafik-IOControl/src/Grafik/Projectile.java</location>
+		</link>
+		<link>
+			<name>src/grafik/RenderManager.java</name>
+			<type>1</type>
+			<location>C:/Users/Lukas Hofmann/Documents/Schule/IOControll/Projekt-X/Projekt-X/Zsm_Grafik-IOControl/src/Grafik/RenderManager.java</location>
+		</link>
+		<link>
+			<name>src/grafik/SettingsMenue.java</name>
+			<type>1</type>
+			<location>C:/Users/Lukas Hofmann/Documents/Schule/IOControll/Projekt-X/Projekt-X/Zsm_Grafik-IOControl/src/Grafik/SettingsMenue.java</location>
+		</link>
+		<link>
+			<name>src/grafik/SoundManager.java</name>
+			<type>1</type>
+			<location>C:/Users/Lukas Hofmann/Documents/Schule/IOControll/Projekt-X/Projekt-X/Zsm_Grafik-IOControl/src/Grafik/SoundManager.java</location>
+		</link>
+		<link>
+			<name>src/grafik/State.java</name>
+			<type>1</type>
+			<location>C:/Users/Lukas Hofmann/Documents/Schule/IOControll/Projekt-X/Projekt-X/Zsm_Grafik-IOControl/src/Grafik/State.java</location>
+		</link>
+		<link>
+			<name>src/ioserver/Attack.java</name>
+			<type>1</type>
+			<location>C:/Users/Lukas Hofmann/Documents/Schule/IOControll/Projekt-X/Projekt-X/Zsm_Grafik-IOControl/src/IOServer/Attack.java</location>
+		</link>
+		<link>
+			<name>src/ioserver/CUpdate.java</name>
+			<type>1</type>
+			<location>C:/Users/Lukas Hofmann/Documents/Schule/IOControll/Projekt-X/Projekt-X/Zsm_Grafik-IOControl/src/IOServer/CUpdate.java</location>
+		</link>
+		<link>
+			<name>src/ioserver/GameManager.java</name>
+			<type>1</type>
+			<location>C:/Users/Lukas Hofmann/Documents/Schule/IOControll/Projekt-X/Projekt-X/Zsm_Grafik-IOControl/src/IOServer/GameManager.java</location>
+		</link>
+		<link>
+			<name>src/ioserver/InputListener.java</name>
+			<type>1</type>
+			<location>C:/Users/Lukas Hofmann/Documents/Schule/IOControll/Projekt-X/Projekt-X/Zsm_Grafik-IOControl/src/IOServer/InputListener.java</location>
+		</link>
+		<link>
+			<name>src/ioserver/Partikel.java</name>
+			<type>1</type>
+			<location>C:/Users/Lukas Hofmann/Documents/Schule/IOControll/Projekt-X/Projekt-X/Zsm_Grafik-IOControl/src/IOServer/Partikel.java</location>
+		</link>
+		<link>
+			<name>src/ioserver/Player.java</name>
+			<type>1</type>
+			<location>C:/Users/Lukas Hofmann/Documents/Schule/IOControll/Projekt-X/Projekt-X/Zsm_Grafik-IOControl/src/IOServer/Player.java</location>
+		</link>
+		<link>
+			<name>src/ioserver/Portal.java</name>
+			<type>1</type>
+			<location>C:/Users/Lukas Hofmann/Documents/Schule/IOControll/Projekt-X/Projekt-X/Zsm_Grafik-IOControl/src/IOServer/Portal.java</location>
+		</link>
+		<link>
+			<name>src/ioserver/Position.java</name>
+			<type>1</type>
+			<location>C:/Users/Lukas Hofmann/Documents/Schule/IOControll/Projekt-X/Projekt-X/Zsm_Grafik-IOControl/src/IOServer/Position.java</location>
+		</link>
+		<link>
+			<name>src/ioserver/Rectangle.java</name>
+			<type>1</type>
+			<location>C:/Users/Lukas Hofmann/Documents/Schule/IOControll/Projekt-X/Projekt-X/Zsm_Grafik-IOControl/src/IOServer/Rectangle.java</location>
+		</link>
+		<link>
+			<name>src/ioserver/SUpdate.java</name>
+			<type>1</type>
+			<location>C:/Users/Lukas Hofmann/Documents/Schule/IOControll/Projekt-X/Projekt-X/Zsm_Grafik-IOControl/src/IOServer/SUpdate.java</location>
+		</link>
+		<link>
+			<name>src/ioserver/ServerVerwaltung.java</name>
+			<type>1</type>
+			<location>C:/Users/Lukas Hofmann/Documents/Schule/IOControll/Projekt-X/Projekt-X/Zsm_Grafik-IOControl/src/IOServer/ServerVerwaltung.java</location>
+		</link>
+		<link>
+			<name>src/ioserver/TestMovement.java</name>
+			<type>1</type>
+			<location>C:/Users/Lukas Hofmann/Documents/Schule/IOControll/Projekt-X/Projekt-X/Zsm_Grafik-IOControl/src/IOServer/TestMovement.java</location>
+		</link>
+		<link>
+			<name>src/ioserver/Update.java</name>
+			<type>1</type>
+			<location>C:/Users/Lukas Hofmann/Documents/Schule/IOControll/Projekt-X/Projekt-X/Zsm_Grafik-IOControl/src/IOServer/Update.java</location>
+		</link>
+		<link>
+			<name>src/ioserver/cLoginUpdate.java</name>
+			<type>1</type>
+			<location>C:/Users/Lukas Hofmann/Documents/Schule/IOControll/Projekt-X/Projekt-X/Zsm_Grafik-IOControl/src/IOServer/cLoginUpdate.java</location>
+		</link>
+	</linkedResources>
+</projectDescription>

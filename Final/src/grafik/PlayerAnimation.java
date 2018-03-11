@@ -24,7 +24,7 @@ public class PlayerAnimation extends Thread {
     /**
      * Konstruktor
      *
-     * @param playerName Name des Spielers f�r welchen die Animationen sind
+     * @param playerName Name des Spielers für welchen die Animationen sind
      * @param imageDir Der Dateipfad zu den Bilddateien des Spiels
      */
     PlayerAnimation(String playerName, String imageDir){

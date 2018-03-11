@@ -1,0 +1,31 @@
+﻿[Files]
+File0=C:\Users\ruben\Desktop\Projekt-X\Beispiele\Dateien Lesen\DateienLesen_Test.java
+
+[Box:  - DateienLesen_Test]
+X=128
+Y=116
+FontSize=12
+FontName=Segoe UI
+
+[Diagram]
+comments=0
+OffsetX=0
+OffsetY=0
+Visibility=0
+ShowParameter=1
+SortOrder=0
+ShowIcons=0
+ShowConnections=0
+Fontname=Segoe UI
+Fontsize=12
+ShowObjectDiagram=0
+
+[Interactive]
+I0=
+
+[Window]
+Left=104
+Top=104
+Width=1419
+Height=645
+
